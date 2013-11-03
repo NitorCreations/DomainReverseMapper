@@ -1,4 +1,12 @@
+/build/
+/bin/
+target/
+
+.DS_Store
+ 
 *.class
+.classpath
+.project
 
 # Package Files #
 *.jar
