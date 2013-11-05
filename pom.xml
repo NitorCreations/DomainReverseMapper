@@ -50,6 +50,11 @@ diagram from your domain classes</description>
 						<target>1.7</target>
 					</configuration>
 				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>findbugs-maven-plugin</artifactId>
+					<version>2.5.2</version>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
