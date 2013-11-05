@@ -35,9 +35,8 @@ public class DomainMapperMojo extends AbstractMojo {
     @SuppressWarnings("unchecked")
     @Override
     public void execute() throws MojoExecutionException {
-        List<String> classpathElements = null;
         try {
-            classpathElements = project.getCompileClasspathElements();
+            List<String> classpathElements = project.getCompileClasspathElements();
             List<URL> projectClasspathList = new ArrayList<URL>();
             for (String element : classpathElements) {
                 try {
@@ -51,7 +50,7 @@ public class DomainMapperMojo extends AbstractMojo {
         } catch (ClassNotFoundException e) {
             throw new MojoExecutionException(e.getMessage());
         } catch (DependencyResolutionRequiredException e) {
-            new MojoExecutionException("Dependency resolution failed", e);
+            throw new MojoExecutionException("Dependency resolution failed", e);
         }
     }
 
