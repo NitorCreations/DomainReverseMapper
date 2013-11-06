@@ -19,39 +19,35 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
 
-/**
- * @requiresDependencyResolution compile
- */
 @Mojo(name = "map", defaultPhase = LifecyclePhase.PROCESS_CLASSES, requiresDependencyResolution = ResolutionScope.COMPILE)
 public class DomainMapperMojo extends AbstractMojo {
-    /**
-     * Location of the file.
-     */
     @Parameter(defaultValue = "${project.build.directory}", property = "outputDir", required = true)
     private File outputDirectory;
     @Component
     private MavenProject project;
 
-    @SuppressWarnings("unchecked")
     @Override
     public void execute() throws MojoExecutionException {
         try {
-            List<String> classpathElements = project.getCompileClasspathElements();
-            List<URL> projectClasspathList = new ArrayList<URL>();
-            for (String element : classpathElements) {
-                try {
-                    projectClasspathList.add(new File(element).toURI().toURL());
-                } catch (MalformedURLException e) {
-                    throw new MojoExecutionException(element + " is an invalid classpath element", e);
-                }
-            };
+            List<URL> projectClasspathList = getClasspathUrls();
             DomainMapper mapper = DomainMapperFactory.create(new String[] { "com.nitorcreations.test" }, new URLClassLoader(projectClasspathList.toArray(new URL[0])));
             writeToFile(mapper.describeDomain());
-        } catch (ClassNotFoundException e) {
-            throw new MojoExecutionException(e.getMessage());
-        } catch (DependencyResolutionRequiredException e) {
-            throw new MojoExecutionException("Dependency resolution failed", e);
+        } catch (ClassNotFoundException | DependencyResolutionRequiredException e) {
+            throw new MojoExecutionException(e.getMessage(), e);
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    private List<URL> getClasspathUrls() throws DependencyResolutionRequiredException, MojoExecutionException {
+        List<URL> projectClasspathList = new ArrayList<URL>();
+        for (String element : (List<String>) project.getCompileClasspathElements()) {
+            try {
+                projectClasspathList.add(new File(element).toURI().toURL());
+            } catch (MalformedURLException e) {
+                throw new MojoExecutionException(element + " is an invalid classpath element", e);
+            }
+        };
+        return projectClasspathList;
     }
 
     private void writeToFile(String domainDescription) throws MojoExecutionException {
