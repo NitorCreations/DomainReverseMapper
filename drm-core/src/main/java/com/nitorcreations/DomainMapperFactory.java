@@ -12,17 +12,17 @@ import org.slf4j.LoggerFactory;
 public class DomainMapperFactory {
     private static final Logger log = LoggerFactory.getLogger(DomainMapperFactory.class);
 
-    public static DomainMapper create(final String[] packages, final URLClassLoader classLoader) throws ClassNotFoundException {
+    public DomainMapper create(final String[] packages, final URLClassLoader classLoader) throws ClassNotFoundException {
         List<Class<?>> allClasses = findClasses(packages, classLoader);
         log.debug("Found " + allClasses.size() + " classes.");
         return new DomainMapper(allClasses);
     }
 
-    public static DomainMapper create(final String[] packages) throws ClassNotFoundException {
+    public DomainMapper create(final String[] packages) throws ClassNotFoundException {
         return create(packages, null);
     }
 
-    private static List<Class<?>> findClasses(final String[] packages, final URLClassLoader classLoader) {
+    private List<Class<?>> findClasses(final String[] packages, final URLClassLoader classLoader) {
         List<Class<?>> allClasses = new ArrayList<Class<?>>();
         for (String packageName : packages) {
             Reflections reflections = new Reflections(packageName, new SubTypesScanner(false), classLoader);

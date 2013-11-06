@@ -1,8 +1,6 @@
 package com.nitorcreations;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -25,13 +23,16 @@ public class DomainMapperMojo extends AbstractMojo {
     private File outputDirectory;
     @Component
     private MavenProject project;
+    private DomainMapperFactory factory = new DomainMapperFactory();
+    private SafeWriter writer = new SafeWriter();
 
     @Override
     public void execute() throws MojoExecutionException {
         try {
             List<URL> projectClasspathList = getClasspathUrls();
-            DomainMapper mapper = DomainMapperFactory.create(new String[] { "com.nitorcreations.test" }, new URLClassLoader(projectClasspathList.toArray(new URL[0])));
-            writeToFile(mapper.describeDomain());
+            DomainMapper mapper = factory.create(new String[] { "com.nitorcreations.test" }, new URLClassLoader(projectClasspathList.toArray(new URL[0])));
+            File outputFile = new File(outputDirectory, "domainmap.dot");
+            writer.writeToFile(outputFile, mapper.describeDomain());
         } catch (ClassNotFoundException | DependencyResolutionRequiredException e) {
             throw new MojoExecutionException(e.getMessage(), e);
         }
@@ -48,23 +49,5 @@ public class DomainMapperMojo extends AbstractMojo {
             }
         };
         return projectClasspathList;
-    }
-
-    private void writeToFile(String domainDescription) throws MojoExecutionException {
-        File f = checkoutOutputDir();
-        File dotFile = new File(f, "domainmap.dot");
-        try (FileWriter w = new FileWriter(dotFile)) {
-            w.write(domainDescription);
-        } catch (IOException e) {
-            throw new MojoExecutionException("Error creating file " + dotFile, e);
-        }
-    }
-
-    private File checkoutOutputDir() {
-        File f = outputDirectory;
-        if (!f.exists()) {
-            f.mkdirs();
-        }
-        return f;
     }
 }

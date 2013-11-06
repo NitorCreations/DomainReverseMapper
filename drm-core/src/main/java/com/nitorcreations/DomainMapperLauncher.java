@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 
 public class DomainMapperLauncher {
     private static final Logger log = LoggerFactory.getLogger(DomainMapperLauncher.class);
+    private DomainMapperFactory factory = new DomainMapperFactory();
 
     public void run(final String[] args) throws ClassNotFoundException, FileNotFoundException, UnsupportedEncodingException {
         // create the command line parser
@@ -32,7 +33,7 @@ public class DomainMapperLauncher {
             for (String packageName : packages) {
                 log.debug(packageName);
             }
-            DomainMapper domainMapper = DomainMapperFactory.create(packages);
+            DomainMapper domainMapper = factory.create(packages);
             if (line.hasOption('f')) {
                 PrintWriter writer = new PrintWriter(line.getOptionValue('f'), "UTF-8");
                 writer.println(domainMapper.describeDomain());

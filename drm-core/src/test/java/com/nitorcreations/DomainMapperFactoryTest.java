@@ -12,9 +12,11 @@ import com.nitorcreations.domain.person.Manager;
 import com.nitorcreations.domain.person.Person;
 
 public class DomainMapperFactoryTest {
+    DomainMapperFactory factory = new DomainMapperFactory();
+
     @Test
     public void testCreate() throws Exception {
-        DomainMapper mapper = DomainMapperFactory.create(new String[] { "com.nitorcreations.domain" });
+        DomainMapper mapper = factory.create(new String[] { "com.nitorcreations.domain" });
         assertThat(mapper.getClasses(), hasItems(Timesheet.class, Task.class, Person.class, Manager.class, Employee.class));
     }
 }
