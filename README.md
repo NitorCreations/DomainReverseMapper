@@ -25,8 +25,35 @@ This tool can be either used manually from command line or hooked as a maven plu
 
 ### Using with Maven
 
+Add to your pom.xml the following:
 
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.nitorcreations</groupId>
+				<artifactId>drm-maven-plugin</artifactId>
+				<version>1.0-SNAPSHOT</version>
+				<configuration>
+					<packages>
+						<param>com.mycompany.domain</param>
+						<param>com.mycompany.other_domain</param>
+					</packages>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>process-classes</phase>
+						<goals>
+							<goal>map</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 
+where the `packages` configuration parameter contains a list of packages that should be scanned for domain graph.
+
+When `process-classes` life-cycle phase gets executed, your domain model graph will be saved to `/target/domainmodel.dot`. Use this file with your local Graphviz or any of the online Graphviz tools to show your domain diagram.
 
 
 
