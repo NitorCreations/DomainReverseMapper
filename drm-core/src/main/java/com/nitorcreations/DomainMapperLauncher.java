@@ -3,6 +3,7 @@ package com.nitorcreations;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
@@ -33,7 +34,7 @@ public class DomainMapperLauncher {
             for (String packageName : packages) {
                 log.debug(packageName);
             }
-            DomainMapper domainMapper = factory.create(packages);
+            DomainMapper domainMapper = factory.create(Arrays.asList(packages));
             if (line.hasOption('f')) {
                 PrintWriter writer = new PrintWriter(line.getOptionValue('f'), "UTF-8");
                 writer.println(domainMapper.describeDomain());

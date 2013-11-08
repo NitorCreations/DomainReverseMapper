@@ -23,6 +23,8 @@ public class DomainMapperMojo extends AbstractMojo {
     private File outputDirectory;
     @Component
     private MavenProject project;
+    @Parameter(property = "map.packages", required = true)
+    private List<String> packages;
     private DomainMapperFactory factory = new DomainMapperFactory();
     private SafeWriter writer = new SafeWriter();
 
@@ -30,7 +32,7 @@ public class DomainMapperMojo extends AbstractMojo {
     public void execute() throws MojoExecutionException {
         try {
             List<URL> projectClasspathList = getClasspathUrls();
-            DomainMapper mapper = factory.create(new String[] { "com.nitorcreations.test" }, new URLClassLoader(projectClasspathList.toArray(new URL[0])));
+            DomainMapper mapper = factory.create(packages, new URLClassLoader(projectClasspathList.toArray(new URL[0])));
             File outputFile = new File(outputDirectory, "domainmap.dot");
             writer.writeToFile(outputFile, mapper.describeDomain());
         } catch (ClassNotFoundException | DependencyResolutionRequiredException e) {
