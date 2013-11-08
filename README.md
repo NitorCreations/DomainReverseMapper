@@ -23,6 +23,14 @@ This tool can be either used manually from command line or hooked as a maven plu
 
 ### Using from command-line
 
+Download the latest `drm-core.jar`. Run this jar in classpath that also contains your domain model classes. So let's say your domain model is in domain.jar, you can execute Domain Reverse Modeler with
+
+    java -cp domain.jar:drm-dore.jar com.nitorcreations.DomainMapperCli -p com.mycompany.domain
+
+This will scan all classes under the package `com.mycompany.domain` and output the .dot file to your console output. If you want to write it to file use -f `filename.dot`. If you need to scan multiple packages use format `-p "com.package1, com.package2"`.
+
+NOTE! Do not use `java -jar` as this will override the classpath provided by `-cp` switch so your domain classes won't get included.
+
 ### Using with Maven
 
 Add to your pom.xml the following:
