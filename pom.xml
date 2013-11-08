@@ -2,17 +2,41 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
+	</parent>
 	<groupId>com.nitorcreations</groupId>
 	<artifactId>drm-parent</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Domain Reverse Mapper</name>
-	<description>Automatically generate Graphviz 
-diagram from your domain classes</description>
+	<description>Automatically generate Graphviz diagram from your domain classes</description>
+	<url>https://github.com/NitorCreations/DomainReverseMapper</url>
+	<scm>
+		<developerConnection>scm:git:git@github.com:NitorCreations/DomainReverseMapper.git</developerConnection>
+		<connection>scm:git:git@github.com:NitorCreations/DomainReverseMapper.git</connection>
+		<url>git@github.com:NitorCreations/DomainReverseMapper.git</url>
+	</scm>
 	<inceptionYear>2013</inceptionYear>
 	<prerequisites>
 		<maven>3.0.4</maven>
 	</prerequisites>
+	<developers>
+		<developer>
+			<id>vertti</id>
+			<name>Janne Sinivirta</name>
+			<email>janne.sinivirta@nitorcreations.com</email>
+		</developer>
+	</developers>
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
 	<modules>
 		<module>drm-core</module>
 		<module>drm-maven</module>
@@ -54,6 +78,18 @@ diagram from your domain classes</description>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>findbugs-maven-plugin</artifactId>
 					<version>2.5.2</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-gpg-plugin</artifactId>
+					<version>1.4</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>2.2.1</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>2.9.1</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>
