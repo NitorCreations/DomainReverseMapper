@@ -37,20 +37,9 @@
 		</dependency>
 		<dependency>
 			<groupId>org.apache.maven</groupId>
-			<artifactId>maven-artifact</artifactId>
-			<version>3.1.1</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.maven</groupId>
 			<artifactId>maven-project</artifactId>
 			<version>3.0-alpha-2</version>
 			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.codehaus.plexus</groupId>
-			<artifactId>plexus-utils</artifactId>
-			<version>3.0.15</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
