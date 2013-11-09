@@ -6,6 +6,7 @@ Automatically generate [Graphviz](http://www.graphviz.org/) diagram from your do
 Using reflection, Domain Reverse Mapper scans your packages that contain your domain entities. It then builds a graph of entity compositions and inheritances and creates a Graphviz .dot file from that.
 
 ![domain model](https://dl.dropboxusercontent.com/u/734976/domain.png)
+
 The picture above is generated from a simple example domain with Domain Reverse Mapper. In the above picture
 
 - black arrows describe composition (private field in one class refers to another domain class
