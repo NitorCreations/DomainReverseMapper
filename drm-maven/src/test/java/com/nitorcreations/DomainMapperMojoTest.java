@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
 import org.junit.Before;
 import org.junit.Test;
@@ -47,7 +48,7 @@ public class DomainMapperMojoTest {
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Test
-    public void testExecute() throws MojoExecutionException, ClassNotFoundException {
+    public void testExecute() throws MojoExecutionException, ClassNotFoundException, MojoFailureException {
         packages.add("foo.bar");
         mojo.execute();
         ArgumentCaptor<List> captor = ArgumentCaptor.forClass(List.class);

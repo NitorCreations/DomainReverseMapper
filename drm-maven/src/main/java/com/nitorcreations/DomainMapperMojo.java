@@ -10,6 +10,7 @@ import java.util.List;
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.Component;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
@@ -29,7 +30,9 @@ public class DomainMapperMojo extends AbstractMojo {
     private SafeWriter writer = new SafeWriter();
 
     @Override
-    public void execute() throws MojoExecutionException {
+    public void execute() throws MojoExecutionException, MojoFailureException {
+        if (packages.isEmpty())
+            throw new MojoFailureException("No packages defined for scanning.");
         try {
             List<URL> projectClasspathList = getClasspathUrls();
             DomainMapper mapper = factory.create(packages, new URLClassLoader(projectClasspathList.toArray(new URL[0])));
