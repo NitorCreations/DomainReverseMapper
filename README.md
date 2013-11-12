@@ -67,6 +67,7 @@ where the `packages` configuration parameter contains a list of packages that sh
 
 When `process-classes` life-cycle phase gets executed, your domain model graph will be saved to `/target/domainmodel.dot`. Use this file with your local Graphviz or any of the online Graphviz tools to show your domain diagram.
 
+[![Build Status](https://travis-ci.org/NitorCreations/DomainReverseMapper.png)](https://travis-ci.org/NitorCreations/DomainReverseMapper)
 
 
 
