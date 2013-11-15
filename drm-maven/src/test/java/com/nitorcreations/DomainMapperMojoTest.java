@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
@@ -40,10 +41,12 @@ public class DomainMapperMojoTest {
     DomainMapperMojo mojo = new DomainMapperMojo();
     final List<Class<?>> dummyList = Arrays.<Class<?>> asList(String.class, Integer.class);
 
+    @SuppressWarnings("unchecked")
     @Before
-    public void setup() throws ClassNotFoundException {
+    public void setup() throws ClassNotFoundException, DependencyResolutionRequiredException {
         MockitoAnnotations.initMocks(this);
         when(factory.create(any(List.class), any(URLClassLoader.class))).thenReturn(mapper);
+        when(project.getCompileClasspathElements()).thenReturn(Arrays.asList("foo", "bar"));
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -54,5 +57,16 @@ public class DomainMapperMojoTest {
         ArgumentCaptor<List> captor = ArgumentCaptor.forClass(List.class);
         verify(factory).create(captor.capture(), any(URLClassLoader.class));
         assertThat((List<String>) captor.getValue(), hasItems("foo.bar"));
+    }
+
+    @Test(expected = MojoFailureException.class)
+    public void failsWithNoPackagesDefined() throws MojoExecutionException, ClassNotFoundException, MojoFailureException {
+        mojo.execute();
+    }
+
+    @Test(expected = MojoFailureException.class)
+    public void failsWhenClassNotFound() throws MojoExecutionException, ClassNotFoundException, MojoFailureException {
+        when(mapper.describeDomain()).thenThrow(new ClassNotFoundException());
+        mojo.execute();
     }
 }
