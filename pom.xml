@@ -65,6 +65,11 @@
 						<maxmem>256m</maxmem>
 						<!-- aggregated reports for multi-module projects -->
 						<aggregate>true</aggregate>
+						<instrumentation>
+							<excludes>
+								<exclude>**/HelpMojo.class</exclude>
+							</excludes>
+						</instrumentation>
 					</configuration>
 				</plugin>
 				<plugin>
