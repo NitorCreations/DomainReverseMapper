@@ -1,6 +1,7 @@
 package com.nitorcreations;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -38,7 +39,7 @@ public class DomainMapperMojo extends AbstractMojo {
             DomainMapper mapper = factory.create(packages, new URLClassLoader(projectClasspathList.toArray(new URL[0])));
             File outputFile = new File(outputDirectory, "domainmap.dot");
             writer.writeToFile(outputFile, mapper.describeDomain());
-        } catch (ClassNotFoundException | DependencyResolutionRequiredException e) {
+        } catch (ClassNotFoundException | DependencyResolutionRequiredException | IOException e) {
             throw new MojoExecutionException(e.getMessage(), e);
         }
     }

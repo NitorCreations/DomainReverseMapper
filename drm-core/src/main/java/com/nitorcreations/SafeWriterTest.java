@@ -8,7 +8,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
-import org.apache.maven.plugin.MojoExecutionException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,7 +20,7 @@ public class SafeWriterTest {
     }
 
     @Test
-    public void writesToCorrectFile() throws MojoExecutionException, IOException {
+    public void writesToCorrectFile() throws IOException {
         File tempFile = createTempFile();
         writer.writeToFile(tempFile, "foo");
         String line = readLine(tempFile);
@@ -29,7 +28,7 @@ public class SafeWriterTest {
     }
 
     @Test
-    public void createsDirectoryIfNeeded() throws MojoExecutionException, IOException {
+    public void createsDirectoryIfNeeded() throws IOException {
         File tempFile = createTempFileInNonExistingDirectory();
         assertThat(tempFile.exists(), is(false));
         writer.writeToFile(tempFile, "foo");

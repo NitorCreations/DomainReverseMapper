@@ -1,12 +1,11 @@
 package com.nitorcreations;
 
-import java.io.FileNotFoundException;
-import java.io.UnsupportedEncodingException;
+import java.io.IOException;
 
 public class DomainMapperCli {
     private static DomainMapperLauncher launcher = new DomainMapperLauncher();
 
-    public static void main(final String[] args) throws ClassNotFoundException, FileNotFoundException, UnsupportedEncodingException {
+    public static void main(final String[] args) throws ClassNotFoundException, IOException {
         launcher.run(args);
     }
 

@@ -1,8 +1,7 @@
 package com.nitorcreations;
 
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 
 import org.apache.commons.cli.BasicParser;
@@ -18,8 +17,9 @@ import org.slf4j.LoggerFactory;
 public class DomainMapperLauncher {
     private static final Logger log = LoggerFactory.getLogger(DomainMapperLauncher.class);
     private DomainMapperFactory factory = new DomainMapperFactory();
+    private SafeWriter writer = new SafeWriter();
 
-    public void run(final String[] args) throws ClassNotFoundException, FileNotFoundException, UnsupportedEncodingException {
+    public void run(final String[] args) throws ClassNotFoundException, IOException {
         // create the command line parser
         CommandLineParser parser = new BasicParser();
         // create the Options
@@ -36,9 +36,7 @@ public class DomainMapperLauncher {
             }
             DomainMapper domainMapper = factory.create(Arrays.asList(packages));
             if (line.hasOption('f')) {
-                PrintWriter writer = new PrintWriter(line.getOptionValue('f'), "UTF-8");
-                writer.println(domainMapper.describeDomain());
-                writer.close();
+                writer.writeToFile(new File(line.getOptionValue('f')), domainMapper.describeDomain());
                 log.info("Wrote dot to file " + line.getOptionValue('f'));
             } else {
                 log.info("GRAPHVIZ DOT FILE STARTS HERE ----:");
