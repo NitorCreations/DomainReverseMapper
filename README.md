@@ -28,9 +28,9 @@ This tool can be either used manually **from command line or as a maven plugin**
 
 ### Using from command-line
 
-Download the latest executable .jar from [Releases](https://github.com/NitorCreations/DomainReverseMapper/releases/tag/drm-1.0-standalone). Run this archive in classpath that also contains your domain model classes. So let's say your domain model is in `domain.jar`, you can execute Domain Reverse Modeler with
+Download the latest executable .jar from [Releases](https://github.com/NitorCreations/DomainReverseMapper/releases/tag/drm-1.1-standalone). Run this archive in classpath that also contains your domain model classes. So let's say your domain model is in `domain.jar`, you can execute Domain Reverse Modeler with
 
-    java -cp domain.jar:drm-dore.jar com.nitorcreations.DomainMapperCli -p com.mycompany.domain
+    java -cp domain.jar:drm-core-1.1.jar com.nitorcreations.DomainMapperCli -p com.mycompany.domain
 
 This will scan all classes under the package `com.mycompany.domain` and output the .dot file to your console output. If you want to write it to file use switch `-f filename.dot`. If you need to scan multiple packages use format `-p "com.package1, com.package2"`.
 
@@ -47,7 +47,7 @@ Add to your pom.xml the following:
 			<plugin>
 				<groupId>com.nitorcreations</groupId>
 				<artifactId>drm-maven-plugin</artifactId>
-				<version>1.0</version>
+				<version>1.1</version>
 				<configuration>
 					<packages>
 						<param>com.mycompany.domain</param>
