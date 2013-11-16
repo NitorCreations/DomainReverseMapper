@@ -8,7 +8,7 @@
 	</parent>
 	<groupId>com.nitorcreations</groupId>
 	<artifactId>drm-parent</artifactId>
-	<version>1.1</version>
+	<version>1.2-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Domain Reverse Mapper</name>
 	<description>Automatically generate Graphviz diagram from your domain classes</description>

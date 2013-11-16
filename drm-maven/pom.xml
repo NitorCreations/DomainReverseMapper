@@ -2,12 +2,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.nitorcreations</groupId>
 	<artifactId>drm-maven-plugin</artifactId>
-	<version>1.1</version>
+	<version>1.2-SNAPSHOT</version>
 	<packaging>maven-plugin</packaging>
 	<parent>
 		<groupId>com.nitorcreations</groupId>
 		<artifactId>drm-parent</artifactId>
-		<version>1.1</version>
+		<version>1.2-SNAPSHOT</version>
 	</parent>
 	<name>drm-maven</name>
 	<description>
@@ -21,7 +21,7 @@
 		<dependency>
 			<groupId>com.nitorcreations</groupId>
 			<artifactId>drm-core</artifactId>
-			<version>1.1</version>
+			<version>1.2-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.maven</groupId>
