@@ -1,5 +1,6 @@
 package com.nitorcreations;
 
+import org.apache.commons.lang3.StringUtils;
 
 public class CompositionLink extends Link {
     private final String atobname;
@@ -23,52 +24,6 @@ public class CompositionLink extends Link {
         return collectionB;
     }
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((a == null) ? 0 : a.hashCode());
-        result = prime * result + ((atobname == null) ? 0 : atobname.hashCode());
-        result = prime * result + ((b == null) ? 0 : b.hashCode());
-        return result;
-    }
-
-    @Override
-    public boolean equals(final Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        CompositionLink other = (CompositionLink) obj;
-        if (a == null) {
-            if (other.a != null) {
-                return false;
-            }
-        } else if (!a.equals(other.a)) {
-            return false;
-        }
-        if (atobname == null) {
-            if (other.atobname != null) {
-                return false;
-            }
-        } else if (!atobname.equals(other.atobname)) {
-            return false;
-        }
-        if (b == null) {
-            if (other.b != null) {
-                return false;
-            }
-        } else if (!b.equals(other.b)) {
-            return false;
-        }
-        return true;
-    }
-
     public CompositionLink getInverse() {
         return new CompositionLink(b, btoaname, collectionB, a, atobname, collectionA);
     }
@@ -83,5 +38,9 @@ public class CompositionLink extends Link {
 
     public String getAtoBname() {
         return atobname;
+    }
+
+    public boolean isDoubleReferer(final CompositionLink other) {
+        return (!StringUtils.equals(atobname, other.atobname) && b == other.b && StringUtils.equals(btoaname, other.btoaname)) || (!StringUtils.equals(btoaname, other.btoaname) && a == other.a && StringUtils.equals(atobname, other.atobname));
     }
 }

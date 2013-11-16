@@ -18,13 +18,13 @@ public class CompositionMapper extends AbstractMapper {
         gatherLinks();
     }
 
-    public void gatherLinks() throws ClassNotFoundException {
+    private void gatherLinks() throws ClassNotFoundException {
         for (Class<?> clazz : classes) {
             for (Field field : clazz.getDeclaredFields()) {
                 CompositionLink link = createLink(clazz, field);
                 if (link != null) {
                     CompositionLink match = findMatch(link);
-                    if (match == null) {
+                    if (match == null || (match != null && link.isDoubleReferer(match))) {
                         getLinks().add(link);
                     } else {
                         removeMatch(link);

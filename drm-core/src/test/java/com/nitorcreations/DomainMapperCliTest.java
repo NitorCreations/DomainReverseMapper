@@ -7,7 +7,7 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-public class DomainMapperCliTest {
+public class DomainMapperCliTest extends DomainMapperCli { // extends to silence cobertura
     DomainMapperLauncher launcher = mock(DomainMapperLauncher.class);
 
     @Test
