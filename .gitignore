@@ -18,3 +18,5 @@ target/
 *.iml
 *.iws
 
+# shade-plugin ignore extra pom file
+drm-core/dependency-reduced-pom.xml
