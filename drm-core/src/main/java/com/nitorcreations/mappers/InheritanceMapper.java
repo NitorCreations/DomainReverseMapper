@@ -3,7 +3,7 @@ package com.nitorcreations.mappers;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.nitorcreations.Link;
+import com.nitorcreations.domain.Link;
 
 public class InheritanceMapper extends AbstractMapper {
     private final List<Link> links = new ArrayList<>();

@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.nitorcreations.domain.CompositionLink;
+import com.nitorcreations.domain.Link;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

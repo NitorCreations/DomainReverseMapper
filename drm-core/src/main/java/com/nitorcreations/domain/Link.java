@@ -1,4 +1,4 @@
-package com.nitorcreations;
+package com.nitorcreations.domain;
 
 public class Link {
     protected final Class<?> a;

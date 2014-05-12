@@ -1,5 +1,6 @@
-package com.nitorcreations;
+package com.nitorcreations.domain;
 
+import com.nitorcreations.domain.Link;
 import nl.jqno.equalsverifier.EqualsVerifier;
 
 import org.junit.Test;

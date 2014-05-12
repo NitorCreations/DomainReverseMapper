@@ -1,4 +1,4 @@
-package com.nitorcreations.domain.person;
+package com.nitorcreations.testdomain.person;
 
 public class Employee extends Person {
     private final String name;

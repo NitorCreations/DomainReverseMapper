@@ -1,4 +1,4 @@
-package com.nitorcreations;
+package com.nitorcreations.domain;
 
 import org.apache.commons.lang3.StringUtils;
 

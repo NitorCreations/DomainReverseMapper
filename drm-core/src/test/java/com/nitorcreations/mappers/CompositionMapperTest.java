@@ -7,8 +7,8 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-import com.nitorcreations.domain.Company;
-import com.nitorcreations.domain.person.Person;
+import com.nitorcreations.testdomain.Company;
+import com.nitorcreations.testdomain.person.Person;
 
 public class CompositionMapperTest {
     @Test

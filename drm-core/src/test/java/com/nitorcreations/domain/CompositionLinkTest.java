@@ -1,8 +1,10 @@
-package com.nitorcreations;
+package com.nitorcreations.domain;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+
+import com.nitorcreations.domain.CompositionLink;
 import nl.jqno.equalsverifier.EqualsVerifier;
 
 import org.junit.Test;

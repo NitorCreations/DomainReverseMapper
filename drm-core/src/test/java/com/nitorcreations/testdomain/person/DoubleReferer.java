@@ -1,4 +1,4 @@
-package com.nitorcreations.domain.person;
+package com.nitorcreations.testdomain.person;
 
 public class DoubleReferer {
     private Manager myBoss;

@@ -1,11 +1,11 @@
-package com.nitorcreations.domain;
+package com.nitorcreations.testdomain;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.nitorcreations.domain.person.Employee;
-import com.nitorcreations.domain.person.Manager;
+import com.nitorcreations.testdomain.person.Employee;
+import com.nitorcreations.testdomain.person.Manager;
 
 public class Task {
     private final List<Employee> assignedEmployees = new ArrayList<Employee>();

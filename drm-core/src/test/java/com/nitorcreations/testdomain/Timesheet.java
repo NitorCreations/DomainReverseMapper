@@ -1,8 +1,8 @@
-package com.nitorcreations.domain;
+package com.nitorcreations.testdomain;
 
 import java.util.List;
 
-import com.nitorcreations.domain.person.Employee;
+import com.nitorcreations.testdomain.person.Employee;
 
 public class Timesheet {
     private final Employee who;

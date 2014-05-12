@@ -7,8 +7,8 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.nitorcreations.CompositionLink;
-import com.nitorcreations.Link;
+import com.nitorcreations.domain.CompositionLink;
+import com.nitorcreations.domain.Link;
 
 public class CompositionMapper extends AbstractMapper {
     final List<CompositionLink> links = new LinkedList<CompositionLink>();
