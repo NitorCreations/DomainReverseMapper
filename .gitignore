@@ -12,3 +12,9 @@ target/
 *.jar
 *.war
 *.ear
+
+# Intellij
+.idea/
+*.iml
+*.iws
+
