@@ -24,7 +24,7 @@ public class CompositionMapper extends AbstractMapper {
                 CompositionLink link = createLink(clazz, field);
                 if (link != null) {
                     CompositionLink match = findMatch(link);
-                    if (match == null || (match != null && link.isDoubleReferer(match))) {
+                    if (match == null || link.isDoubleReferer(match)) {
                         getLinks().add(link);
                     } else {
                         removeMatch(link);
@@ -60,7 +60,8 @@ public class CompositionMapper extends AbstractMapper {
         if (isCollection(field)) {
             Type type = getDomainClassFromCollection(field);
             if (type != null) {
-                return new CompositionLink(clazz, field.getName(), true, Class.forName(stripClassHeader(type.toString())), null, false);
+                return new CompositionLink(clazz, field.getName(), true, Class.forName(stripClassHeader(type.toString()), false,
+                    this.getClass().getClassLoader()), null, false);
             }
         }
         return null;
