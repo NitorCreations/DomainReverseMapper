@@ -28,7 +28,7 @@ public class DomainMapperMojoTest {
     @Spy
     File outputDirectory = new File("");
     @Spy
-    List<String> packages = new ArrayList<String>();
+    List<String> packages = new ArrayList<>();
     @Mock
     MavenProject project;
     @Mock

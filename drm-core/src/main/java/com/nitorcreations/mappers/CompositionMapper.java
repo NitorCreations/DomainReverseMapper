@@ -11,7 +11,7 @@ import com.nitorcreations.domain.CompositionLink;
 import com.nitorcreations.domain.Link;
 
 public class CompositionMapper extends AbstractMapper {
-    final List<CompositionLink> links = new LinkedList<CompositionLink>();
+    final List<CompositionLink> links = new LinkedList<>();
 
     public CompositionMapper(final List<Class<?>> classes) throws ClassNotFoundException {
         super(classes);

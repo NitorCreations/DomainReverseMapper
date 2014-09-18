@@ -8,7 +8,7 @@ import com.nitorcreations.testdomain.person.Employee;
 import com.nitorcreations.testdomain.person.Manager;
 
 public class Task {
-    private final List<Employee> assignedEmployees = new ArrayList<Employee>();
+    private final List<Employee> assignedEmployees = new ArrayList<>();
     private final Manager manager;
     private boolean completed;
     private final String description;

@@ -36,7 +36,7 @@ public class DomainMapperMojo extends AbstractMojo {
             throw new MojoFailureException("No packages defined for scanning.");
         try {
             List<URL> projectClasspathList = getClasspathUrls();
-            DomainMapper mapper = factory.create(packages, new URLClassLoader(projectClasspathList.toArray(new URL[0])));
+            DomainMapper mapper = factory.create(packages, new URLClassLoader(projectClasspathList.toArray(new URL[projectClasspathList.size()])));
             File outputFile = new File(outputDirectory, "domainmap.dot");
             writer.writeToFile(outputFile, mapper.describeDomain());
         } catch (ClassNotFoundException | DependencyResolutionRequiredException | IOException e) {
@@ -46,14 +46,14 @@ public class DomainMapperMojo extends AbstractMojo {
 
     @SuppressWarnings("unchecked")
     private List<URL> getClasspathUrls() throws DependencyResolutionRequiredException, MojoExecutionException {
-        List<URL> projectClasspathList = new ArrayList<URL>();
+        List<URL> projectClasspathList = new ArrayList<>();
         for (String element : (List<String>) project.getCompileClasspathElements()) {
             try {
                 projectClasspathList.add(new File(element).toURI().toURL());
             } catch (MalformedURLException e) {
                 throw new MojoExecutionException(element + " is an invalid classpath element", e);
             }
-        };
+        }
         return projectClasspathList;
     }
 }

@@ -23,7 +23,7 @@ public class DomainMapperFactory {
     }
 
     private List<Class<?>> findClasses(final List<String> packages, final URLClassLoader classLoader) {
-        List<Class<?>> allClasses = new ArrayList<Class<?>>();
+        List<Class<?>> allClasses = new ArrayList<>();
         for (String packageName : packages) {
             Reflections reflections = new Reflections(packageName, new SubTypesScanner(false), classLoader);
             allClasses.addAll(reflections.getSubTypesOf(Object.class));

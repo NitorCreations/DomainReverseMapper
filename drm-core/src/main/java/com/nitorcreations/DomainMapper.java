@@ -56,13 +56,7 @@ public class DomainMapper {
     }
 
     public String describeDomain() throws ClassNotFoundException {
-        StringBuilder sb = new StringBuilder(DOMAIN_DECLARATION);
-        sb.append(DEFAULTS).append("\n");
-        sb.append(describePackages());
-        sb.append(describeCompositions());
-        sb.append(describeInheritance());
-        sb.append("}");
-        return sb.toString();
+      return DOMAIN_DECLARATION + DEFAULTS + "\n" + describePackages() + describeCompositions() + describeInheritance() + "}";
     }
 
     private String describeInheritance() {
@@ -80,7 +74,7 @@ public class DomainMapper {
             if (map.containsKey(packageName)) {
                 map.get(packageName).add(clazz);
             } else {
-                List<Class<?>> list = new ArrayList<Class<?>>();
+                List<Class<?>> list = new ArrayList<>();
                 list.add(clazz);
                 map.put(packageName, list);
             }
