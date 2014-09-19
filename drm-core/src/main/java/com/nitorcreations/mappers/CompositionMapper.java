@@ -38,6 +38,8 @@ public class CompositionMapper extends AbstractMapper {
                             addLink(clazz, clazz.getDeclaredField(name));
                         } catch (NoSuchFieldException e) {
                             // should never happen
+                        } catch (NoClassDefFoundError e) {
+                            logger.warn("Skipped field " + name + " in class " + clazz.getName() + " because it's type class is not available. Field description: " + desc);
                         }
                         return super.visitField(access, name, desc, signature, value);
                     }
