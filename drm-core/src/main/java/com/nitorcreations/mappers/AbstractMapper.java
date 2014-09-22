@@ -24,8 +24,13 @@ public class AbstractMapper {
 
     String stripClassHeader(final String fullToString) {
         if (fullToString.startsWith("class ")) {
-            return fullToString.substring(6);
+            return convertFromAsmToComplete(fullToString.substring(6));
         }
-        return fullToString;
+        return convertFromAsmToComplete(fullToString);
     }
+
+    String convertFromAsmToComplete(String original) {
+        return original.replace('/', '.');
+    }
+
 }
