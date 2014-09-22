@@ -1,17 +1,5 @@
 package com.nitorcreations;
 
-import static org.hamcrest.CoreMatchers.hasItem;
-import static org.hamcrest.CoreMatchers.hasItems;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyList;
-import static org.mockito.Matchers.argThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.io.File;
-import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -19,10 +7,15 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.io.File;
+
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.verify;
+
 @SuppressWarnings("unchecked")
 public class DomainMapperLauncherTest {
-    @Mock
-    DomainMapperFactory factory;
     @Mock
     SafeWriter writer;
     @InjectMocks
@@ -35,30 +28,26 @@ public class DomainMapperLauncherTest {
 
     @Test
     public void withsinglePackage() throws Exception {
-        when(factory.create(anyList())).thenReturn(mock(DomainMapper.class));
-        launcher.run(new String[] { "-p", "foo.bar" });
-        verify(factory).create((List<String>) argThat(hasItem("foo.bar")));
+        launcher.run(new String[]{"-p", "com.nitorcreations.testdomain.person"});
+        assertThat(launcher.domainMapper.getClasses().size(), is(4));
     }
 
     @Test
     public void withMultiPackages() throws Exception {
-        when(factory.create(anyList())).thenReturn(mock(DomainMapper.class));
-        launcher.run(new String[] { "-p", "\"foo.bar, baz.qux\"" });
-        verify(factory).create((List<String>) argThat(hasItems("foo.bar", "baz.qux")));
+        launcher.run(new String[] { "-p", "\"com.nitorcreations.testdomain.person, com.nitorcreations.testdomain.another\"" });
+        assertThat(launcher.domainMapper.getClasses().size(), is(5));
     }
 
     @Test
     public void withNoPackages_noError() throws Exception {
-        when(factory.create(anyList())).thenReturn(mock(DomainMapper.class));
-        launcher.run(new String[] {});
+        launcher.run(new String[]{});
     }
 
     @Test
     public void withWriteToFile() throws Exception {
-        when(factory.create(anyList())).thenReturn(mock(DomainMapper.class));
-        launcher.run(new String[] { "-p", "foo.bar", "-f", "foofile.txt" });
-        verify(factory).create((List<String>) argThat(hasItem("foo.bar")));
+        launcher.run(new String[]{"-p", "foo.bar", "-f", "foofile.txt"});
         ArgumentCaptor<File> captor = ArgumentCaptor.forClass(File.class);
         verify(writer).writeToFile(captor.capture(), any(String.class));
     }
+
 }

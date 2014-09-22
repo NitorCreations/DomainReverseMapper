@@ -1,9 +1,5 @@
 package com.nitorcreations;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Arrays;
-
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -14,10 +10,14 @@ import org.apache.commons.cli.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
+
 public class DomainMapperLauncher {
     private static final Logger log = LoggerFactory.getLogger(DomainMapperLauncher.class);
-    private DomainMapperFactory factory = new DomainMapperFactory();
     private SafeWriter writer = new SafeWriter();
+    public DomainMapper domainMapper;
 
     public void run(final String[] args) throws ClassNotFoundException, IOException {
         // create the command line parser
@@ -34,7 +34,7 @@ public class DomainMapperLauncher {
             for (String packageName : packages) {
                 log.debug(packageName);
             }
-            DomainMapper domainMapper = factory.create(Arrays.asList(packages));
+            domainMapper = DomainMapper.create(Arrays.asList(packages));
             if (line.hasOption('f')) {
                 writer.writeToFile(new File(line.getOptionValue('f')), domainMapper.describeDomain());
                 log.info("Wrote dot to file " + line.getOptionValue('f'));

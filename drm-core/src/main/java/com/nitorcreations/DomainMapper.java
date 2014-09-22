@@ -1,22 +1,23 @@
 package com.nitorcreations;
 
-import java.io.IOException;
+import com.nitorcreations.domain.CompositionLink;
+import com.nitorcreations.domain.Link;
+import com.nitorcreations.mappers.CompositionMapper;
+import com.nitorcreations.mappers.InheritanceMapper;
+import org.reflections.Reflections;
+import org.reflections.scanners.SubTypesScanner;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.nitorcreations.domain.CompositionLink;
-import com.nitorcreations.domain.Link;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.nitorcreations.mappers.CompositionMapper;
-import com.nitorcreations.mappers.InheritanceMapper;
-
 public class DomainMapper {
-    final Logger logger = LoggerFactory.getLogger(DomainMapper.class);
+    static final Logger log = LoggerFactory.getLogger(DomainMapper.class);
     public static final String DOMAIN_DECLARATION = "digraph domain {\n";
     public static final String DEFAULTS = "  edge [ fontsize = 11 ];\n  node [ shape=box style=rounded ];";
     private static final String INHERITANCE_STYLE = "arrowhead=empty color=slategray";
@@ -24,7 +25,7 @@ public class DomainMapper {
     private final CompositionMapper compositionMapper;
     private final InheritanceMapper inheritanceMapper;
 
-    public DomainMapper(final List<Class<?>> classes) throws ClassNotFoundException {
+    DomainMapper(final List<Class<?>> classes) throws ClassNotFoundException {
         this.classes = classes;
         compositionMapper = new CompositionMapper(classes);
         inheritanceMapper = new InheritanceMapper(classes);
@@ -105,4 +106,24 @@ public class DomainMapper {
     public List<Class<?>> getClasses() {
         return classes;
     }
+
+    public static DomainMapper create(final List<String> packages, final URLClassLoader classLoader) throws ClassNotFoundException {
+        List<Class<?>> allClasses = findClasses(packages, classLoader);
+        log.debug("Found " + allClasses.size() + " classes.");
+        return new DomainMapper(allClasses);
+    }
+
+    public static DomainMapper create(final List<String> packages) throws ClassNotFoundException {
+        return create(packages, null);
+    }
+
+    private static List<Class<?>> findClasses(final List<String> packages, final URLClassLoader classLoader) {
+        List<Class<?>> allClasses = new ArrayList<>();
+        for (String packageName : packages) {
+            Reflections reflections = new Reflections(packageName, new SubTypesScanner(false), classLoader);
+            allClasses.addAll(reflections.getSubTypesOf(Object.class));
+        }
+        return allClasses;
+    }
+
 }
