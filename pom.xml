@@ -53,15 +53,17 @@
 		<logback.version>1.0.13</logback.version>
         <asm.version>5.0.3</asm.version>
 	</properties>
-     <repositories>
-       <repository>
-         <id>snapshots-repo</id>
-         <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-         <releases><enabled>false</enabled></releases>
-         <snapshots><enabled>true</enabled></snapshots>
-       </repository>
-     </repositories>	
-<build>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>oss.sonatype.org</id>
+            <name>SNAPSHOTs on Sonatype.org</name>
+            <url>http://oss.sonatype.org/content/repositories/snapshots/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+    <build>
 		<pluginManagement>
 			<plugins>
 				<plugin>
