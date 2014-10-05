@@ -5,5 +5,5 @@ jdk:
   - oraclejdk7
   
 after_success:
-  - mvn clean cobertura:cobertura coveralls:report
+  - mvn -X clean cobertura:cobertura coveralls:report
 
