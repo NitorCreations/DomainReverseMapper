@@ -1,6 +1,7 @@
 package com.nitorcreations.mappers;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -30,7 +31,8 @@ public class CompositionMapper extends AbstractMapper {
     private void gatherLinks() {
         for (final Class<?> clazz : classes) {
             try {
-                ClassReader reader = new ClassReader(clazz.getName());
+                InputStream is = clazz.getClassLoader().getResourceAsStream(clazz.getName().replace(".", "/") + ".class");
+                ClassReader reader = new ClassReader(is);
                 reader.accept(new ClassVisitor(Opcodes.ASM4) {
                     @Override
                     public FieldVisitor visitField(int access, String name, String desc, String signature, Object value) {
