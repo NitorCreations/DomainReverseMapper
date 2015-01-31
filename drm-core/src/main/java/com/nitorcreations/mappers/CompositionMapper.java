@@ -85,38 +85,28 @@ public class CompositionMapper extends AbstractMapper {
 
     private CompositionLink createLink(final Class<?> clazz, final Field field) {
         if (isDomainClass(field.getType())) {
-            return new CompositionLink(clazz, field.getName(), false, getKnownClass(field.getType().getCanonicalName()), null, false);
+            return new CompositionLink(clazz, field.getName(), false, field.getType(), null, false);
         }
         if (isCollection(field)) {
-            Type type = getDomainClassFromCollection(field);
-            if (type != null) {
-                return new CompositionLink(clazz, field.getName(), true, getKnownClass(stripClassHeader(type.toString())), null, false);
+            Class<?> domainClass = getDomainClassFromCollection(field);
+            if (domainClass != null) {
+                return new CompositionLink(clazz, field.getName(), true, domainClass, null, false);
             }
         }
         return null;
-    }
-
-    private Class getKnownClass(String canonicalName) {
-        try {
-            return Class.forName(canonicalName, false,
-                this.getClass().getClassLoader());
-        } catch (ClassNotFoundException e) {
-            logger.warn("ClassNotFoundException thrown although it never should be. Problematic class: " + canonicalName, e);
-            throw new IllegalStateException();
-        }
     }
 
     public List<CompositionLink> getLinks() {
         return links;
     }
 
-    private Type getDomainClassFromCollection(final Field field) {
+    private Class<?> getDomainClassFromCollection(final Field field) {
         Type type = field.getGenericType();
         if (type instanceof ParameterizedType) {
             ParameterizedType pt = (ParameterizedType) type;
             for (Type t : pt.getActualTypeArguments()) {
                 if (isDomainClass(t.toString())) {
-                    return t;
+                    return (Class) t;
                 }
             }
         }
