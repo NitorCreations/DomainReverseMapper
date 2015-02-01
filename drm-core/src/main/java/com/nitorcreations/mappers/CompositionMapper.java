@@ -1,6 +1,7 @@
 package com.nitorcreations.mappers;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -30,7 +31,8 @@ public class CompositionMapper extends AbstractMapper {
     private void gatherLinks() {
         for (final Class<?> clazz : classes) {
             try {
-                ClassReader reader = new ClassReader(clazz.getName());
+                InputStream is = clazz.getClassLoader().getResourceAsStream(clazz.getName().replace(".", "/") + ".class");
+                ClassReader reader = new ClassReader(is);
                 reader.accept(new ClassVisitor(Opcodes.ASM4) {
                     @Override
                     public FieldVisitor visitField(int access, String name, String desc, String signature, Object value) {
@@ -83,38 +85,28 @@ public class CompositionMapper extends AbstractMapper {
 
     private CompositionLink createLink(final Class<?> clazz, final Field field) {
         if (isDomainClass(field.getType())) {
-            return new CompositionLink(clazz, field.getName(), false, getKnownClass(field.getType().getCanonicalName()), null, false);
+            return new CompositionLink(clazz, field.getName(), false, field.getType(), null, false);
         }
         if (isCollection(field)) {
-            Type type = getDomainClassFromCollection(field);
-            if (type != null) {
-                return new CompositionLink(clazz, field.getName(), true, getKnownClass(stripClassHeader(type.toString())), null, false);
+            Class<?> domainClass = getDomainClassFromCollection(field);
+            if (domainClass != null) {
+                return new CompositionLink(clazz, field.getName(), true, domainClass, null, false);
             }
         }
         return null;
-    }
-
-    private Class getKnownClass(String canonicalName) {
-        try {
-            return Class.forName(canonicalName, false,
-                this.getClass().getClassLoader());
-        } catch (ClassNotFoundException e) {
-            logger.warn("ClassNotFoundException thrown although it never should be. Problematic class: " + canonicalName, e);
-            throw new IllegalStateException();
-        }
     }
 
     public List<CompositionLink> getLinks() {
         return links;
     }
 
-    private Type getDomainClassFromCollection(final Field field) {
+    private Class<?> getDomainClassFromCollection(final Field field) {
         Type type = field.getGenericType();
         if (type instanceof ParameterizedType) {
             ParameterizedType pt = (ParameterizedType) type;
             for (Type t : pt.getActualTypeArguments()) {
                 if (isDomainClass(t.toString())) {
-                    return t;
+                    return (Class) t;
                 }
             }
         }
