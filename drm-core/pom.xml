@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>drm-core</artifactId>
 	<packaging>jar</packaging>
-	<version>1.2-SNAPSHOT</version>
+	<version>1.2</version>
 	<name>drm-core</name>
 	<parent>
 		<groupId>com.nitorcreations</groupId>
