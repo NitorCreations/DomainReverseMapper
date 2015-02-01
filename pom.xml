@@ -211,4 +211,11 @@
             </dependency>
 		</dependencies>
 	</dependencyManagement>
+    <distributionManagement>
+        <repository>
+            <id>bintray-vertti-maven-DomainReverseMapper</id>
+            <name>vertti-maven-DomainReverseMapper</name>
+            <url>https://api.bintray.com/maven/vertti/maven/DomainReverseMapper</url>
+        </repository>
+    </distributionManagement>
 </project>
