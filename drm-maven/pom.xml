@@ -20,7 +20,7 @@
 		<dependency>
 			<groupId>com.nitorcreations</groupId>
 			<artifactId>drm-core</artifactId>
-			<version>1.2-SNAPSHOT</version>
+			<version>1.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.maven</groupId>
