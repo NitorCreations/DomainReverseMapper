@@ -2,10 +2,8 @@ package com.nitorcreations;
 
 import com.nitorcreations.domain.CompositionLink;
 import com.nitorcreations.domain.Link;
-import com.nitorcreations.mappers.CompositionMapper;
-import com.nitorcreations.mappers.InheritanceMapper;
-import org.reflections.Reflections;
-import org.reflections.scanners.SubTypesScanner;
+import com.nitorcreations.scanners.FieldScanner;
+import com.nitorcreations.scanners.HierarchyScanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,13 +20,13 @@ public class DomainMapper {
     public static final String DEFAULTS = "  edge [ fontsize = 11 ];\n  node [ shape=box style=rounded ];";
     private static final String INHERITANCE_STYLE = "arrowhead=empty color=slategray";
     private final List<Class<?>> classes;
-    private final CompositionMapper compositionMapper;
-    private final InheritanceMapper inheritanceMapper;
+    private final FieldScanner fieldScanner;
+    private final HierarchyScanner hierarchyScanner;
 
     DomainMapper(final List<Class<?>> classes) throws ClassNotFoundException {
         this.classes = classes;
-        compositionMapper = new CompositionMapper(classes);
-        inheritanceMapper = new InheritanceMapper(classes);
+        fieldScanner = new FieldScanner(classes);
+        hierarchyScanner = new HierarchyScanner(classes);
     }
 
     private String describeLink(final CompositionLink link) {
@@ -63,7 +61,7 @@ public class DomainMapper {
 
     private String describeInheritance() {
         StringBuilder sb = new StringBuilder();
-        for (Link link : inheritanceMapper.getLinks()) {
+        for (Link link : hierarchyScanner.getLinks()) {
             sb.append(String.format("  %s -> %s [%s];\n", link.getA().getSimpleName(), link.getB().getSimpleName(), INHERITANCE_STYLE));
         }
         return sb.toString();
@@ -97,7 +95,7 @@ public class DomainMapper {
 
     private String describeCompositions() {
         StringBuilder sb = new StringBuilder();
-        for (CompositionLink link : compositionMapper.getLinks()) {
+        for (CompositionLink link : fieldScanner.getLinks()) {
             sb.append("  ").append(describeLink(link)).append("\n");
         }
         return sb.toString();

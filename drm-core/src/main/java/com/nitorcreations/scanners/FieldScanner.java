@@ -1,4 +1,4 @@
-package com.nitorcreations.mappers;
+package com.nitorcreations.scanners;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,12 +18,12 @@ import org.objectweb.asm.Opcodes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class CompositionMapper extends AbstractMapper {
-    final Logger logger = LoggerFactory.getLogger(CompositionMapper.class);
+public class FieldScanner extends AbstractScanner {
+    final Logger logger = LoggerFactory.getLogger(FieldScanner.class);
 
     final List<CompositionLink> links = new LinkedList<>();
 
-    public CompositionMapper(final List<Class<?>> classes) throws ClassNotFoundException {
+    public FieldScanner(final List<Class<?>> classes) throws ClassNotFoundException {
         super(classes);
         gatherLinks();
     }

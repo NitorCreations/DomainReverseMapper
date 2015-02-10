@@ -1,4 +1,4 @@
-package com.nitorcreations.mappers;
+package com.nitorcreations.scanners;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -10,10 +10,10 @@ import org.junit.Test;
 import com.nitorcreations.testdomain.Company;
 import com.nitorcreations.testdomain.person.Person;
 
-public class CompositionMapperTest {
+public class FieldScannerTest {
     @Test
     public void twoWayLink() throws ClassNotFoundException {
-        CompositionMapper mapper = new CompositionMapper(Arrays.asList(Person.class, Company.class));
+        FieldScanner mapper = new FieldScanner(Arrays.asList(Person.class, Company.class));
         assertThat(mapper.getLinks().size(), is(1));
     }
 }

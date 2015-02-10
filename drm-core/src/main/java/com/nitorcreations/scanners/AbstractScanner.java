@@ -1,11 +1,11 @@
-package com.nitorcreations.mappers;
+package com.nitorcreations.scanners;
 
 import java.util.List;
 
-public class AbstractMapper {
+public class AbstractScanner {
     protected final List<Class<?>> classes;
 
-    public AbstractMapper(final List<Class<?>> classes) {
+    public AbstractScanner(final List<Class<?>> classes) {
         this.classes = classes;
     }
 
