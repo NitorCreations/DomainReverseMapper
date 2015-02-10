@@ -15,8 +15,8 @@ import java.util.List;
 
 import static com.nitorcreations.DomainMapper.DEFAULTS;
 import static com.nitorcreations.DomainMapper.DOMAIN_DECLARATION;
-import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.hasItems;
 import static org.junit.Assert.assertThat;
 
 public class DomainMapperTest {
