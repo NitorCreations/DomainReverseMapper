@@ -108,22 +108,13 @@ public class DomainMapper {
     }
 
     public static DomainMapper create(final List<String> packages, final URLClassLoader classLoader) throws ClassNotFoundException {
-        List<Class<?>> allClasses = findClasses(packages, classLoader);
+        List<Class<?>> allClasses = ClassScanner.findClasses(packages, classLoader);
         log.debug("Found " + allClasses.size() + " classes.");
         return new DomainMapper(allClasses);
     }
 
     public static DomainMapper create(final List<String> packages) throws ClassNotFoundException {
         return create(packages, null);
-    }
-
-    private static List<Class<?>> findClasses(final List<String> packages, final URLClassLoader classLoader) {
-        List<Class<?>> allClasses = new ArrayList<>();
-        for (String packageName : packages) {
-            Reflections reflections = new Reflections(packageName, new SubTypesScanner(false), classLoader);
-            allClasses.addAll(reflections.getSubTypesOf(Object.class));
-        }
-        return allClasses;
     }
 
 }
