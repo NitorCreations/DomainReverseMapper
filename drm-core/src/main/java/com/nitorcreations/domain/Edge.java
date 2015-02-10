@@ -1,11 +1,14 @@
 package com.nitorcreations.domain;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 public class Edge {
 
-    final DomainObject source;
-    final DomainObject target;
-    final EdgeType type;
-    final String name;
+    public final DomainObject source;
+    public final DomainObject target;
+    public final EdgeType type;
+    public final String name;
 
     public Edge(DomainObject source, DomainObject target, EdgeType type, String name) {
         this.source = source;
@@ -14,4 +17,17 @@ public class Edge {
         this.name = name;
     }
 
+    public Edge(DomainObject source, DomainObject target, EdgeType type) {
+        this(source, target, type, null);
+    }
+
+    @Override
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return EqualsBuilder.reflectionEquals(this, obj);
+    }
 }
