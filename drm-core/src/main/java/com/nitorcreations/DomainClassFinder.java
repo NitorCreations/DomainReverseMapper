@@ -7,7 +7,7 @@ import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClassScanner {
+public class DomainClassFinder {
 
     public static List<Class<?>> findClasses(final List<String> packages, final URLClassLoader classLoader) {
         List<Class<?>> allClasses = new ArrayList<>();

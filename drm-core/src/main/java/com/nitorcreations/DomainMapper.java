@@ -106,7 +106,7 @@ public class DomainMapper {
     }
 
     public static DomainMapper create(final List<String> packages, final URLClassLoader classLoader) throws ClassNotFoundException {
-        List<Class<?>> allClasses = ClassScanner.findClasses(packages, classLoader);
+        List<Class<?>> allClasses = DomainClassFinder.findClasses(packages, classLoader);
         log.debug("Found " + allClasses.size() + " classes.");
         return new DomainMapper(allClasses);
     }
