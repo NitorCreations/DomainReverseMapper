@@ -2,19 +2,20 @@ package com.nitorcreations.domain;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 public class Edge {
 
     public final DomainObject source;
     public final DomainObject target;
     public final EdgeType type;
-    public final String name;
+    public final Direction direction;
 
-    public Edge(DomainObject source, DomainObject target, EdgeType type, String name) {
+    public Edge(DomainObject source, DomainObject target, EdgeType type, Direction direction) {
         this.source = source;
         this.target = target;
         this.type = type;
-        this.name = name;
+        this.direction = direction;
     }
 
     public Edge(DomainObject source, DomainObject target, EdgeType type) {
@@ -29,5 +30,10 @@ public class Edge {
     @Override
     public boolean equals(Object obj) {
         return EqualsBuilder.reflectionEquals(this, obj);
+    }
+
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this);
     }
 }
