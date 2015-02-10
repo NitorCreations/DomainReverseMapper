@@ -1,7 +1,6 @@
 package com.nitorcreations;
 
-import com.nitorcreations.domain.CompositionLink;
-import com.nitorcreations.domain.Link;
+import com.nitorcreations.domain.Edge;
 import com.nitorcreations.scanners.FieldScanner;
 import com.nitorcreations.scanners.HierarchyScanner;
 import org.slf4j.Logger;
@@ -29,27 +28,27 @@ public class DomainMapper {
         hierarchyScanner = new HierarchyScanner(classes);
     }
 
-    private String describeLink(final CompositionLink link) {
-        return String.format("%s -> %s [%s];", link.getA().getSimpleName(), link.getB().getSimpleName(), getEdgeDescription(link));
+    private String describe(Edge edge) {
+        return String.format("%s -> %s [%s];", edge.source.className, edge.target.className, getEdgeDescription(edge));
     }
 
-    private Object getEdgeDescription(final CompositionLink link) {
+    private Object getEdgeDescription(Edge edge) {
         StringBuilder sb = new StringBuilder();
-        if (link.getBtoAname() != null) {
-            sb.append(" headlabel = \"").append(link.getBtoAname()).append("\"");
+        if (edge.target.description != null) {
+            sb.append(" headlabel = \"").append(edge.target.description).append("\"");
         }
-        if (link.getAtoBname() != null) {
-            sb.append(" taillabel = \"").append(link.getAtoBname()).append("\"");
+        if (edge.source.description != null) {
+            sb.append(" taillabel = \"").append(edge.source.description).append("\"");
         }
-        sb.append(" ").append(linkDirection(link));
+        sb.append(" ").append(linkDirection(edge));
         return sb.toString();
     }
 
-    private String linkDirection(final CompositionLink link) {
-        if (link.getAtoBname() == null) {
+    private String linkDirection(Edge edge) {
+        if (edge.source.description == null) {
             return "dir=back arrowtail=open";
         }
-        if (link.getBtoAname() == null) {
+        if (edge.target.description == null) {
             return "dir=forward arrowhead=open";
         }
         return "dir=both arrowhead=open arrowtail=open";
@@ -61,8 +60,8 @@ public class DomainMapper {
 
     private String describeInheritance() {
         StringBuilder sb = new StringBuilder();
-        for (Link link : hierarchyScanner.getLinks()) {
-            sb.append(String.format("  %s -> %s [%s];\n", link.getA().getSimpleName(), link.getB().getSimpleName(), INHERITANCE_STYLE));
+        for (Edge hierarchyEdge : hierarchyScanner.getEdges()) {
+            sb.append(String.format("  %s -> %s [%s];\n", hierarchyEdge.source.className, hierarchyEdge.target.className, INHERITANCE_STYLE));
         }
         return sb.toString();
     }
@@ -95,8 +94,8 @@ public class DomainMapper {
 
     private String describeCompositions() {
         StringBuilder sb = new StringBuilder();
-        for (CompositionLink link : fieldScanner.getLinks()) {
-            sb.append("  ").append(describeLink(link)).append("\n");
+        for (Edge fieldEdge : fieldScanner.getEdges()) {
+            sb.append("  ").append(describe(fieldEdge)).append("\n");
         }
         return sb.toString();
     }
@@ -105,7 +104,7 @@ public class DomainMapper {
         return classes;
     }
 
-    public static DomainMapper create(final List<String> packages, final URLClassLoader classLoader) throws ClassNotFoundException {
+    public static DomainMapper create(List<String> packages, URLClassLoader classLoader) throws ClassNotFoundException {
         List<Class<?>> allClasses = DomainClassFinder.findClasses(packages, classLoader);
         log.debug("Found " + allClasses.size() + " classes.");
         return new DomainMapper(allClasses);

@@ -4,6 +4,8 @@ import com.nitorcreations.domain.Direction;
 import com.nitorcreations.domain.DomainObject;
 import com.nitorcreations.domain.Edge;
 import com.nitorcreations.domain.EdgeType;
+import com.nitorcreations.testdomain.person.DoubleReferer;
+import com.nitorcreations.testdomain.person.Manager;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -21,6 +23,11 @@ public class FieldScannerTest {
     private Edge personalNumbersReference = new Edge(new DomainObject(Person.class, "personalNumbers"),
             new DomainObject(PhoneNumber.class), EdgeType.ONE_TO_MANY, Direction.UNI_DIRECTIONAL);
 
+    private Edge firstReference = new Edge(new DomainObject(DoubleReferer.class, "myBoss"),
+            new DomainObject(Manager.class), EdgeType.ONE_TO_ONE, Direction.UNI_DIRECTIONAL);
+    private Edge secondReference = new Edge(new DomainObject(Person.class, "myTeamManager"),
+            new DomainObject(Manager.class), EdgeType.ONE_TO_ONE, Direction.UNI_DIRECTIONAL);
+
     @Test
     public void resolvesCorrectFieldEdges() {
         List<Class<?>> domainClasses = new ArrayList<>();
@@ -32,6 +39,17 @@ public class FieldScannerTest {
         List<Edge> edges = scanner.getEdges();
         assertThat(edges, containsInAnyOrder(ownerEmployeerReference,
                 customerServiceNumberReference, personalNumbersReference));
+    }
+
+    @Test
+    public void domainModelHasMultipleReferencesToSameDomainObject() {
+        List<Class<?>> domainClasses = new ArrayList<>();
+        domainClasses.add(Manager.class);
+        domainClasses.add(DoubleReferer.class);
+        FieldScanner scanner = new FieldScanner(domainClasses);
+
+        List<Edge> edges = scanner.getEdges();
+        assertThat(edges, containsInAnyOrder(firstReference, secondReference));
     }
 
     private class Company {

@@ -3,7 +3,6 @@ package com.nitorcreations.scanners;
 import com.nitorcreations.domain.DomainObject;
 import com.nitorcreations.domain.Edge;
 import com.nitorcreations.domain.EdgeType;
-import com.nitorcreations.domain.Link;
 
 import java.util.ArrayList;
 import java.util.List;
