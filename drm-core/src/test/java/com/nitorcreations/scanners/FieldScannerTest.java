@@ -28,6 +28,11 @@ public class FieldScannerTest {
     private Edge secondReference = new Edge(new DomainObject(Person.class, "myTeamManager"),
             new DomainObject(Manager.class), EdgeType.ONE_TO_ONE, Direction.UNI_DIRECTIONAL);
 
+    private Edge motherToChilds = new Edge(new DomainObject(Mother.class, "childs"),
+            new DomainObject(Child.class, "mommy"), EdgeType.MANY_TO_ONE, Direction.BI_DIRECTIONAL);
+    private Edge motherToFavorite = new Edge(new DomainObject(Mother.class, "favorite"),
+            new DomainObject(Child.class, "mommy"), EdgeType.ONE_TO_ONE, Direction.BI_DIRECTIONAL);
+
     @Test
     public void resolvesCorrectFieldEdges() {
         List<Class<?>> domainClasses = new ArrayList<>();
@@ -52,6 +57,17 @@ public class FieldScannerTest {
         assertThat(edges, containsInAnyOrder(firstReference, secondReference));
     }
 
+    @Test
+    public void domainModelHasBiDirectionalReferencesMappedToBothReferences() {
+        List<Class<?>> domainClasses = new ArrayList<>();
+        domainClasses.add(Mother.class);
+        domainClasses.add(Child.class);
+        FieldScanner scanner = new FieldScanner(domainClasses);
+
+        List<Edge> edges = scanner.getEdges();
+        assertThat(edges, containsInAnyOrder(motherToChilds, motherToFavorite));
+    }
+
     private class Company {
         Person owner;
         PhoneNumber customerServiceNumber;
@@ -64,5 +80,14 @@ public class FieldScannerTest {
 
     private class PhoneNumber {
         String number;
+    }
+
+    private class Mother {
+        List<Child> childs;
+        Child favorite;
+    }
+
+    private class Child {
+        Mother mommy;
     }
 }
