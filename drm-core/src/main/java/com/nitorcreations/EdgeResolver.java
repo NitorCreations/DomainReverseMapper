@@ -15,9 +15,9 @@ import static java.util.stream.Collectors.toList;
 
 public class EdgeResolver {
 
-    public static Edge createEdge(Class<?> clazz, Class fieldType, EdgeType type, String name) {
-        DomainObject source = new DomainObject(clazz, name);
-        DomainObject target = new DomainObject(fieldType);
+    public static Edge createEdge(Class<?> sourceClass, Class<?> field, EdgeType type, String name) {
+        DomainObject source = new DomainObject(sourceClass, name);
+        DomainObject target = new DomainObject(field);
         return new Edge(source, target, type, UNI_DIRECTIONAL);
     }
 
