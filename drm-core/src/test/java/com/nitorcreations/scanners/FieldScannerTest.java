@@ -16,7 +16,7 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 
 public class FieldScannerTest {
 
-    private Edge ownerEmployeerReference = new Edge(new DomainObject(Company.class, "owner"),
+    private Edge ownerEmployeerReferences = new Edge(new DomainObject(Company.class, "owner"),
             new DomainObject(Person.class, "employeer"), EdgeType.ONE_TO_ONE, Direction.BI_DIRECTIONAL);
     private Edge customerServiceNumberReference = new Edge(new DomainObject(Company.class, "customerServiceNumber"),
             new DomainObject(PhoneNumber.class), EdgeType.ONE_TO_ONE, Direction.UNI_DIRECTIONAL);
@@ -25,11 +25,11 @@ public class FieldScannerTest {
 
     private Edge firstReference = new Edge(new DomainObject(DoubleReferer.class, "myBoss"),
             new DomainObject(Manager.class), EdgeType.ONE_TO_ONE, Direction.UNI_DIRECTIONAL);
-    private Edge secondReference = new Edge(new DomainObject(Person.class, "myTeamManager"),
+    private Edge secondReference = new Edge(new DomainObject(DoubleReferer.class, "myTeamManager"),
             new DomainObject(Manager.class), EdgeType.ONE_TO_ONE, Direction.UNI_DIRECTIONAL);
 
     private Edge motherToChilds = new Edge(new DomainObject(Mother.class, "childs"),
-            new DomainObject(Child.class, "mommy"), EdgeType.MANY_TO_ONE, Direction.BI_DIRECTIONAL);
+            new DomainObject(Child.class, "mommy"), EdgeType.ONE_TO_MANY, Direction.BI_DIRECTIONAL);
     private Edge motherToFavorite = new Edge(new DomainObject(Mother.class, "favorite"),
             new DomainObject(Child.class, "mommy"), EdgeType.ONE_TO_ONE, Direction.BI_DIRECTIONAL);
 
@@ -42,7 +42,7 @@ public class FieldScannerTest {
         FieldScanner scanner = new FieldScanner(domainClasses);
 
         List<Edge> edges = scanner.getEdges();
-        assertThat(edges, containsInAnyOrder(ownerEmployeerReference,
+        assertThat(edges, containsInAnyOrder(ownerEmployeerReferences,
                 customerServiceNumberReference, personalNumbersReference));
     }
 

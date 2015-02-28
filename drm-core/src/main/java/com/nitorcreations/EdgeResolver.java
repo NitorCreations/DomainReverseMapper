@@ -1,11 +1,15 @@
 package com.nitorcreations;
 
+import com.google.common.collect.Lists;
 import com.nitorcreations.domain.DomainObject;
 import com.nitorcreations.domain.Edge;
 import com.nitorcreations.domain.EdgeType;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import static com.nitorcreations.domain.Direction.BI_DIRECTIONAL;
 import static com.nitorcreations.domain.Direction.UNI_DIRECTIONAL;
@@ -26,7 +30,7 @@ public class EdgeResolver {
                 .collect(groupingBy(EdgeResolver::sameSourceAndTarget));
         return groupedEdges
                 .values().stream()
-                .map(EdgeResolver::mergeEdges)
+                .flatMap(EdgeResolver::mergeEdges)
                 .collect(toList());
     }
 
@@ -36,26 +40,54 @@ public class EdgeResolver {
         return UnorderedTuple.of(sourceId, targetId);
     }
 
-    private static Edge mergeEdges(List<Edge> edges) {
+    private static Stream<Edge> mergeEdges(List<Edge> edges) {
         if (edges.size() == 1) {
-            return edges.get(0);
-        } else if (edges.size() == 2) {
-            Edge source = edges.get(0);
-            Edge target = edges.get(1);
-            return new Edge(source.source, target.source, resolveEdgeType(source.type, target.type), BI_DIRECTIONAL);
+            return edges.stream();
         } else {
-            //something very exotic?
-            return null;
+            List<Edge> merged = new ArrayList<>();
+            List<List<Edge>> edgesWithSameSourceType = Lists.newArrayList(edges.stream()
+                    .collect(groupingBy(edge -> edge.source.className))
+                    .values());
+            if (edgesWithSameSourceType.size() == 1) {
+               edgesWithSameSourceType.get(0).forEach(merged::add);
+            } else if (edgesWithSameSourceType.size() == 2) {
+                List<Edge> a = edgesWithSameSourceType.get(0);
+                List<Edge> b = edgesWithSameSourceType.get(1);
+                List<Tuple<Edge,Edge>> mergePairs = makePairs(a, b);
+                mergePairs.forEach(edgePair -> {
+                    Edge source = edgePair.left;
+                    Edge target = edgePair.right;
+                    Edge edge = new Edge(source.source, target.source, resolveEdgeType(source.type, target.type), BI_DIRECTIONAL);
+                    merged.add(edge);
+                });
+            } else {
+                throw new RuntimeException("Inputted Edge list contained more than 2 type of edges");
+            }
+            return merged.stream();
         }
     }
 
-    private static class UnorderedTuple<X, Y> {
-        private X left;
-        private Y right;
+    /**
+     * Order of joined lists must preserve.
+     */
+    private static <T> List<Tuple<T, T>> makePairs(List<T> a, List<T> b) {
+        List<Tuple<T,T>> pairs = Lists.newArrayList();
+        if (a.size() > b.size()) {
+            for (int i = 0; i < a.size(); i++) {
+                pairs.add(new Tuple<>(a.get(i), b.get(i % b.size())));
+            }
+        } else {
+            for (int i = 0; i < b.size(); i++) {
+                pairs.add(new Tuple<>(a.get(i % a.size()), b.get(i)));
+            }
+        }
+        return pairs;
+    }
+
+    private static class UnorderedTuple<X, Y> extends Tuple<X, Y> {
 
         public UnorderedTuple(X left, Y right) {
-            this.left = left;
-            this.right = right;
+            super(left, right);
         }
 
         @Override
@@ -78,6 +110,16 @@ public class EdgeResolver {
 
         public static <X, Y> UnorderedTuple<X, Y> of(X source, Y target) {
             return new UnorderedTuple<>(source, target);
+        }
+    }
+
+    private static class Tuple<X,Y> {
+        protected final X left;
+        protected final Y right;
+
+        public Tuple(X left, Y right) {
+            this.left = left;
+            this.right = right;
         }
     }
 }
