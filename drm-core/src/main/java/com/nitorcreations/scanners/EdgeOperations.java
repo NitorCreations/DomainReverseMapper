@@ -32,10 +32,11 @@ public class EdgeOperations {
         return mergedEdges;
     }
 
-    private static Collection<List<Edge>> groupEdges(List<Edge> edges) {
-        return edges.stream()
-                .collect(groupingBy(EdgeOperations::sameSourceAndTarget))
-                .values();
+    private static List<Edge> takeSingleItemsGroups(Collection<List<Edge>> groupedEdges) {
+        return groupedEdges.stream()
+                .filter(edgeGroup -> edgeGroup.size() == 1)
+                .flatMap(Collection::stream)
+                .collect(toList());
     }
 
     private static List<Edge> mergeNonSingleGroups(Collection<List<Edge>> groupedEdges) {
@@ -50,32 +51,20 @@ public class EdgeOperations {
                 .collect(toList());
         List<Edge> biDirectionals = edgeGroups.stream()
                 .filter(sourceGroups -> sourceGroups.size() == 2)
-                .flatMap(groupedBySource -> {
-                    List<Edge> a = groupedBySource.get(0);
-                    List<Edge> b = groupedBySource.get(1);
-                    return makePairs(a, b).stream();
-                }).map(edgePair -> {
-                    Edge source = edgePair.left;
-                    Edge target = edgePair.right;
-                    return new Edge(source.source, target.source, resolveEdgeType(source.type, target.type), BI_DIRECTIONAL);
-                }).collect(toList());
+                .map(EdgeOperations.Tuple::createPairs)
+                .flatMap(Collection::stream)
+                .map(EdgeOperations::mergeEdges)
+                .collect(toList());
         List<Edge> newEdges = Lists.newArrayList();
         newEdges.addAll(multiReferenceUniDirectionals);
         newEdges.addAll(biDirectionals);
         return newEdges;
     }
 
-    private static List<Edge> takeSingleItemsGroups(Collection<List<Edge>> groupedEdges) {
-        return groupedEdges.stream()
-                .filter(edgeGroup -> edgeGroup.size() == 1)
-                .flatMap(Collection::stream)
-                .collect(toList());
-    }
-
-    private static UnorderedTuple<?, ?> sameSourceAndTarget(Edge edge) {
-        String sourceId = edge.source.packageName + "." + edge.source.className;
-        String targetId = edge.target.packageName + "." + edge.target.className;
-        return UnorderedTuple.of(sourceId, targetId);
+    private static Collection<List<Edge>> groupEdges(List<Edge> edges) {
+        return edges.stream()
+                .collect(groupingBy(EdgeOperations::sameSourceAndTarget))
+                .values();
     }
 
     private static List<List<Edge>> groupBySource(List<Edge> edges) {
@@ -84,18 +73,16 @@ public class EdgeOperations {
                 .values());
     }
 
-    private static <T> List<Tuple<T, T>> makePairs(List<T> a, List<T> b) {
-        List<Tuple<T,T>> pairs = Lists.newArrayList();
-        if (a.size() > b.size()) {
-            for (int i = 0; i < a.size(); i++) {
-                pairs.add(new Tuple<>(a.get(i), b.get(i % b.size())));
-            }
-        } else {
-            for (int i = 0; i < b.size(); i++) {
-                pairs.add(new Tuple<>(a.get(i % a.size()), b.get(i)));
-            }
-        }
-        return pairs;
+    private static Edge mergeEdges(Tuple<Edge, Edge> edgePair) {
+        Edge source = edgePair.left;
+        Edge target = edgePair.right;
+        return new Edge(source.source, target.source, resolveEdgeType(source.type, target.type), BI_DIRECTIONAL);
+    }
+
+    private static UnorderedTuple<?, ?> sameSourceAndTarget(Edge edge) {
+        String sourceId = edge.source.packageName + "." + edge.source.className;
+        String targetId = edge.target.packageName + "." + edge.target.className;
+        return UnorderedTuple.of(sourceId, targetId);
     }
 
     private static class UnorderedTuple<X, Y> extends Tuple<X, Y> {
@@ -134,6 +121,26 @@ public class EdgeOperations {
         public Tuple(X left, Y right) {
             this.left = left;
             this.right = right;
+        }
+
+        public static <T> List<Tuple<T, T>> createPairs(List<List<T>> listOfTwoGroups) {
+            List<T> a = listOfTwoGroups.get(0);
+            List<T> b = listOfTwoGroups.get(1);
+            return makePairs(a, b);
+        }
+
+        private static <T> List<Tuple<T, T>> makePairs(List<T> a, List<T> b) {
+            List<Tuple<T,T>> pairs = Lists.newArrayList();
+            if (a.size() > b.size()) {
+                for (int i = 0; i < a.size(); i++) {
+                    pairs.add(new Tuple<>(a.get(i), b.get(i % b.size())));
+                }
+            } else {
+                for (int i = 0; i < b.size(); i++) {
+                    pairs.add(new Tuple<>(a.get(i % a.size()), b.get(i)));
+                }
+            }
+            return pairs;
         }
     }
 }
