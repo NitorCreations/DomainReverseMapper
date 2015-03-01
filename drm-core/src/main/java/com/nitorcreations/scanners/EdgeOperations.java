@@ -6,8 +6,8 @@ import com.nitorcreations.domain.Edge;
 import com.nitorcreations.domain.EdgeType;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Stream;
 
 import static com.nitorcreations.domain.Direction.BI_DIRECTIONAL;
@@ -25,11 +25,32 @@ public class EdgeOperations {
     }
 
     public static List<Edge> mergeBiDirectionals(List<Edge> edges) {
-        Map<?, List<Edge>> groupedEdges = edges.stream()
-                .collect(groupingBy(EdgeOperations::sameSourceAndTarget));
-        return groupedEdges
-                .values().stream()
+        Collection<List<Edge>> groupedEdges = groupEdges(edges);
+        List<Edge> uniDirectionals = takeSingleItemsGroups(groupedEdges);
+        List<Edge> biDirectionals = mergeNonSingleGroups(groupedEdges);
+        List<Edge> mergedEdges = Lists.newArrayList();
+        mergedEdges.addAll(uniDirectionals);
+        mergedEdges.addAll(biDirectionals);
+        return mergedEdges;
+    }
+
+    private static Collection<List<Edge>> groupEdges(List<Edge> edges) {
+        return edges.stream()
+                .collect(groupingBy(EdgeOperations::sameSourceAndTarget))
+                .values();
+    }
+
+    private static List<Edge> mergeNonSingleGroups(Collection<List<Edge>> groupedEdges) {
+        return groupedEdges.stream()
+                .filter(edgeGroup -> edgeGroup.size() > 1)
                 .flatMap(EdgeOperations::mergeEdges)
+                .collect(toList());
+    }
+
+    private static List<Edge> takeSingleItemsGroups(Collection<List<Edge>> groupedEdges) {
+        return groupedEdges.stream()
+                .filter(edgeGroup -> edgeGroup.size() == 1)
+                .flatMap(Collection::stream)
                 .collect(toList());
     }
 
@@ -40,30 +61,29 @@ public class EdgeOperations {
     }
 
     private static Stream<Edge> mergeEdges(List<Edge> edges) {
-        if (edges.size() == 1) {
-            return edges.stream();
+        List<Edge> merged = new ArrayList<>();
+
+        List<List<Edge>> edgesWithSameSourceType = Lists.newArrayList(edges.stream()
+                .collect(groupingBy(edge -> edge.source.className))
+                .values());
+
+        if (edgesWithSameSourceType.size() == 1) {
+            edgesWithSameSourceType.get(0).forEach(merged::add);
+        } else if (edgesWithSameSourceType.size() == 2) {
+            List<Edge> a = edgesWithSameSourceType.get(0);
+            List<Edge> b = edgesWithSameSourceType.get(1);
+            List<Tuple<Edge,Edge>> mergePairs = makePairs(a, b);
+            mergePairs.forEach(edgePair -> {
+                Edge source = edgePair.left;
+                Edge target = edgePair.right;
+                Edge edge = new Edge(source.source, target.source, resolveEdgeType(source.type, target.type), BI_DIRECTIONAL);
+                merged.add(edge);
+            });
         } else {
-            List<Edge> merged = new ArrayList<>();
-            List<List<Edge>> edgesWithSameSourceType = Lists.newArrayList(edges.stream()
-                    .collect(groupingBy(edge -> edge.source.className))
-                    .values());
-            if (edgesWithSameSourceType.size() == 1) {
-               edgesWithSameSourceType.get(0).forEach(merged::add);
-            } else if (edgesWithSameSourceType.size() == 2) {
-                List<Edge> a = edgesWithSameSourceType.get(0);
-                List<Edge> b = edgesWithSameSourceType.get(1);
-                List<Tuple<Edge,Edge>> mergePairs = makePairs(a, b);
-                mergePairs.forEach(edgePair -> {
-                    Edge source = edgePair.left;
-                    Edge target = edgePair.right;
-                    Edge edge = new Edge(source.source, target.source, resolveEdgeType(source.type, target.type), BI_DIRECTIONAL);
-                    merged.add(edge);
-                });
-            } else {
-                throw new RuntimeException("Inputted Edge list contained more than 2 type of edges");
-            }
-            return merged.stream();
+            throw new RuntimeException("Inputted Edge list contained more than 2 type of edges");
         }
+
+        return merged.stream();
     }
 
     private static <T> List<Tuple<T, T>> makePairs(List<T> a, List<T> b) {
