@@ -4,8 +4,20 @@ import com.nitorcreations.domain.Direction;
 import com.nitorcreations.domain.DomainObject;
 import com.nitorcreations.domain.Edge;
 import com.nitorcreations.domain.EdgeType;
+import com.nitorcreations.testdomain.Company;
+import com.nitorcreations.testdomain.PhoneNumber;
+import com.nitorcreations.testdomain.Selfie;
+import com.nitorcreations.testdomain.Task;
+import com.nitorcreations.testdomain.Timesheet;
+import com.nitorcreations.testdomain.family.Husband;
+import com.nitorcreations.testdomain.family.Wife;
+import com.nitorcreations.testdomain.family.Child;
+import com.nitorcreations.testdomain.family.Mother;
 import com.nitorcreations.testdomain.person.DoubleReferer;
 import com.nitorcreations.testdomain.person.Manager;
+import com.nitorcreations.testdomain.person.Person;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -16,78 +28,108 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 
 public class FieldScannerTest {
 
-    private Edge ownerEmployeerReferences = new Edge(new DomainObject(Company.class, "owner"),
-            new DomainObject(Person.class, "employeer"), EdgeType.ONE_TO_ONE, Direction.BI_DIRECTIONAL);
-    private Edge customerServiceNumberReference = new Edge(new DomainObject(Company.class, "customerServiceNumber"),
-            new DomainObject(PhoneNumber.class), EdgeType.ONE_TO_ONE, Direction.UNI_DIRECTIONAL);
-    private Edge personalNumbersReference = new Edge(new DomainObject(Person.class, "personalNumbers"),
-            new DomainObject(PhoneNumber.class), EdgeType.ONE_TO_MANY, Direction.UNI_DIRECTIONAL);
+    private final Edge firstReference = createReference(
+            DoubleReferer.class, "myBoss", Manager.class, null, EdgeType.ONE_TO_ONE, Direction.UNI_DIRECTIONAL);
+    private final Edge secondReference = createReference(
+            DoubleReferer.class, "myTeamManager", Manager.class, null, EdgeType.ONE_TO_ONE, Direction.UNI_DIRECTIONAL);
 
-    private Edge firstReference = new Edge(new DomainObject(DoubleReferer.class, "myBoss"),
-            new DomainObject(Manager.class), EdgeType.ONE_TO_ONE, Direction.UNI_DIRECTIONAL);
-    private Edge secondReference = new Edge(new DomainObject(DoubleReferer.class, "myTeamManager"),
-            new DomainObject(Manager.class), EdgeType.ONE_TO_ONE, Direction.UNI_DIRECTIONAL);
+    private final Edge motherToChilds = createReference(
+            Mother.class, "childs", Child.class, "mommy", EdgeType.ONE_TO_MANY, Direction.BI_DIRECTIONAL);
+    private final Edge motherToFavorite = createReference(
+            Mother.class, "favorite", Child.class, "mommy", EdgeType.ONE_TO_ONE, Direction.BI_DIRECTIONAL);
 
-    private Edge motherToChilds = new Edge(new DomainObject(Mother.class, "childs"),
-            new DomainObject(Child.class, "mommy"), EdgeType.ONE_TO_MANY, Direction.BI_DIRECTIONAL);
-    private Edge motherToFavorite = new Edge(new DomainObject(Mother.class, "favorite"),
-            new DomainObject(Child.class, "mommy"), EdgeType.ONE_TO_ONE, Direction.BI_DIRECTIONAL);
+    private final Edge selfReference = createReference(
+            Selfie.class, "me", Selfie.class, null, EdgeType.ONE_TO_ONE, Direction.UNI_DIRECTIONAL);
 
-    @Test
-    public void resolvesCorrectFieldEdges() {
-        List<Class<?>> domainClasses = new ArrayList<>();
-        domainClasses.add(Company.class);
-        domainClasses.add(Person.class);
-        domainClasses.add(PhoneNumber.class);
-        FieldScanner scanner = new FieldScanner(domainClasses);
+    private final Edge phoneNumbersReference = createReference(
+            Person.class, "contactNumbers", PhoneNumber.class, null, EdgeType.ONE_TO_MANY, Direction.UNI_DIRECTIONAL);
 
-        List<Edge> edges = scanner.getEdges();
-        assertThat(edges, containsInAnyOrder(ownerEmployeerReferences,
-                customerServiceNumberReference, personalNumbersReference));
+    private final Edge companyPersonReferences = createReference(
+            Company.class, "employees", Person.class, "company", EdgeType.ONE_TO_MANY, Direction.BI_DIRECTIONAL);
+
+    private final Edge marriageReference = createReference(
+            Husband.class, "wife", Wife.class, "husband", EdgeType.ONE_TO_ONE, Direction.BI_DIRECTIONAL);
+
+    private final Edge timeSheetToTask = createReference(
+            Timesheet.class, "task", Task.class, null, EdgeType.ONE_TO_ONE, Direction.UNI_DIRECTIONAL);
+    private final Edge taskToManager = createReference(
+            Task.class, "manager", Manager.class, null, EdgeType.ONE_TO_ONE, Direction.UNI_DIRECTIONAL);
+
+    private List<Class<?>> testedSetOfDomainClasses;
+
+    @Before
+    public void setup() {
+        testedSetOfDomainClasses = new ArrayList<>();
     }
 
     @Test
-    public void domainModelHasMultipleReferencesToSameDomainObject() {
-        List<Class<?>> domainClasses = new ArrayList<>();
-        domainClasses.add(Manager.class);
-        domainClasses.add(DoubleReferer.class);
-        FieldScanner scanner = new FieldScanner(domainClasses);
+    public void simpleReferenceChain() {
+        testedSetOfDomainClasses.add(Timesheet.class);
+        testedSetOfDomainClasses.add(Task.class);
+        testedSetOfDomainClasses.add(Manager.class);
+        List<Edge> edges = resolveEdges(testedSetOfDomainClasses);
+        assertThat(edges, containsInAnyOrder(timeSheetToTask, taskToManager));
+    }
 
-        List<Edge> edges = scanner.getEdges();
+    @Test
+    public void selfReference() {
+        testedSetOfDomainClasses.add(Selfie.class);
+        List<Edge> edges = resolveEdges(testedSetOfDomainClasses);
+        assertThat(edges, containsInAnyOrder(selfReference));
+    }
+
+    @Test
+    public void collectionReferences() {
+        testedSetOfDomainClasses.add(PhoneNumber.class);
+        testedSetOfDomainClasses.add(Person.class);
+        List<Edge> edges = resolveEdges(testedSetOfDomainClasses);
+        assertThat(edges, containsInAnyOrder(phoneNumbersReference));
+    }
+
+    @Test
+    public void bidirectionalReferences() {
+        testedSetOfDomainClasses.add(Company.class);
+        testedSetOfDomainClasses.add(Person.class);
+        testedSetOfDomainClasses.add(Husband.class);
+        testedSetOfDomainClasses.add(Wife.class);
+        List<Edge> edges = resolveEdges(testedSetOfDomainClasses);
+        assertThat(edges, containsInAnyOrder(companyPersonReferences, marriageReference));
+    }
+
+    @Test
+    public void multipleReferencesToSameDomainObject() {
+        testedSetOfDomainClasses.add(Manager.class);
+        testedSetOfDomainClasses.add(DoubleReferer.class);
+        List<Edge> edges = resolveEdges(testedSetOfDomainClasses);
         assertThat(edges, containsInAnyOrder(firstReference, secondReference));
     }
 
     @Test
-    public void domainModelHasBiDirectionalReferencesMappedToBothReferences() {
-        List<Class<?>> domainClasses = new ArrayList<>();
-        domainClasses.add(Mother.class);
-        domainClasses.add(Child.class);
-        FieldScanner scanner = new FieldScanner(domainClasses);
-
-        List<Edge> edges = scanner.getEdges();
+    public void BiDirectionalReferencesMappedToBothReferences() {
+        testedSetOfDomainClasses.add(Mother.class);
+        testedSetOfDomainClasses.add(Child.class);
+        List<Edge> edges = resolveEdges(testedSetOfDomainClasses);
         assertThat(edges, containsInAnyOrder(motherToChilds, motherToFavorite));
     }
 
-    private class Company {
-        Person owner;
-        PhoneNumber customerServiceNumber;
+    @After
+    public void cleanup() {
+        testedSetOfDomainClasses = null;
     }
 
-    private class Person {
-        Company employeer;
-        List<PhoneNumber> personalNumbers;
+    private static List<Edge> resolveEdges(List<Class<?>> domainClasses) {
+        FieldScanner scanner = new FieldScanner(domainClasses);
+        return scanner.getEdges();
     }
 
-    private class PhoneNumber {
-        String number;
-    }
-
-    private class Mother {
-        List<Child> childs;
-        Child favorite;
-    }
-
-    private class Child {
-        Mother mommy;
+    public static Edge createReference(Class<?> source, String sourceDescription,
+                                       Class<?> target, String targetDescription,
+                                       EdgeType type, Direction direction) {
+        return new Edge(
+                new DomainObject(source, sourceDescription),
+                new DomainObject(target, targetDescription),
+                type,
+                direction
+        );
     }
 }
