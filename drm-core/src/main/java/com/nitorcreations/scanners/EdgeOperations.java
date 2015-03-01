@@ -1,4 +1,4 @@
-package com.nitorcreations;
+package com.nitorcreations.scanners;
 
 import com.google.common.collect.Lists;
 import com.nitorcreations.domain.DomainObject;
@@ -6,7 +6,6 @@ import com.nitorcreations.domain.Edge;
 import com.nitorcreations.domain.EdgeType;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -17,7 +16,7 @@ import static com.nitorcreations.domain.EdgeType.resolveEdgeType;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
 
-public class EdgeResolver {
+public class EdgeOperations {
 
     public static Edge createEdge(Class<?> sourceClass, Class<?> field, EdgeType type, String name) {
         DomainObject source = new DomainObject(sourceClass, name);
@@ -27,10 +26,10 @@ public class EdgeResolver {
 
     public static List<Edge> mergeBiDirectionals(List<Edge> edges) {
         Map<?, List<Edge>> groupedEdges = edges.stream()
-                .collect(groupingBy(EdgeResolver::sameSourceAndTarget));
+                .collect(groupingBy(EdgeOperations::sameSourceAndTarget));
         return groupedEdges
                 .values().stream()
-                .flatMap(EdgeResolver::mergeEdges)
+                .flatMap(EdgeOperations::mergeEdges)
                 .collect(toList());
     }
 
@@ -67,9 +66,6 @@ public class EdgeResolver {
         }
     }
 
-    /**
-     * Order of joined lists must preserve.
-     */
     private static <T> List<Tuple<T, T>> makePairs(List<T> a, List<T> b) {
         List<Tuple<T,T>> pairs = Lists.newArrayList();
         if (a.size() > b.size()) {

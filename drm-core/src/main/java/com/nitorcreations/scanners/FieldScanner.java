@@ -1,6 +1,5 @@
 package com.nitorcreations.scanners;
 
-import com.nitorcreations.EdgeResolver;
 import com.nitorcreations.domain.Edge;
 import com.nitorcreations.domain.EdgeType;
 import org.objectweb.asm.ClassReader;
@@ -20,7 +19,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-import static com.nitorcreations.EdgeResolver.createEdge;
+import static com.nitorcreations.scanners.EdgeOperations.createEdge;
+import static com.nitorcreations.scanners.EdgeOperations.mergeBiDirectionals;
 import static java.util.Optional.empty;
 import static java.util.Optional.of;
 
@@ -36,7 +36,7 @@ public class FieldScanner extends AbstractScanner {
         for (Class<?> clazz : classes) {
             edges.addAll(extractFieldEdges(clazz));
         }
-        return EdgeResolver.mergeBiDirectionals(edges);
+        return mergeBiDirectionals(edges);
     }
 
     private List<Edge> extractFieldEdges(Class<?> clazz) {
