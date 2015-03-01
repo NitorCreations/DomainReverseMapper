@@ -49,7 +49,7 @@ Add to your pom.xml the following:
 			<plugin>
 				<groupId>com.nitorcreations</groupId>
 				<artifactId>drm-maven-plugin</artifactId>
-				<version>1.1</version>
+				<version>1.2</version>
 				<configuration>
 					<packages>
 						<param>com.mycompany.domain</param>
