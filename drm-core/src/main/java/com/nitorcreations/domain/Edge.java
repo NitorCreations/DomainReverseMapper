@@ -23,12 +23,12 @@ public class Edge {
     }
 
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         return HashCodeBuilder.reflectionHashCode(this);
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public final boolean equals(Object obj) {
         return EqualsBuilder.reflectionEquals(this, obj);
     }
 
