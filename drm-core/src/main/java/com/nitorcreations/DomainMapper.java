@@ -55,7 +55,7 @@ public class DomainMapper {
     }
 
     public String describeDomain() throws ClassNotFoundException {
-      return DOMAIN_DECLARATION + DEFAULTS + "\n" + describePackages() + describeCompositions() + describeInheritance() + "}";
+        return DOMAIN_DECLARATION + DEFAULTS + "\n" + describePackages() + describeCompositions() + describeInheritance() + "}";
     }
 
     private String describeInheritance() {

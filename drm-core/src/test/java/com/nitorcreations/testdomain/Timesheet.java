@@ -1,8 +1,8 @@
 package com.nitorcreations.testdomain;
 
-import java.util.List;
-
 import com.nitorcreations.testdomain.person.Employee;
+
+import java.util.List;
 
 public class Timesheet {
     private final Employee who;
@@ -30,6 +30,7 @@ public class Timesheet {
 
     /**
      * Manager can alter hours before closing task
+     *
      * @param hours New amount of hours
      */
     public void alterHours(final Integer hours) {

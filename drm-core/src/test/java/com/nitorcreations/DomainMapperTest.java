@@ -49,7 +49,7 @@ public class DomainMapperTest {
 
     @Test
     public void testDescribeDomain_simpleInheritance() throws ClassNotFoundException {
-        domainMapper = new DomainMapper(Arrays.<Class<?>> asList(Manager.class, Person.class));
+        domainMapper = new DomainMapper(Arrays.<Class<?>>asList(Manager.class, Person.class));
         String description = DOMAIN_DECLARATION + DEFAULTS + "\n  subgraph cluster_0 {\n    label = \"com.nitorcreations.testdomain.person\";\n    Manager\n    Person\n  }\n  Manager -> Person [arrowhead=empty color=slategray];\n}";
         assertThat(domainMapper.describeDomain(), is(description));
     }

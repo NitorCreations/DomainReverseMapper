@@ -2,19 +2,14 @@ package com.nitorcreations;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.verify;
 
 @SuppressWarnings("unchecked")
 public class DomainMapperLauncherTest {
@@ -34,7 +29,7 @@ public class DomainMapperLauncherTest {
 
     @Test
     public void withMultiPackages() throws Exception {
-        launcher.run(new String[] { "-p", "\"com.nitorcreations.testdomain.person, com.nitorcreations.testdomain.another\"" });
+        launcher.run(new String[]{"-p", "\"com.nitorcreations.testdomain.person, com.nitorcreations.testdomain.another\""});
         assertThat(launcher.domainMapper.getClasses().size(), is(5));
     }
 

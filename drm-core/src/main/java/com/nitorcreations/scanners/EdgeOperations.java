@@ -101,7 +101,7 @@ public class EdgeOperations {
             if (obj == null) {
                 return false;
             } else if (obj instanceof UnorderedTuple) {
-                UnorderedTuple<?,?> tuple = (UnorderedTuple) obj;
+                UnorderedTuple<?, ?> tuple = (UnorderedTuple) obj;
                 return this.left.equals(tuple.left) && this.right.equals(tuple.right) ||
                         this.left.equals(tuple.right) && this.right.equals(tuple.left);
             } else {
@@ -114,7 +114,7 @@ public class EdgeOperations {
         }
     }
 
-    private static class Tuple<X,Y> {
+    private static class Tuple<X, Y> {
         protected final X left;
         protected final Y right;
 
@@ -130,7 +130,7 @@ public class EdgeOperations {
         }
 
         private static <T> List<Tuple<T, T>> makePairs(List<T> a, List<T> b) {
-            List<Tuple<T,T>> pairs = Lists.newArrayList();
+            List<Tuple<T, T>> pairs = Lists.newArrayList();
             if (a.size() > b.size()) {
                 for (int i = 0; i < a.size(); i++) {
                     pairs.add(new Tuple<>(a.get(i), b.get(i % b.size())));

@@ -1,11 +1,11 @@
 package com.nitorcreations;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import org.junit.Test;
 
 import java.io.IOException;
 
-import org.junit.Test;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 public class DomainMapperCliTest extends DomainMapperCli { // extends to silence cobertura
     DomainMapperLauncher launcher = mock(DomainMapperLauncher.class);
