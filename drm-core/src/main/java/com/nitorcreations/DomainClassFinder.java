@@ -17,4 +17,8 @@ public class DomainClassFinder {
         }
         return allClasses;
     }
+
+    private DomainClassFinder() {
+        // private constructor for utility class
+    }
 }
