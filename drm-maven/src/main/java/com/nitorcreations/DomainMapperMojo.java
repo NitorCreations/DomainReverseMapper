@@ -16,6 +16,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +29,6 @@ public class DomainMapperMojo extends AbstractMojo {
     private MavenProject project;
     @Parameter(property = "map.packages", required = true)
     private List<String> packages;
-    private SafeWriter writer = new SafeWriter();
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
@@ -36,8 +37,7 @@ public class DomainMapperMojo extends AbstractMojo {
         try {
             List<URL> projectClasspathList = getClasspathUrls();
             DomainMapper mapper = DomainMapper.create(packages, new URLClassLoader(projectClasspathList.toArray(new URL[projectClasspathList.size()])));
-            File outputFile = new File(outputDirectory, "domainmap.dot");
-            writer.writeToFile(outputFile, mapper.describeDomain());
+            Files.write(Paths.get(outputDirectory.getPath(), "domainmap.dot"), mapper.describeDomain().getBytes());
         } catch (ClassNotFoundException | DependencyResolutionRequiredException | IOException e) {
             throw new MojoExecutionException(e.getMessage(), e);
         }

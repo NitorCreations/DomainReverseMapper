@@ -8,6 +8,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -16,8 +18,6 @@ import static org.mockito.Mockito.verify;
 
 @SuppressWarnings("unchecked")
 public class DomainMapperLauncherTest {
-    @Mock
-    SafeWriter writer;
     @InjectMocks
     DomainMapperLauncher launcher = new DomainMapperLauncher();
 
@@ -46,8 +46,8 @@ public class DomainMapperLauncherTest {
     @Test
     public void withWriteToFile() throws Exception {
         launcher.run(new String[]{"-p", "foo.bar", "-f", "foofile.txt"});
-        ArgumentCaptor<File> captor = ArgumentCaptor.forClass(File.class);
-        verify(writer).writeToFile(captor.capture(), any(String.class));
+
+        assertThat(Files.exists(Paths.get("foofile.txt")), is(true));
     }
 
 }

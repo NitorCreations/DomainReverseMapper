@@ -6,7 +6,6 @@ import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -14,14 +13,14 @@ import org.mockito.Spy;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 public class DomainMapperMojoTest {
@@ -31,11 +30,9 @@ public class DomainMapperMojoTest {
     List<String> packages = new ArrayList<>();
     @Mock
     MavenProject project;
-    @Mock
-    SafeWriter writer;
     @InjectMocks
     DomainMapperMojo mojo = new DomainMapperMojo();
-    final List<Class<?>> dummyList = Arrays.<Class<?>> asList(String.class, Integer.class);
+    final List<Class<?>> dummyList = Arrays.<Class<?>>asList(String.class, Integer.class);
 
     @SuppressWarnings("unchecked")
     @Before
@@ -44,14 +41,13 @@ public class DomainMapperMojoTest {
         when(project.getCompileClasspathElements()).thenReturn(Arrays.asList("foo", "bar"));
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({"rawtypes", "unchecked"})
     @Test
     public void testExecute() throws MojoExecutionException, ClassNotFoundException, MojoFailureException, IOException {
-        ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
-        doNothing().when(writer).writeToFile(any(File.class), captor.capture());
         packages.add("com.nitorcreations.testdomain");
         mojo.execute();
-        assertThat(captor.getValue(), containsString("TestPojo"));
+
+        assertThat(Files.exists(Paths.get("domainmap.dot")), is(true));
     }
 
     @Test(expected = MojoFailureException.class)

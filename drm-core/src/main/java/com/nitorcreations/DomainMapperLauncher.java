@@ -12,11 +12,12 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Arrays;
 
 public class DomainMapperLauncher {
     private static final Logger log = LoggerFactory.getLogger(DomainMapperLauncher.class);
-    private SafeWriter writer = new SafeWriter();
     public DomainMapper domainMapper;
 
     public void run(final String[] args) throws ClassNotFoundException, IOException {
@@ -36,10 +37,11 @@ public class DomainMapperLauncher {
             }
             domainMapper = DomainMapper.create(Arrays.asList(packages));
             if (line.hasOption('f')) {
-                writer.writeToFile(new File(line.getOptionValue('f')), domainMapper.describeDomain());
-                log.info("Wrote dot to file " + line.getOptionValue('f'));
+
+                String filename = line.getOptionValue('f');
+                Files.write(Paths.get(filename), domainMapper.describeDomain().getBytes());
+                log.info("Wrote dot to file " + filename);
             } else {
-                log.info("GRAPHVIZ DOT FILE STARTS HERE ----:");
                 log.info(domainMapper.describeDomain());
             }
         } catch (ParseException exp) {
