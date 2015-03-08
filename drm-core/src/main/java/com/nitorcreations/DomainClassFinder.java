@@ -18,6 +18,10 @@ public class DomainClassFinder {
         return allClasses;
     }
 
+    public static List<Class<?>> findClasses(final List<String> packages) {
+        return findClasses(packages, null);
+    }
+
     private DomainClassFinder() {
         // private constructor for utility class
     }
