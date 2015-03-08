@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.nitorcreations.DomainMapper.DEFAULTS;
-import static com.nitorcreations.DomainMapper.DOMAIN_DECLARATION;
+import static com.nitorcreations.presenters.DefaultGraphvizPresenter.DEFAULTS;
+import static com.nitorcreations.presenters.DefaultGraphvizPresenter.DOMAIN_DECLARATION;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasItems;
 import static org.junit.Assert.assertThat;
@@ -57,7 +57,7 @@ public class DomainMapperTest {
     @Test
     public void testDescribeDomain() throws ClassNotFoundException {
         domainMapper = new DomainMapper(Arrays.asList(Employee.class, Task.class, Manager.class, Timesheet.class, Person.class));
-        String description = DOMAIN_DECLARATION + DEFAULTS + "\n  subgraph cluster_0 {\n    label = \"com.nitorcreations.testdomain.person\";\n    Employee\n    Manager\n    Person\n  }\n  subgraph cluster_1 {\n    label = \"com.nitorcreations.testdomain\";\n    Task\n    Timesheet\n  }\n  Task -> Employee [ taillabel = \"assignedEmployees\" dir=forward arrowhead=open];\n  Timesheet -> Employee [ taillabel = \"who\" dir=forward arrowhead=open];\n  Task -> Manager [ taillabel = \"manager\" dir=forward arrowhead=open];\n  Timesheet -> Task [ taillabel = \"task\" dir=forward arrowhead=open];\n  Employee -> Person [arrowhead=empty color=slategray];\n  Manager -> Person [arrowhead=empty color=slategray];\n}";
+        String description = DOMAIN_DECLARATION + DEFAULTS + "\n  subgraph cluster_0 {\n    label = \"com.nitorcreations.testdomain\";\n    Task\n    Timesheet\n  }\n  subgraph cluster_1 {\n    label = \"com.nitorcreations.testdomain.person\";\n    Employee\n    Manager\n    Person\n  }\n  Task -> Employee [ taillabel = \"assignedEmployees\" dir=forward arrowhead=open];\n  Timesheet -> Employee [ taillabel = \"who\" dir=forward arrowhead=open];\n  Task -> Manager [ taillabel = \"manager\" dir=forward arrowhead=open];\n  Timesheet -> Task [ taillabel = \"task\" dir=forward arrowhead=open];\n  Employee -> Person [arrowhead=empty color=slategray];\n  Manager -> Person [arrowhead=empty color=slategray];\n}";
         assertThat(domainMapper.describeDomain(), is(description));
     }
 

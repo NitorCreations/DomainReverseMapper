@@ -22,6 +22,14 @@ public class Edge {
         this(source, target, type, null);
     }
 
+    public DomainObject getSource() {
+        return source;
+    }
+
+    public DomainObject getTarget() {
+        return target;
+    }
+
     @Override
     public final int hashCode() {
         return HashCodeBuilder.reflectionHashCode(this);
