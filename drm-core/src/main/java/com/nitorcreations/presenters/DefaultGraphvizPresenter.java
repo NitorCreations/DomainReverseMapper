@@ -7,7 +7,9 @@ import com.nitorcreations.domain.EdgeType;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.joining;
 
 public class DefaultGraphvizPresenter implements Presenter {
 
@@ -44,32 +46,22 @@ public class DefaultGraphvizPresenter implements Presenter {
 
 
     private String describeInheritance(List<Edge> edges) {
-        StringBuilder sb = new StringBuilder();
-        for (Edge hierarchyEdge : edges.stream().filter(e -> e.type == EdgeType.EXTENDS).collect(Collectors.toList())) {
-            sb.append(String.format("  %s -> %s [%s];\n", hierarchyEdge.source.className, hierarchyEdge.target.className, INHERITANCE_STYLE));
-        }
-        return sb.toString();
+        return edges.stream().filter(e -> e.type == EdgeType.EXTENDS).map(hierarchyEdge -> String.format("  %s -> %s [%s];\n", hierarchyEdge.source.className, hierarchyEdge.target.className, INHERITANCE_STYLE)).collect(joining());
     }
 
     private String describePackages(List<DomainObject> domainObjects) {
         count.set(0);
-        return domainObjects.stream().collect(Collectors.groupingBy(DomainObject::getPackageName)).entrySet().stream().map(this::describePackage).collect(Collectors.joining());
+        return domainObjects.stream().collect(groupingBy(DomainObject::getPackageName)).entrySet().stream().map(this::describePackage).collect(joining());
 
     }
 
     private String describePackage(Map.Entry<String, List<DomainObject>> entry) {
-        return "  subgraph cluster_" + count.getAndIncrement() + " {\n" +
-                "    label = \"" + entry.getKey() + "\";\n" +
-                entry.getValue().stream().map(domainObject -> "    " + domainObject.className + "\n").distinct().collect(Collectors.joining())
-                + "  }\n";
+        return String.format("  subgraph cluster_%s {\n    label = \"%s\";\n%s  }\n",
+                count.getAndIncrement(), entry.getKey(), entry.getValue().stream().map(domainObject -> "    " + domainObject.className + "\n").distinct().collect(joining()));
     }
 
     private String describeCompositions(List<Edge> edges) {
-        StringBuilder sb = new StringBuilder();
-        for (Edge fieldEdge : edges.stream().filter(e -> e.type != EdgeType.EXTENDS).collect(Collectors.toList())) {
-            sb.append("  ").append(describeEdge(fieldEdge)).append("\n");
-        }
-        return sb.toString();
+        return edges.stream().filter(e -> e.type != EdgeType.EXTENDS).map(e -> String.format("  %s\n", describeEdge(e))).collect(joining());
     }
 
 
