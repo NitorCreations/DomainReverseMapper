@@ -4,6 +4,7 @@ import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
 import org.junit.Test;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
@@ -21,6 +22,13 @@ public class DomainObjectTest {
         DomainObject viaClassConstructor = new DomainObject(DomainObjectTest.DomainObjectAssertion.class);
         assertThat(viaClassConstructor,
                 new DomainObjectAssertion("com.nitorcreations.domain", "DomainObjectAssertion"));
+    }
+
+    @Test
+    public void toStringWorks() {
+        String toString = new DomainObject(DomainObjectAssertion.class).toString();
+        assertThat(toString, containsString("packageName"));
+        assertThat(toString, containsString("className"));
     }
 
     private static class DomainObjectAssertion extends TypeSafeMatcher<DomainObject> {
