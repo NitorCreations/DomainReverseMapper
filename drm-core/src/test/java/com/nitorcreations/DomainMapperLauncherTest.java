@@ -43,6 +43,7 @@ public class DomainMapperLauncherTest {
         launcher.run(new String[]{"-p", "foo.bar", "-f", "foofile.txt"});
 
         assertThat(Files.exists(Paths.get("foofile.txt")), is(true));
+        Files.delete(Paths.get("foofile.txt"));
     }
 
 }

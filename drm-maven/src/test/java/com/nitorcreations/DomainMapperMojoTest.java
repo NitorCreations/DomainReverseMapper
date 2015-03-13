@@ -48,6 +48,7 @@ public class DomainMapperMojoTest {
         mojo.execute();
 
         assertThat(Files.exists(Paths.get("domainmap.dot")), is(true));
+        Files.delete(Paths.get("domainmap.dot"));
     }
 
     @Test(expected = MojoFailureException.class)
