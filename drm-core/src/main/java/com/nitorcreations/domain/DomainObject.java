@@ -28,14 +28,6 @@ public class DomainObject {
         return packageName;
     }
 
-    public String getClassName() {
-        return className;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
     @Override
     public int hashCode() {
         return HashCodeBuilder.reflectionHashCode(this);
