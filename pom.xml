@@ -29,6 +29,11 @@
             <name>Janne Sinivirta</name>
             <email>janne.sinivirta@nitorcreations.com</email>
         </developer>
+        <developer>
+            <id>d4gg4d</id>
+            <name>Sami Airaksinen</name>
+            <email>sami.airaksinen@nitorcreations.com</email>
+        </developer>
     </developers>
     <licenses>
         <license>
