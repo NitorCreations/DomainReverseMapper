@@ -2,18 +2,18 @@ package com.nitorcreations.scanners;
 
 import java.util.List;
 
-public class AbstractScanner {
-    protected final List<Class<?>> classes;
+class AbstractScanner {
+    final List<Class<?>> classes;
 
-    public AbstractScanner(final List<Class<?>> classes) {
+    AbstractScanner(final List<Class<?>> classes) {
         this.classes = classes;
     }
 
-    protected boolean isDomainClass(final Class<?> clazz) {
+    boolean isDomainClass(final Class<?> clazz) {
         return classes.contains(clazz);
     }
 
-    protected boolean isDomainClass(final String name) {
+    boolean isDomainClass(final String name) {
         for (Class<?> clazz : classes) {
             if (clazz.getName().equals(stripClassHeader(name))) {
                 return true;

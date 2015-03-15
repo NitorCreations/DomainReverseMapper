@@ -12,18 +12,17 @@ import org.slf4j.LoggerFactory;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class DomainMapper {
-    static final Logger log = LoggerFactory.getLogger(DomainMapper.class);
+    private static final Logger log = LoggerFactory.getLogger(DomainMapper.class);
     private final FieldScanner fieldScanner;
     private final HierarchyScanner hierarchyScanner;
     private final List<Class<?>> classes;
 
-    private Presenter presenter = new DefaultGraphvizPresenter();
+    private final Presenter presenter = new DefaultGraphvizPresenter();
 
-    DomainMapper(final List<Class<?>> classes) throws ClassNotFoundException {
+    DomainMapper(final List<Class<?>> classes) {
         this.classes = classes;
         fieldScanner = new FieldScanner(classes);
         hierarchyScanner = new HierarchyScanner(classes);
@@ -37,7 +36,6 @@ public class DomainMapper {
 
         return presenter.describe(domainObjects, edges);
     }
-
 
 
     public List<Class<?>> getClasses() {

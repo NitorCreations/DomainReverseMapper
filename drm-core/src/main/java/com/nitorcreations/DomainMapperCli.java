@@ -9,7 +9,7 @@ public class DomainMapperCli {
         launcher.run(args);
     }
 
-    public static void setLauncher(final DomainMapperLauncher launcher) {
+    static void setLauncher(final DomainMapperLauncher launcher) {
         DomainMapperCli.launcher = launcher;
     }
 }

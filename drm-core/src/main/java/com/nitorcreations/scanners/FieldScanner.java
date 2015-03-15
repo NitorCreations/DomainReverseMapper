@@ -25,7 +25,7 @@ import static java.util.Optional.empty;
 import static java.util.Optional.of;
 
 public class FieldScanner extends AbstractScanner {
-    final Logger logger = LoggerFactory.getLogger(FieldScanner.class);
+    private final Logger logger = LoggerFactory.getLogger(FieldScanner.class);
 
     public FieldScanner(final List<Class<?>> classes) {
         super(classes);

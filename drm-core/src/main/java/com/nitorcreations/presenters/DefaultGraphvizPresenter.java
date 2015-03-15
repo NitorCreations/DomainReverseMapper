@@ -16,7 +16,7 @@ public class DefaultGraphvizPresenter implements Presenter {
     public static final String DOMAIN_DECLARATION = "digraph domain {\n";
     public static final String DEFAULTS = "  edge [ fontsize = 11 ];\n  node [ shape=box style=rounded ];";
     private static final String INHERITANCE_STYLE = "arrowhead=empty color=slategray";
-    private AtomicInteger count = new AtomicInteger();
+    private final AtomicInteger count = new AtomicInteger();
 
     private String describeEdge(Edge edge) {
         return String.format("%s -> %s [%s];", edge.source.className, edge.target.className, getEdgeDescription(edge));

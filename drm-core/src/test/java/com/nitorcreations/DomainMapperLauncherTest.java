@@ -11,8 +11,8 @@ import java.nio.file.Paths;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
-@SuppressWarnings("unchecked")
 public class DomainMapperLauncherTest {
+
     @InjectMocks
     DomainMapperLauncher launcher = new DomainMapperLauncher();
 
