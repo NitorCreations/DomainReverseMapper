@@ -54,16 +54,6 @@
         <logback.version>1.1.2</logback.version>
         <asm.version>5.0.3</asm.version>
     </properties>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>oss.sonatype.org</id>
-            <name>SNAPSHOTs on Sonatype.org</name>
-            <url>http://oss.sonatype.org/content/repositories/snapshots/</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>
     <build>
         <pluginManagement>
             <plugins>
