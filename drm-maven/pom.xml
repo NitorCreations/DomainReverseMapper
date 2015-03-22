@@ -1,12 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>drm-maven-plugin</artifactId>
-	<version>1.3</version>
 	<packaging>maven-plugin</packaging>
 	<parent>
 		<groupId>com.nitorcreations</groupId>
 		<artifactId>drm-parent</artifactId>
-		<version>1.3</version>
+		<version>1.4-SNAPSHOT</version>
 	</parent>
 	<name>drm-maven</name>
 	<description>
@@ -20,7 +19,7 @@
 		<dependency>
 			<groupId>com.nitorcreations</groupId>
 			<artifactId>drm-core</artifactId>
-			<version>1.3</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.maven</groupId>
