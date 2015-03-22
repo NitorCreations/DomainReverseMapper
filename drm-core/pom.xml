@@ -92,6 +92,7 @@
                             <exclude>org.apache.maven:lib:tests</exclude>
                             <exclude>log4j:log4j:jar:</exclude>
                             <exclude>com.google.code.findbugs:jsr305:jar:</exclude>
+                            <exclude>net.sf.qualitycheck:*</exclude>
                         </excludes>
                     </artifactSet>
                 </configuration>
