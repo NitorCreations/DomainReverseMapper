@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 public class DomainClassFinderTest {
 
@@ -24,7 +24,6 @@ public class DomainClassFinderTest {
 
         assertThat(classes.size(), is(5));
     }
-
 
     @Test
     public void privateConstructor() {
