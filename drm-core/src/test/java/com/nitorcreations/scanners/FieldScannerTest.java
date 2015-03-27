@@ -12,6 +12,7 @@ import com.nitorcreations.testdomain.family.Wife;
 import com.nitorcreations.testdomain.person.DoubleReferer;
 import com.nitorcreations.testdomain.person.Manager;
 import com.nitorcreations.testdomain.person.Person;
+import com.nitorcreations.testdomain.weirdos.Outer;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,6 +20,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 
@@ -50,6 +52,9 @@ public class FieldScannerTest {
             Timesheet.class, "task", Task.class, null, EdgeType.ONE_TO_ONE, Direction.UNI_DIRECTIONAL);
     private final Edge taskToManager = createReference(
             Task.class, "manager", Manager.class, null, EdgeType.ONE_TO_ONE, Direction.UNI_DIRECTIONAL);
+
+    private final Edge innerClassToOuter = createReference(
+            Outer.Inner.class, null, Outer.class, null, EdgeType.INNER_CLASS, Direction.UNI_DIRECTIONAL);
 
     private List<Class<?>> testedSetOfDomainClasses;
 
@@ -106,6 +111,14 @@ public class FieldScannerTest {
         testedSetOfDomainClasses.add(Child.class);
         List<Edge> edges = resolveEdges(testedSetOfDomainClasses);
         assertThat(edges, containsInAnyOrder(motherToChilds, motherToFavorite));
+    }
+
+    @Test
+    public void InnerClass() {
+        testedSetOfDomainClasses.add(Outer.Inner.class);
+        testedSetOfDomainClasses.add(Outer.class);
+        List<Edge> edges = resolveEdges(testedSetOfDomainClasses);
+        assertThat(edges, containsInAnyOrder(innerClassToOuter));
     }
 
     @After
