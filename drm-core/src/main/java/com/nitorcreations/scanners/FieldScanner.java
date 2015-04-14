@@ -25,7 +25,10 @@ import static java.util.Optional.empty;
 import static java.util.Optional.of;
 
 public class FieldScanner extends AbstractScanner {
-    public static final String NAME_FOR_INNERCLASS = null;
+
+    private static final String NAME_FOR_INNERCLASS = null;
+    private static final String innerClassFieldReferenceInBytecode = "this$0";
+
     private final Logger logger = LoggerFactory.getLogger(FieldScanner.class);
 
     public FieldScanner(final List<Class<?>> classes) {
@@ -69,7 +72,7 @@ public class FieldScanner extends AbstractScanner {
 
     private Optional<Edge> createFieldEdge(Class<?> clazz, Field field) {
         if (isDomainClass(field.getType())) {
-            if ("this$0".equals(field.getName())) {
+            if (innerClassFieldReferenceInBytecode.equals(field.getName())) {
                 return of(createEdge(clazz, (Class) field.getType(), EdgeType.INNER_CLASS, NAME_FOR_INNERCLASS));
             }
             return of(createEdge(clazz, (Class) field.getType(), EdgeType.ONE_TO_ONE, field.getName()));
