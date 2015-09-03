@@ -2,28 +2,23 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>org.sonatype.oss</groupId>
-        <artifactId>oss-parent</artifactId>
-        <version>7</version>
-    </parent>
     <groupId>com.nitorcreations</groupId>
-    <artifactId>drm-parent</artifactId>
-    <version>1.4-SNAPSHOT</version>
+    <artifactId>urm-parent</artifactId>
+    <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>Domain Reverse Mapper</name>
-    <description>Automatically generate Graphviz diagram from your domain classes</description>
-    <url>https://github.com/NitorCreations/DomainReverseMapper</url>
-    <scm>
-        <developerConnection>scm:git:git@github.com:NitorCreations/DomainReverseMapper.git</developerConnection>
-        <connection>scm:git:git@github.com:NitorCreations/DomainReverseMapper.git</connection>
-        <url>git@github.com:NitorCreations/DomainReverseMapper.git</url>
-    </scm>
+    <name>UML Reverse Mapper</name>
+    <description>Automatically generate Graphviz based class diagram from your code</description>
+    <url>https://github.com/iluwatar/uml-reverse-mapper</url>
     <inceptionYear>2013</inceptionYear>
     <prerequisites>
         <maven>3.0.4</maven>
     </prerequisites>
     <developers>
+        <developer>
+            <id>iluwatar</id>
+            <name>Ilkka Seppälä</name>
+            <email>iluwatar@gmail.com</email>
+        </developer>
         <developer>
             <id>vertti</id>
             <name>Janne Sinivirta</name>
@@ -135,13 +130,6 @@
     </build>
     <dependencyManagement>
         <dependencies>
-            <!-- our own -->
-            <dependency>
-                <groupId>com.nitorcreations</groupId>
-                <artifactId>drm-core</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <!-- 3rd party -->
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
@@ -219,11 +207,4 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-    <distributionManagement>
-        <repository>
-            <id>bintray-vertti-maven-DomainReverseMapper</id>
-            <name>vertti-maven-DomainReverseMapper</name>
-            <url>https://api.bintray.com/maven/vertti/maven/DomainReverseMapper</url>
-        </repository>
-    </distributionManagement>
 </project>
