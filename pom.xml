@@ -43,8 +43,8 @@
         </license>
     </licenses>
     <modules>
-        <module>drm-core</module>
-        <module>drm-maven</module>
+        <module>urm-core</module>
+        <module>urm-maven</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
