@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/iluwatar/uml-reverse-mapper.svg?branch=master)](https://travis-ci.org/iluwatar/uml-reverse-mapper)
 
 UML Reverse Mapper
 ===========================
