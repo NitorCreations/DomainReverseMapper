@@ -17,7 +17,7 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.nitorcreations</groupId>
+			<groupId>com.iluwatar</groupId>
 			<artifactId>urm-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
