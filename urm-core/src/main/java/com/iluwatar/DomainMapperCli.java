@@ -35,7 +35,6 @@ public class DomainMapperCli {
             }
             domainMapper = DomainMapper.create(Arrays.asList(packages));
             if (line.hasOption('f')) {
-
                 String filename = line.getOptionValue('f');
                 Files.write(Paths.get(filename), domainMapper.describeDomain().getBytes());
                 log.info("Wrote dot to file " + filename);
@@ -46,8 +45,7 @@ public class DomainMapperCli {
             log.info(exp.getMessage());
             // automatically generate the help statement
             HelpFormatter formatter = new HelpFormatter();
-            formatter.printHelp("java -jar drm-core.jar", options);
+            formatter.printHelp("java -jar urm-core.jar", options);
         }
     }
-
 }

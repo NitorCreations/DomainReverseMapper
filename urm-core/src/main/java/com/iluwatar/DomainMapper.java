@@ -15,11 +15,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class DomainMapper {
+
     private static final Logger log = LoggerFactory.getLogger(DomainMapper.class);
     private final FieldScanner fieldScanner;
     private final HierarchyScanner hierarchyScanner;
     private final List<Class<?>> classes;
-
     private final Presenter presenter = new DefaultGraphvizPresenter();
 
     DomainMapper(final List<Class<?>> classes) {
@@ -33,10 +33,8 @@ public class DomainMapper {
         edges.addAll(fieldScanner.getEdges());
         edges.addAll(hierarchyScanner.getEdges());
         List<DomainObject> domainObjects = classes.stream().map(DomainObject::new).collect(Collectors.toList());
-
         return presenter.describe(domainObjects, edges);
     }
-
 
     public List<Class<?>> getClasses() {
         return classes;
@@ -51,5 +49,4 @@ public class DomainMapper {
     public static DomainMapper create(final List<String> packages) throws ClassNotFoundException {
         return create(packages, null);
     }
-
 }
