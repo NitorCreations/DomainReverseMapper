@@ -45,7 +45,7 @@ public class DomainMapperMojoTest {
     @SuppressWarnings({"rawtypes", "unchecked"})
     @Test
     public void testExecute() throws MojoExecutionException, ClassNotFoundException, MojoFailureException, IOException {
-        packages.add("com.nitorcreations.testdomain");
+        packages.add("com.iluwatar.nitorcreations.testdomain");
         mojo.execute();
 
         assertThat(Files.exists(Paths.get("domainmap.dot")), is(true));
