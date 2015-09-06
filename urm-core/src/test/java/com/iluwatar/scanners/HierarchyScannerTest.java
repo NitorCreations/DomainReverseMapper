@@ -18,6 +18,10 @@ public class HierarchyScannerTest {
             new DomainObject(Parent.class), EdgeType.EXTENDS);
     private Edge childToGrandChild = new Edge(new DomainObject(GrandChild.class),
             new DomainObject(Child.class), EdgeType.EXTENDS);
+    private Edge carToVehicle = new Edge(new DomainObject(Car.class),
+            new DomainObject(Vehicle.class), EdgeType.EXTENDS);
+    private Edge carToTransport = new Edge(new DomainObject(Car.class),
+            new DomainObject(Transport.class), EdgeType.EXTENDS);
 
     @Test
     public void createsProperHierarchy() {
@@ -42,6 +46,18 @@ public class HierarchyScannerTest {
         assertThat(edges, contains(childToGrandChild));
     }
 
+    @Test
+    public void createsProperHierarchyForInterfaces() {
+        List<Class<?>> hierarchicalClasses = Lists.newArrayList();
+        hierarchicalClasses.add(Car.class);
+        hierarchicalClasses.add(Vehicle.class);
+        hierarchicalClasses.add(Transport.class);
+        HierarchyScanner scanner = new HierarchyScanner(hierarchicalClasses);
+
+        List<Edge> edges = scanner.getEdges();
+        assertThat(edges, containsInAnyOrder(carToVehicle, carToTransport));
+    }
+
     private static class Parent {
 
     }
@@ -51,6 +67,18 @@ public class HierarchyScannerTest {
     }
 
     private static class GrandChild extends Child {
+
+    }
+
+    private interface Vehicle {
+
+    }
+
+    private interface Transport {
+
+    }
+
+    private static class Car implements Vehicle, Transport {
 
     }
 }
