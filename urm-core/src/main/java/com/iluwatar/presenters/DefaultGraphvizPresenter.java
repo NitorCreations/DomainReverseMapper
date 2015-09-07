@@ -20,24 +20,18 @@ public class DefaultGraphvizPresenter implements Presenter {
 
     private Object getEdgeDescription(Edge edge) {
         StringBuilder sb = new StringBuilder();
-        if (edge.target.description != null) {
-            sb.append(" headlabel = \"").append(edge.target.description).append("\"");
-        }
-        if (edge.source.description != null) {
-            sb.append(" taillabel = \"").append(edge.source.description).append("\"");
-        }
         sb.append(" ").append(linkDirection(edge));
         return sb.toString();
     }
 
     private String linkDirection(Edge edge) {
         if (edge.source.description == null) {
-            return "dir=back arrowtail=open";
+            return "dir=forward arrowhead=diamond color=slategray";
         }
         if (edge.target.description == null) {
-            return "dir=forward arrowhead=open";
+            return "dir=back arrowtail=diamond color=slategray";
         }
-        return "dir=both arrowhead=open arrowtail=open";
+        return "dir=both arrowhead=none arrowtail=none color=slategray";
     }
 
     private String describeInheritance(List<Edge> edges) {
