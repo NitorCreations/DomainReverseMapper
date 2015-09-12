@@ -14,3 +14,5 @@ Build the `urm-core` project with `mvn clean package` and grab the generated art
     java -cp abstract-factory-1.6.0.jar:urm-core-1.0-SNAPSHOT.jar com.iluwatar.DomainMapperCli -p com.iluwatar.abstractfactory
 
 This will scan all classes under the package `com.iluwatar.abstractfactory` and output the .dot file to your console output. If you want to write it to file use switch `-f filename.dot`. If you need to scan multiple packages use format `-p "com.package1, com.package2"`. Note that under Windows OS the classpath separator is `;` instead of `:`;
+
+![Abstract Factory](abstractfactory.png "Abstract Factory")
