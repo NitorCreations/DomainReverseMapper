@@ -14,7 +14,7 @@ import static java.util.stream.Collectors.joining;
 public class DefaultGraphvizPresenter implements Presenter {
 
     public static final String DOMAIN_DECLARATION = "digraph domain {\n";
-    public static final String DEFAULTS = "  edge [ fontsize = 11 ];\n  node [ shape=box style=rounded ];";
+    public static final String DEFAULTS = "  edge [ fontsize = 11 ];\n  node [ shape=record ];";
     private static final String INHERITANCE_STYLE = "arrowhead=empty color=slategray";
     private final AtomicInteger count = new AtomicInteger();
 
