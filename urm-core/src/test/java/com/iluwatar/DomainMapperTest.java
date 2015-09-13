@@ -36,14 +36,14 @@ public class DomainMapperTest {
         List<Class<?>> list = new ArrayList<>();
         list.add(Selfie.class);
         domainMapper = new DomainMapper(list);
-        String description = DOMAIN_DECLARATION + DEFAULTS + "\n  subgraph cluster_0 {\n    label = \"com.iluwatar.testdomain\";\n    Selfie\n  }\n  Selfie -> Selfie [ dir=back arrowtail=diamond color=slategray];\n}";
+        String description = DOMAIN_DECLARATION + DEFAULTS + "\n  subgraph cluster_0 {\n    label = \"com.iluwatar.testdomain\";\n    Selfie\n  }\n  Selfie -> Selfie [ dir=back arrowtail=odiamond color=slategray];\n}";
         assertThat(domainMapper.describeDomain(), is(description));
     }
 
     @Test
     public void testDescribeDomain_doubleReferer() throws ClassNotFoundException {
         domainMapper = new DomainMapper(Arrays.asList(DoubleReferer.class, Manager.class));
-        String description = DOMAIN_DECLARATION + DEFAULTS + "\n  subgraph cluster_0 {\n    label = \"com.iluwatar.testdomain.person\";\n    DoubleReferer\n    Manager\n  }\n  DoubleReferer -> Manager [ dir=back arrowtail=diamond color=slategray];\n  DoubleReferer -> Manager [ dir=back arrowtail=diamond color=slategray];\n}";
+        String description = DOMAIN_DECLARATION + DEFAULTS + "\n  subgraph cluster_0 {\n    label = \"com.iluwatar.testdomain.person\";\n    DoubleReferer\n    Manager\n  }\n  DoubleReferer -> Manager [ dir=back arrowtail=odiamond color=slategray];\n  DoubleReferer -> Manager [ dir=back arrowtail=odiamond color=slategray];\n}";
         assertThat(domainMapper.describeDomain(), is(description));
     }
 
@@ -57,7 +57,7 @@ public class DomainMapperTest {
     @Test
     public void testDescribeDomain() throws ClassNotFoundException {
         domainMapper = new DomainMapper(Arrays.asList(Employee.class, Task.class, Manager.class, Timesheet.class, Person.class));
-        String description = DOMAIN_DECLARATION + DEFAULTS + "\n  subgraph cluster_0 {\n    label = \"com.iluwatar.testdomain\";\n    Task\n    Timesheet\n  }\n  subgraph cluster_1 {\n    label = \"com.iluwatar.testdomain.person\";\n    Employee\n    Manager\n    Person\n  }\n  Timesheet -> Task [ dir=back arrowtail=diamond color=slategray];\n  Task -> Manager [ dir=back arrowtail=diamond color=slategray];\n  Timesheet -> Employee [ dir=back arrowtail=diamond color=slategray];\n  Task -> Employee [ dir=back arrowtail=diamond color=slategray];\n  Employee -> Person [arrowhead=empty color=slategray];\n  Manager -> Person [arrowhead=empty color=slategray];\n}";
+        String description = DOMAIN_DECLARATION + DEFAULTS + "\n  subgraph cluster_0 {\n    label = \"com.iluwatar.testdomain\";\n    Task\n    Timesheet\n  }\n  subgraph cluster_1 {\n    label = \"com.iluwatar.testdomain.person\";\n    Employee\n    Manager\n    Person\n  }\n  Timesheet -> Task [ dir=back arrowtail=odiamond color=slategray];\n  Task -> Manager [ dir=back arrowtail=odiamond color=slategray];\n  Timesheet -> Employee [ dir=back arrowtail=odiamond color=slategray];\n  Task -> Employee [ dir=back arrowtail=odiamond color=slategray];\n  Employee -> Person [arrowhead=empty color=slategray];\n  Manager -> Person [arrowhead=empty color=slategray];\n}";
         assertThat(domainMapper.describeDomain(), is(description));
     }
 

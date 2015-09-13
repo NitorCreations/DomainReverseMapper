@@ -26,10 +26,10 @@ public class DefaultGraphvizPresenter implements Presenter {
 
     private String linkDirection(Edge edge) {
         if (edge.source.description == null) {
-            return "dir=forward arrowhead=diamond color=slategray";
+            return "dir=forward arrowhead=odiamond color=slategray";
         }
         if (edge.target.description == null) {
-            return "dir=back arrowtail=diamond color=slategray";
+            return "dir=back arrowtail=odiamond color=slategray";
         }
         return "dir=both arrowhead=none arrowtail=none color=slategray";
     }
