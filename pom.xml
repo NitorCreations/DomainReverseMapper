@@ -9,6 +9,11 @@
     <name>UML Reverse Mapper</name>
     <description>Automatically generate Graphviz based class diagram from your code</description>
     <url>https://github.com/iluwatar/uml-reverse-mapper</url>
+    <scm>
+        <developerConnection>scm:git:git@github.com:iluwatar/uml-reverse-mapper.git</developerConnection>
+        <connection>scm:git:git@github.com:iluwatar/uml-reverse-mapper.git</connection>
+        <url>git@github.com:iluwatar/uml-reverse-mapper.git</url>
+    </scm>
     <inceptionYear>2013</inceptionYear>
     <prerequisites>
         <maven>3.0.4</maven>
