@@ -34,7 +34,7 @@ public class DomainMapperMojo extends AbstractMojo {
         try {
             List<URL> projectClasspathList = getClasspathUrls();
             DomainMapper mapper = DomainMapper.create(packages, new URLClassLoader(projectClasspathList.toArray(new URL[projectClasspathList.size()])));
-            Files.write(Paths.get(outputDirectory.getPath(), "domainmap.dot"), mapper.describeDomain().getBytes());
+            Files.write(Paths.get(outputDirectory.getPath(), "urm.dot"), mapper.describeDomain().getBytes());
         } catch (ClassNotFoundException | DependencyResolutionRequiredException | IOException e) {
             throw new MojoExecutionException(e.getMessage(), e);
         }
