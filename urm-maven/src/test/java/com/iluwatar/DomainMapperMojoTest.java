@@ -48,8 +48,8 @@ public class DomainMapperMojoTest {
         packages.add("com.iluwatar.testdomain");
         mojo.execute();
 
-        assertThat(Files.exists(Paths.get("domainmap.dot")), is(true));
-        Files.delete(Paths.get("domainmap.dot"));
+        assertThat(Files.exists(Paths.get("urm.dot")), is(true));
+        Files.delete(Paths.get("urm.dot"));
     }
 
     @Test(expected = MojoFailureException.class)
