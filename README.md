@@ -16,3 +16,35 @@ Build the `urm-core` project with `mvn clean package` and grab the generated art
 This will scan all classes under the package `com.iluwatar.abstractfactory` and output the .dot file to your console output. If you want to write it to file use switch `-f filename.dot`. If you need to scan multiple packages use format `-p "com.package1, com.package2"`. Note that under Windows OS the classpath separator is `;` instead of `:`;
 
 ![Abstract Factory](abstractfactory.png "Abstract Factory")
+
+### Using the Maven plugin
+
+Add to your pom.xml the following:
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.iluwatar</groupId>
+				<artifactId>urm-maven-plugin</artifactId>
+				<version>1.0-SNAPSHOT</version>
+				<configuration>
+					<packages>
+						<param>com.mycompany.mypackage</param>
+						<param>com.mycompany.other_package</param>
+					</packages>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>process-classes</phase>
+						<goals>
+							<goal>map</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+where the `packages` configuration parameter contains a list of packages that should be included in the class diagram.
+
+When `process-classes` life-cycle phase gets executed, the class diagram will be saved to `/target/urm.dot`. Use this file with your local Graphviz or any of the online Graphviz tools to show your class diagram.
