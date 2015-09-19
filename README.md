@@ -28,7 +28,7 @@ Add to your pom.xml the following:
 			<plugin>
 				<groupId>com.iluwatar</groupId>
 				<artifactId>urm-maven-plugin</artifactId>
-				<version>1.0.0</version>
+				<version>1.1.0</version>
 				<configuration>
 					<packages>
 						<param>com.mycompany.mypackage</param>
