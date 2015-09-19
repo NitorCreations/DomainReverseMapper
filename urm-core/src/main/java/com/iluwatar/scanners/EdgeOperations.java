@@ -7,6 +7,7 @@ import com.iluwatar.domain.EdgeType;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 import static com.iluwatar.domain.Direction.BI_DIRECTIONAL;
 import static com.iluwatar.domain.Direction.UNI_DIRECTIONAL;
@@ -83,6 +84,30 @@ public class EdgeOperations {
         String sourceId = edge.source.packageName + "." + edge.source.className;
         String targetId = edge.target.packageName + "." + edge.target.className;
         return UnorderedTuple.of(sourceId, targetId);
+    }
+
+    public static boolean relationAlreadyExists(List<Edge> fieldEdges, Edge e) {
+        return fieldEdges.stream().anyMatch((Edge d) -> EdgeOperations.isSameRelation(d, e));
+    }
+
+    public static Optional<Edge> getMatchingRelation(List<Edge> fieldEdges, Edge e) {
+        List<Edge> edges = fieldEdges.stream()
+                .filter((Edge d) -> EdgeOperations.isSameRelation(d, e))
+                .collect(toList());
+        if (edges.isEmpty()) {
+            return Optional.empty();
+        } else {
+            return Optional.of(edges.get(0));
+        }
+    }
+
+    private static boolean isSameRelation(Edge d, Edge e) {
+        return d.source.packageName.equals(e.source.packageName) &&
+                d.source.className.equals(e.source.className) &&
+                d.target.packageName.equals(e.target.packageName) &&
+                d.target.className.equals(e.target.className) &&
+                d.type.equals(e.type) &&
+                d.direction.equals(e.direction);
     }
 
     private static class UnorderedTuple<X, Y> extends Tuple<X, Y> {

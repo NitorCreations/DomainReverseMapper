@@ -43,7 +43,7 @@ public class DomainMapperTest {
     @Test
     public void testDescribeDomain_doubleReferer() throws ClassNotFoundException {
         domainMapper = new DomainMapper(Arrays.asList(DoubleReferer.class, Manager.class));
-        String description = DOMAIN_DECLARATION + DEFAULTS + "\n  subgraph cluster_0 {\n    label = \"com.iluwatar.testdomain.person\";\n    DoubleReferer\n    Manager\n  }\n  DoubleReferer -> Manager [ dir=back arrowtail=odiamond color=slategray];\n  DoubleReferer -> Manager [ dir=back arrowtail=odiamond color=slategray];\n}";
+        String description = DOMAIN_DECLARATION + DEFAULTS + "\n  subgraph cluster_0 {\n    label = \"com.iluwatar.testdomain.person\";\n    DoubleReferer\n    Manager\n  }\n  DoubleReferer -> Manager [ dir=back arrowtail=odiamond color=slategray];\n}";
         assertThat(domainMapper.describeDomain(), is(description));
     }
 

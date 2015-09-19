@@ -52,7 +52,15 @@ public class FieldScanner extends AbstractScanner {
                     try {
                         Optional<Edge> fieldEdge = createFieldEdge(clazz, clazz.getDeclaredField(name));
                         if (fieldEdge.isPresent()) {
-                            fieldEdges.add(fieldEdge.get());
+                            if (EdgeOperations.relationAlreadyExists(fieldEdges, fieldEdge.get())) {
+                                Optional<Edge> relation = EdgeOperations.getMatchingRelation(fieldEdges, fieldEdge.get());
+                                if (relation.isPresent()) {
+                                    fieldEdges.remove(relation.get());
+                                    fieldEdges.add(new Edge(relation.get().source, relation.get().target, EdgeType.ONE_TO_MANY, relation.get().direction));
+                                }
+                            } else{
+                                fieldEdges.add(fieldEdge.get());
+                            }
                         }
                     } catch (NoSuchFieldException e) {
                         // should never happen

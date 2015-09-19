@@ -5,10 +5,7 @@ import com.iluwatar.domain.DomainObject;
 import com.iluwatar.domain.Edge;
 import com.iluwatar.domain.EdgeType;
 import com.iluwatar.testdomain.*;
-import com.iluwatar.testdomain.family.Child;
-import com.iluwatar.testdomain.family.Husband;
-import com.iluwatar.testdomain.family.Mother;
-import com.iluwatar.testdomain.family.Wife;
+import com.iluwatar.testdomain.family.*;
 import com.iluwatar.testdomain.person.DoubleReferer;
 import com.iluwatar.testdomain.person.Manager;
 import com.iluwatar.testdomain.person.Person;
@@ -22,13 +19,13 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.core.Is.is;
 
 public class FieldScannerTest {
 
     private final Edge firstReference = createReference(
-            DoubleReferer.class, "myBoss", Manager.class, null, EdgeType.ONE_TO_ONE, Direction.UNI_DIRECTIONAL);
-    private final Edge secondReference = createReference(
-            DoubleReferer.class, "myTeamManager", Manager.class, null, EdgeType.ONE_TO_ONE, Direction.UNI_DIRECTIONAL);
+            DoubleReferer.class, "myBoss", Manager.class, null, EdgeType.ONE_TO_MANY, Direction.UNI_DIRECTIONAL);
 
     private final Edge motherToChilds = createReference(
             Mother.class, "childs", Child.class, "mommy", EdgeType.ONE_TO_MANY, Direction.BI_DIRECTIONAL);
@@ -101,7 +98,8 @@ public class FieldScannerTest {
         testedSetOfDomainClasses.add(Manager.class);
         testedSetOfDomainClasses.add(DoubleReferer.class);
         List<Edge> edges = resolveEdges(testedSetOfDomainClasses);
-        assertThat(edges, containsInAnyOrder(firstReference, secondReference));
+        assertThat(edges.size(), is(1));
+        assertThat(edges, containsInAnyOrder(firstReference));
     }
 
     @Test
