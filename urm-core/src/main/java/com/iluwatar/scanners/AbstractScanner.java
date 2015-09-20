@@ -25,6 +25,8 @@ class AbstractScanner {
     String stripClassHeader(final String fullToString) {
         if (fullToString.startsWith("class ")) {
             return convertFromAsmToComplete(fullToString.substring(6));
+        } else if (fullToString.startsWith("interface ")) {
+            return convertFromAsmToComplete(fullToString.substring(10));
         }
         return convertFromAsmToComplete(fullToString);
     }
