@@ -28,9 +28,21 @@ public class DomainMapperCliTest extends DomainMapperCli { // extends to silence
     }
 
     @Test
+    public void withsinglePackageAndIgnore() throws Exception {
+        cli.run(new String[]{"-p", "com.iluwatar.testdomain.person", "-i", "com.iluwatar.testdomain.person.Manager"});
+        assertThat(cli.domainMapper.getClasses().size(), is(3));
+    }
+
+    @Test
     public void withMultiPackages() throws Exception {
         cli.run(new String[]{"-p", "\"com.iluwatar.testdomain.person, com.iluwatar.testdomain.another\""});
         assertThat(cli.domainMapper.getClasses().size(), is(5));
+    }
+
+    @Test
+    public void withMultiPackagesAndIgnores() throws Exception {
+        cli.run(new String[]{"-p", "\"com.iluwatar.testdomain.person, com.iluwatar.testdomain.another\"", "-i", "\"com.iluwatar.testdomain.person.Employee, com.iluwatar.testdomain.another.Another\""});
+        assertThat(cli.domainMapper.getClasses().size(), is(3));
     }
 
     @Test

@@ -27,10 +27,12 @@ import static org.mockito.Mockito.when;
 public class DomainMapperMojoTest {
     @Spy
     File outputDirectory = new File("");
-    @Spy
-    List<String> packages = new ArrayList<>();
     @Mock
     MavenProject project;
+    @Spy
+    List<String> packages = new ArrayList<>();
+    @Spy
+    List<String> ignores = new ArrayList<>();
     @InjectMocks
     DomainMapperMojo mojo = new DomainMapperMojo();
     final List<Class<?>> dummyList = Arrays.<Class<?>>asList(String.class, Integer.class);

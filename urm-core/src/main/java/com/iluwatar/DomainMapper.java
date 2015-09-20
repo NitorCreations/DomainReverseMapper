@@ -40,13 +40,17 @@ public class DomainMapper {
         return classes;
     }
 
-    public static DomainMapper create(List<String> packages, URLClassLoader classLoader) throws ClassNotFoundException {
-        List<Class<?>> allClasses = DomainClassFinder.findClasses(packages, classLoader);
+    public static DomainMapper create(List<String> packages, List<String> ignores, URLClassLoader classLoader) throws ClassNotFoundException {
+        List<Class<?>> allClasses = DomainClassFinder.findClasses(packages, ignores, classLoader);
         log.debug("Found " + allClasses.size() + " classes.");
         return new DomainMapper(allClasses);
     }
 
+    public static DomainMapper create(final List<String> packages, List<String> ignores) throws ClassNotFoundException {
+        return create(packages, ignores, null);
+    }
+
     public static DomainMapper create(final List<String> packages) throws ClassNotFoundException {
-        return create(packages, null);
+        return create(packages, new ArrayList<>(), null);
     }
 }

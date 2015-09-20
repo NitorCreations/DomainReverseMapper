@@ -26,6 +26,8 @@ public class DomainMapperMojo extends AbstractMojo {
     private MavenProject project;
     @Parameter(property = "map.packages", required = true)
     private List<String> packages;
+    @Parameter(property = "map.ignores", required = false)
+    private List<String> ignores;
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
@@ -33,7 +35,7 @@ public class DomainMapperMojo extends AbstractMojo {
             throw new MojoFailureException("No packages defined for scanning.");
         try {
             List<URL> projectClasspathList = getClasspathUrls();
-            DomainMapper mapper = DomainMapper.create(packages, new URLClassLoader(projectClasspathList.toArray(new URL[projectClasspathList.size()])));
+            DomainMapper mapper = DomainMapper.create(packages, ignores, new URLClassLoader(projectClasspathList.toArray(new URL[projectClasspathList.size()])));
             Files.write(Paths.get(outputDirectory.getPath(), "urm.dot"), mapper.describeDomain().getBytes());
         } catch (ClassNotFoundException | DependencyResolutionRequiredException | IOException e) {
             throw new MojoExecutionException(e.getMessage(), e);

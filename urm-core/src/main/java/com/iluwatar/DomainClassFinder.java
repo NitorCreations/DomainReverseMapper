@@ -11,12 +11,13 @@ import java.util.stream.Collectors;
 
 class DomainClassFinder {
 
-    public static List<Class<?>> findClasses(final List<String> packages, final URLClassLoader classLoader) {
+    public static List<Class<?>> findClasses(final List<String> packages, List<String> ignores, final URLClassLoader classLoader) {
         return packages.stream()
                 .map(packageName -> getClasses(classLoader, packageName))
                 .flatMap(Collection::stream)
                 .filter(DomainClassFinder::isNotPackageInfo)
                 .filter(DomainClassFinder::isNotAnonymousClass)
+                .filter((Class<?> clazz) -> !ignores.contains(clazz.getName()))
                 .collect(Collectors.toList());
     }
 

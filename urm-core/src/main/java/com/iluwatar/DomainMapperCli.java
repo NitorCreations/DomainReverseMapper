@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class DomainMapperCli {
@@ -26,6 +27,8 @@ public class DomainMapperCli {
         options.addOption("f", "file", true, "write to file");
         options.addOption("p", "package", true, "comma separated list of domain packages");
         options.addOption(OptionBuilder.withArgName("package").hasArgs().isRequired().create('p'));
+        options.addOption("i", "ignore", true, "comma separated list of ignored types");
+        options.addOption(OptionBuilder.withArgName("ignore").hasArgs().isRequired(false).create('i'));
         try {
             CommandLine line = parser.parse(options, args);
             String[] packages = line.getOptionValue("p").split(",[ ]*");
@@ -33,7 +36,17 @@ public class DomainMapperCli {
             for (String packageName : packages) {
                 log.debug(packageName);
             }
-            domainMapper = DomainMapper.create(Arrays.asList(packages));
+            String[] ignores = null;
+            if (line.hasOption("i")) {
+                ignores = line.getOptionValue("i").split(",[ ]*");
+                if (ignores != null) {
+                    log.debug("Ignored types:");
+                    for (String ignore : ignores) {
+                        log.debug(ignore);
+                    }
+                }
+            }
+            domainMapper = DomainMapper.create(Arrays.asList(packages), ignores == null ? new ArrayList<>() : Arrays.asList(ignores));
             if (line.hasOption('f')) {
                 String filename = line.getOptionValue('f');
                 Files.write(Paths.get(filename), domainMapper.describeDomain().getBytes());
