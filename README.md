@@ -28,12 +28,16 @@ Add to your pom.xml the following:
 			<plugin>
 				<groupId>com.iluwatar</groupId>
 				<artifactId>urm-maven-plugin</artifactId>
-				<version>1.1.0</version>
+				<version>1.2.0</version>
 				<configuration>
 					<packages>
 						<param>com.mycompany.mypackage</param>
 						<param>com.mycompany.other_package</param>
 					</packages>
+					<ignores>
+						<param>com.mycompany.mypackage.MyClass</param>
+						<param>com.mycompany.other_package.OtherClass</param>
+					</ignores>
 				</configuration>
 				<executions>
 					<execution>
@@ -47,6 +51,7 @@ Add to your pom.xml the following:
 		</plugins>
 	</build>
 
-where the `packages` configuration parameter contains a list of packages that should be included in the class diagram.
+where the `packages` configuration parameter contains a list of packages that should be included in the class diagram and
+the `ignores` configuration parameter contains a list of types that should be excluded from the class diagram.
 
 When `process-classes` life-cycle phase gets executed, the class diagram will be saved to `/target/urm.dot`. Use this file with your local Graphviz or any of the online Graphviz tools to show your class diagram.
