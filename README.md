@@ -13,9 +13,9 @@ Using reflection, UML Reverse Mapper scans your packages that contain your code.
 
 Build the `urm-core` project with `mvn clean package` and grab the generated artifact `urm-core.jar`. Then you need the archive that will be analyzed. In this example we use `abstract-factory.jar` and assume the package name to be `com.iluwatar.abstractfactory`. Place the jar-files in the same directory and execute the following command.
 
-    java -cp abstract-factory.jar:urm-core.jar com.iluwatar.DomainMapperCli -p com.iluwatar.abstractfactory
+    java -cp abstract-factory.jar:urm-core.jar com.iluwatar.DomainMapperCli -p com.iluwatar.abstractfactory -i com.iluwatar.abstractfactory.Castle
 
-This will scan all classes under the package `com.iluwatar.abstractfactory` and output the .dot file to your console output. If you want to write it to file use switch `-f filename.dot`. If you need to scan multiple packages use format `-p "com.package1, com.package2"`. Note that under Windows OS the classpath separator is `;` instead of `:`;
+This will scan all classes under the package `com.iluwatar.abstractfactory` except `Castle` that was marked to be ignored and output the .dot file to your console output. If you want to write it to file use switch `-f filename.dot`. If you need to scan multiple packages use format `-p "com.package1, com.package2"`. Note that under Windows OS the classpath separator is `;` instead of `:`;
 
 ### Using the Maven plugin
 
