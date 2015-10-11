@@ -66,9 +66,13 @@ public class DefaultGraphvizPresenter implements Presenter {
 
     private String listDomainObjects(List<DomainObject> domainObjects) {
         return domainObjects.stream()
-                .map(domainObject -> "    " + domainObject.className + "\n")
+                .map(domainObject -> describeDomainObject(domainObject))
                 .distinct()
                 .collect(joining());
+    }
+
+    private String describeDomainObject(DomainObject domainObject){
+        return "    " + domainObject.className + "\n";
     }
 
     private String describeCompositions(List<Edge> edges) {

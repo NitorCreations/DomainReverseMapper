@@ -3,17 +3,41 @@ package com.iluwatar.domain;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DomainObject {
+
+    private static final Logger log = LoggerFactory.getLogger(DomainObject.class);
 
     public final String packageName;
     public final String className;
     public final String description;
+    public List<String> fields = new ArrayList<>();
+    public List<String> methods = new ArrayList<>();
 
     public DomainObject(String packageName, String className, String description) {
         this.packageName = packageName;
         this.className = className;
         this.description = description;
+        Class<?> aClass = null;
+        final String fqn = String.format("%s.%s", packageName, className);
+        try {
+            aClass = Class.forName(fqn);
+            for (Field f: aClass.getFields()) {
+                fields.add(f.toString());
+            }
+            for (Method m: aClass.getDeclaredMethods()) {
+                methods.add(m.toString());
+            }
+        } catch (ClassNotFoundException e) {
+            log.warn("Could not get class for name {}", fqn);
+        }
     }
 
     public DomainObject(Class<?> clazz, String description) {
