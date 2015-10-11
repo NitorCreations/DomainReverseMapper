@@ -72,7 +72,8 @@ public class DefaultGraphvizPresenter implements Presenter {
     }
 
     private String describeDomainObject(DomainObject domainObject){
-        return String.format("    %s [ label = \"{%s | %s}\" ] \n", domainObject.className, domainObject.className, describeDomainObjectMethods(domainObject));
+        return String.format("    %s [ label = \"{%s | %s}\" ] \n", domainObject.className, domainObject.className,
+                describeDomainObjectMethods(domainObject));
     }
 
     private String describeDomainObjectMethods(DomainObject domainObject) {

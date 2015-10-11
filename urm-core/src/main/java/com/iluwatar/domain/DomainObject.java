@@ -6,7 +6,6 @@ import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +17,6 @@ public class DomainObject {
     public final String packageName;
     public final String className;
     public final String description;
-    public List<String> fields = new ArrayList<>();
     public List<String> methods = new ArrayList<>();
 
     public DomainObject(String packageName, String className, String description) {
@@ -29,9 +27,6 @@ public class DomainObject {
         final String fqn = String.format("%s.%s", packageName, className);
         try {
             aClass = Class.forName(fqn);
-            for (Field f: aClass.getFields()) {
-                fields.add(formatFieldName(f));
-            }
             for (Method m: aClass.getDeclaredMethods()) {
                 methods.add(formatMethodName(m));
             }
@@ -54,10 +49,6 @@ public class DomainObject {
         final String remove = String.format("%s.%s.", packageName, className);
         final String s = method.toString().replace(remove, "").replace(replaceOld, replaceNew);
         return s;
-    }
-
-    private String formatFieldName(Field field) {
-        return field.toString();
     }
 
     public String getPackageName() {
