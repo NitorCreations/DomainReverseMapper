@@ -47,7 +47,16 @@ public class DomainObject {
         final String replaceOld = method.getReturnType().getName();
         final String replaceNew = method.getReturnType().getSimpleName();
         final String remove = String.format("%s.%s.", packageName, className);
-        final String s = method.toString().replace(remove, "").replace(replaceOld, replaceNew);
+        String s = method.toString().replace(remove, "").replace(replaceOld, replaceNew);
+        for (Class clazz: method.getParameterTypes()) {
+            if (clazz.isArray()) {
+                String name = clazz.getName().replace("[L", "").replace(";", "").concat("[]");
+                String replace = clazz.getSimpleName();
+                s = s.replace(name, replace);
+            } else {
+                s = s.replace(clazz.getName(), clazz.getSimpleName());
+            }
+        }
         return s;
     }
 
