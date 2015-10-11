@@ -72,7 +72,13 @@ public class DefaultGraphvizPresenter implements Presenter {
     }
 
     private String describeDomainObject(DomainObject domainObject){
-        return "    " + domainObject.className + "\n";
+        return String.format("    %s [ label = \"{%s | %s}\" ] \n", domainObject.className, domainObject.className, describeDomainObjectMethods(domainObject));
+    }
+
+    private String describeDomainObjectMethods(DomainObject domainObject) {
+        StringBuilder sb = new StringBuilder();
+        domainObject.methods.stream().forEach((m) -> sb.append("+ " + m + "\\l"));
+        return sb.toString();
     }
 
     private String describeCompositions(List<Edge> edges) {

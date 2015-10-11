@@ -30,10 +30,10 @@ public class DomainObject {
         try {
             aClass = Class.forName(fqn);
             for (Field f: aClass.getFields()) {
-                fields.add(f.toString());
+                fields.add(formatFieldName(f));
             }
             for (Method m: aClass.getDeclaredMethods()) {
-                methods.add(m.toString());
+                methods.add(formatMethodName(m));
             }
         } catch (ClassNotFoundException e) {
             log.warn("Could not get class for name {}", fqn);
@@ -46,6 +46,18 @@ public class DomainObject {
 
     public DomainObject(Class<?> clazz) {
         this(clazz, null);
+    }
+
+    private String formatMethodName(Method method) {
+        final String replaceOld = method.getReturnType().getName();
+        final String replaceNew = method.getReturnType().getSimpleName();
+        final String remove = String.format("%s.%s.", packageName, className);
+        final String s = method.toString().replace(remove, "").replace(replaceOld, replaceNew);
+        return s;
+    }
+
+    private String formatFieldName(Field field) {
+        return field.toString();
     }
 
     public String getPackageName() {
