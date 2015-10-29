@@ -26,7 +26,7 @@ Add to your pom.xml the following:
 			<plugin>
 				<groupId>com.iluwatar</groupId>
 				<artifactId>urm-maven-plugin</artifactId>
-				<version>1.2.0</version>
+				<version>1.3.0</version>
 				<configuration>
 					<packages>
 						<param>com.mycompany.mypackage</param>
@@ -45,12 +45,19 @@ Add to your pom.xml the following:
 						</goals>
 					</execution>
 				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>com.iluwatar</groupId>
+						<artifactId>mediator</artifactId>
+						<version>1.6.0</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 		</plugins>
 	</build>
 
 where the `packages` configuration parameter contains a list of packages that should be included in the class diagram and
-the `ignores` configuration parameter contains a list of types that should be excluded from the class diagram.
+the `ignores` configuration parameter contains a list of types that should be excluded from the class diagram. `Dependencies` list should contain the artifacts where the classes are found.
 
 When `process-classes` life-cycle phase gets executed, the class diagram will be saved to `/target/urm.dot`. Use this file with your local Graphviz or any of the online Graphviz tools to show your class diagram.
 
