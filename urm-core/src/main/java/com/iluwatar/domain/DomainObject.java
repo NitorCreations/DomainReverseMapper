@@ -37,7 +37,7 @@ public class DomainObject {
             }
             methods.sort(String::compareTo);
         } catch (ClassNotFoundException e) {
-            log.warn("Could not get class for name {}", fqn);
+            log.error("Could not get class for name {} Check that the plugin has declared the required dependencies!", fqn);
         }
     }
 
