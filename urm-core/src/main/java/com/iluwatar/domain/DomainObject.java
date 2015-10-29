@@ -31,7 +31,7 @@ public class DomainObject {
         try {
             aClass = Class.forName(fqn);
             for (Method m: aClass.getDeclaredMethods()) {
-                if (!IGNORED_METHODS.contains(formatMethodName(m))) {
+                if (!IGNORED_METHODS.contains(formatMethodName(m)) && !isLambda(formatMethodName(m))) {
                     methods.add(formatMethodName(m));
                 }
             }
@@ -39,6 +39,10 @@ public class DomainObject {
         } catch (ClassNotFoundException e) {
             log.error("Could not get class for name {} Check that the plugin has declared the required dependencies!", fqn);
         }
+    }
+
+    private boolean isLambda(String s) {
+        return s.contains("lambda$");
     }
 
     public DomainObject(Class<?> clazz, String description) {
