@@ -42,8 +42,8 @@ public class DomainMapper {
 
     public static DomainMapper create(List<String> packages, List<String> ignores, URLClassLoader classLoader) throws ClassNotFoundException {
         List<Class<?>> allClasses = DomainClassFinder.findClasses(packages, ignores, classLoader);
-        log.info("Found " + allClasses.size() + " classes.");
-        allClasses.stream().forEach(clazz -> System.out.println(clazz.getName()));
+        log.debug("Found " + allClasses.size() + " classes.");
+        allClasses.stream().forEach(clazz -> log.debug(clazz.getName()));
         return new DomainMapper(allClasses);
     }
 
