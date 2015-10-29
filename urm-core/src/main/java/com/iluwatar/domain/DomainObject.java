@@ -8,11 +8,14 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class DomainObject {
 
     private static final Logger log = LoggerFactory.getLogger(DomainObject.class);
+
+    private static final List<String> IGNORED_METHODS = Arrays.asList("private static boolean[] $jacocoInit()");
 
     public final String packageName;
     public final String className;
@@ -28,8 +31,11 @@ public class DomainObject {
         try {
             aClass = Class.forName(fqn);
             for (Method m: aClass.getDeclaredMethods()) {
-                methods.add(formatMethodName(m));
+                if (!IGNORED_METHODS.contains(formatMethodName(m))) {
+                    methods.add(formatMethodName(m));
+                }
             }
+            methods.sort(String::compareTo);
         } catch (ClassNotFoundException e) {
             log.warn("Could not get class for name {}", fqn);
         }
