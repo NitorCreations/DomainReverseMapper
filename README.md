@@ -65,8 +65,5 @@ When `process-classes` life-cycle phase gets executed, the class diagram will be
 
 Here are some class diagrams generated with the `urm-maven-plugin`.
 
-![Prototype](prototype.dot.png "Prototype")
 ![Poison Pill](poisonpill.dot.png "Poison Pill")
 ![Mediator](mediator.dot.png "Mediator")
-![Flux](flux.dot.png "Flux")
-![Bridge](bridge.dot.png "Bridge")
