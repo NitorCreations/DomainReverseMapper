@@ -1,7 +1,7 @@
 package com.iluwatar.scanners;
 
 import com.google.common.collect.Lists;
-import com.iluwatar.domain.DomainObject;
+import com.iluwatar.domain.DomainClass;
 import com.iluwatar.domain.Edge;
 import com.iluwatar.domain.EdgeType;
 
@@ -18,8 +18,8 @@ import static java.util.stream.Collectors.toList;
 public class EdgeOperations {
 
     public static Edge createEdge(Class<?> sourceClass, Class<?> field, EdgeType type, String name) {
-        DomainObject source = new DomainObject(sourceClass, name);
-        DomainObject target = new DomainObject(field);
+        DomainClass source = new DomainClass(sourceClass, name);
+        DomainClass target = new DomainClass(field);
         return new Edge(source, target, type, UNI_DIRECTIONAL);
     }
 
@@ -70,7 +70,7 @@ public class EdgeOperations {
 
     private static List<List<Edge>> groupBySource(List<Edge> edges) {
         return Lists.newArrayList(edges.stream()
-                .collect(groupingBy(edge -> edge.source.className))
+                .collect(groupingBy(edge -> edge.source.getClassName()))
                 .values());
     }
 
@@ -81,8 +81,8 @@ public class EdgeOperations {
     }
 
     private static UnorderedTuple<?, ?> sameSourceAndTarget(Edge edge) {
-        String sourceId = edge.source.packageName + "." + edge.source.className;
-        String targetId = edge.target.packageName + "." + edge.target.className;
+        String sourceId = edge.source.getPackageName() + "." + edge.source.getClassName();
+        String targetId = edge.target.getPackageName() + "." + edge.target.getClassName();
         return UnorderedTuple.of(sourceId, targetId);
     }
 
@@ -102,10 +102,10 @@ public class EdgeOperations {
     }
 
     private static boolean isSameRelation(Edge d, Edge e) {
-        return d.source.packageName.equals(e.source.packageName) &&
-                d.source.className.equals(e.source.className) &&
-                d.target.packageName.equals(e.target.packageName) &&
-                d.target.className.equals(e.target.className) &&
+        return d.source.getPackageName().equals(e.source.getPackageName()) &&
+                d.source.getClassName().equals(e.source.getClassName()) &&
+                d.target.getPackageName().equals(e.target.getPackageName()) &&
+                d.target.getClassName().equals(e.target.getClassName()) &&
                 d.type.equals(e.type) &&
                 d.direction.equals(e.direction);
     }

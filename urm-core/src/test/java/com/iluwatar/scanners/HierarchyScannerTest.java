@@ -1,7 +1,7 @@
 package com.iluwatar.scanners;
 
 import com.google.common.collect.Lists;
-import com.iluwatar.domain.DomainObject;
+import com.iluwatar.domain.DomainClass;
 import com.iluwatar.domain.Edge;
 import com.iluwatar.domain.EdgeType;
 import org.junit.Test;
@@ -14,14 +14,14 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 
 public class HierarchyScannerTest {
 
-    private Edge parentToChild = new Edge(new DomainObject(Child.class),
-            new DomainObject(Parent.class), EdgeType.EXTENDS);
-    private Edge childToGrandChild = new Edge(new DomainObject(GrandChild.class),
-            new DomainObject(Child.class), EdgeType.EXTENDS);
-    private Edge carToVehicle = new Edge(new DomainObject(Car.class),
-            new DomainObject(Vehicle.class), EdgeType.EXTENDS);
-    private Edge carToTransport = new Edge(new DomainObject(Car.class),
-            new DomainObject(Transport.class), EdgeType.EXTENDS);
+    private Edge parentToChild = new Edge(new DomainClass(Child.class),
+            new DomainClass(Parent.class), EdgeType.EXTENDS);
+    private Edge childToGrandChild = new Edge(new DomainClass(GrandChild.class),
+            new DomainClass(Child.class), EdgeType.EXTENDS);
+    private Edge carToVehicle = new Edge(new DomainClass(Car.class),
+            new DomainClass(Vehicle.class), EdgeType.EXTENDS);
+    private Edge carToTransport = new Edge(new DomainClass(Car.class),
+            new DomainClass(Transport.class), EdgeType.EXTENDS);
 
     @Test
     public void createsProperHierarchy() {

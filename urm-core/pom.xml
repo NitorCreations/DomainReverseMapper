@@ -55,6 +55,10 @@
             <groupId>net.sf.qualitycheck</groupId>
             <artifactId>quality-test</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.thoughtworks.paranamer</groupId>
+            <artifactId>paranamer</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

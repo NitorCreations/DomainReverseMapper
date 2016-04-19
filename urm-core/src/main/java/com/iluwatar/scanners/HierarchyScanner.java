@@ -1,6 +1,6 @@
 package com.iluwatar.scanners;
 
-import com.iluwatar.domain.DomainObject;
+import com.iluwatar.domain.DomainClass;
 import com.iluwatar.domain.Edge;
 import com.iluwatar.domain.EdgeType;
 
@@ -20,16 +20,16 @@ public class HierarchyScanner extends AbstractScanner {
             Class<?>[] interfaces = clazz.getInterfaces();
             for (Class<?> interfaze: interfaces) {
                 if (isDomainClass(interfaze)) {
-                    DomainObject child = new DomainObject(clazz);
-                    DomainObject parent = new DomainObject(interfaze);
+                    DomainClass child = new DomainClass(clazz);
+                    DomainClass parent = new DomainClass(interfaze);
                     edges.add(new Edge(child, parent, EdgeType.EXTENDS));
                 }
             }
             // show superclass
             Class<?> superclass = clazz.getSuperclass();
             if (isDomainClass(superclass)) {
-                DomainObject child = new DomainObject(clazz);
-                DomainObject parent = new DomainObject(superclass);
+                DomainClass child = new DomainClass(clazz);
+                DomainClass parent = new DomainClass(superclass);
                 edges.add(new Edge(child, parent, EdgeType.EXTENDS));
             }
         }

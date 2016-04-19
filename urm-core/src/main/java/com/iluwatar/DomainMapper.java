@@ -1,9 +1,9 @@
 package com.iluwatar;
 
-import com.iluwatar.domain.DomainObject;
+import com.iluwatar.domain.DomainClass;
 import com.iluwatar.domain.Edge;
-import com.iluwatar.presenters.DefaultGraphvizPresenter;
 import com.iluwatar.presenters.Presenter;
+import com.iluwatar.presenters.Representation;
 import com.iluwatar.scanners.FieldScanner;
 import com.iluwatar.scanners.HierarchyScanner;
 import org.slf4j.Logger;
@@ -20,19 +20,20 @@ public class DomainMapper {
     private final FieldScanner fieldScanner;
     private final HierarchyScanner hierarchyScanner;
     private final List<Class<?>> classes;
-    private final Presenter presenter = new DefaultGraphvizPresenter();
+    private final Presenter presenter;
 
-    DomainMapper(final List<Class<?>> classes) {
+    DomainMapper(Presenter presenter, final List<Class<?>> classes) {
+        this.presenter = presenter;
         this.classes = classes;
         fieldScanner = new FieldScanner(classes);
         hierarchyScanner = new HierarchyScanner(classes);
     }
 
-    public String describeDomain() throws ClassNotFoundException {
+    public Representation describeDomain() throws ClassNotFoundException {
         List<Edge> edges = new ArrayList<>();
         edges.addAll(fieldScanner.getEdges());
         edges.addAll(hierarchyScanner.getEdges());
-        List<DomainObject> domainObjects = classes.stream().map(DomainObject::new).collect(Collectors.toList());
+        List<DomainClass> domainObjects = classes.stream().map(DomainClass::new).collect(Collectors.toList());
         return presenter.describe(domainObjects, edges);
     }
 
@@ -40,18 +41,20 @@ public class DomainMapper {
         return classes;
     }
 
-    public static DomainMapper create(List<String> packages, List<String> ignores, URLClassLoader classLoader) throws ClassNotFoundException {
+    public static DomainMapper create(Presenter presenter, List<String> packages, List<String> ignores,
+                                      URLClassLoader classLoader) throws ClassNotFoundException {
         List<Class<?>> allClasses = DomainClassFinder.findClasses(packages, ignores, classLoader);
         log.debug("Found " + allClasses.size() + " classes.");
         allClasses.stream().forEach(clazz -> log.debug(clazz.getName()));
-        return new DomainMapper(allClasses);
+        return new DomainMapper(presenter, allClasses);
     }
 
-    public static DomainMapper create(final List<String> packages, List<String> ignores) throws ClassNotFoundException {
-        return create(packages, ignores, null);
+    public static DomainMapper create(Presenter presenter, final List<String> packages, List<String> ignores)
+            throws ClassNotFoundException {
+        return create(presenter, packages, ignores, null);
     }
 
-    public static DomainMapper create(final List<String> packages) throws ClassNotFoundException {
-        return create(packages, new ArrayList<>(), null);
+    public static DomainMapper create(Presenter presenter, final List<String> packages) throws ClassNotFoundException {
+        return create(presenter, packages, new ArrayList<>(), null);
     }
 }

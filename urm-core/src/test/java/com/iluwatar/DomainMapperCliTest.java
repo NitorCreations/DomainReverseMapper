@@ -58,5 +58,10 @@ public class DomainMapperCliTest extends DomainMapperCli { // extends to silence
         Files.delete(Paths.get("foofile.txt"));
     }
 
+    @Test
+    public void customWithSinglePackage() throws Exception {
+        cli.run(new String[]{"-p", "com.iluwatar.async.method.invocation"});
+        assertThat(cli.domainMapper.getClasses().size(), is(4));
+    }
 
 }

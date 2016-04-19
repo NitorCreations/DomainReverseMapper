@@ -1,11 +1,14 @@
 package com.iluwatar.scanners;
 
 import com.iluwatar.domain.Direction;
-import com.iluwatar.domain.DomainObject;
+import com.iluwatar.domain.DomainClass;
 import com.iluwatar.domain.Edge;
 import com.iluwatar.domain.EdgeType;
 import com.iluwatar.testdomain.*;
-import com.iluwatar.testdomain.family.*;
+import com.iluwatar.testdomain.family.Child;
+import com.iluwatar.testdomain.family.Husband;
+import com.iluwatar.testdomain.family.Mother;
+import com.iluwatar.testdomain.family.Wife;
 import com.iluwatar.testdomain.person.DoubleReferer;
 import com.iluwatar.testdomain.person.Manager;
 import com.iluwatar.testdomain.person.Person;
@@ -19,7 +22,6 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
 
 public class FieldScannerTest {
@@ -132,8 +134,8 @@ public class FieldScannerTest {
                                        Class<?> target, String targetDescription,
                                        EdgeType type, Direction direction) {
         return new Edge(
-                new DomainObject(source, sourceDescription),
-                new DomainObject(target, targetDescription),
+                new DomainClass(source, sourceDescription),
+                new DomainClass(target, targetDescription),
                 type,
                 direction
         );

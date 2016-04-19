@@ -17,7 +17,7 @@ public class EdgeTest {
 
     @Test
     public void toStringWorks() {
-        String toString = new Edge(new DomainObject(Person.class), new DomainObject(Manager.class), EdgeType.ONE_TO_ONE, Direction.BI_DIRECTIONAL).toString();
+        String toString = new Edge(new DomainClass(Person.class), new DomainClass(Manager.class), EdgeType.ONE_TO_ONE, Direction.BI_DIRECTIONAL).toString();
         assertThat(toString, containsString("source"));
         assertThat(toString, containsString("target"));
     }

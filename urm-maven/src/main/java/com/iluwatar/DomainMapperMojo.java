@@ -1,6 +1,7 @@
 package com.iluwatar;
 
-import com.iluwatar.DomainMapper;
+import com.iluwatar.presenters.Presenter;
+import com.iluwatar.presenters.Representation;
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -28,6 +29,8 @@ public class DomainMapperMojo extends AbstractMojo {
     private List<String> packages;
     @Parameter(property = "map.ignores", required = false)
     private List<String> ignores;
+    @Parameter(property = "presenter", required = false)
+    private String presenterString;
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
@@ -35,8 +38,11 @@ public class DomainMapperMojo extends AbstractMojo {
             throw new MojoFailureException("No packages defined for scanning.");
         try {
             List<URL> projectClasspathList = getClasspathUrls();
-            DomainMapper mapper = DomainMapper.create(packages, ignores, new URLClassLoader(projectClasspathList.toArray(new URL[projectClasspathList.size()])));
-            Files.write(Paths.get(outputDirectory.getPath(), "urm.dot"), mapper.describeDomain().getBytes());
+            Presenter presenter = Presenter.parse(presenterString);
+            DomainMapper mapper = DomainMapper.create(presenter, packages, ignores, new URLClassLoader(projectClasspathList.toArray(new URL[projectClasspathList.size()])));
+            Representation representation = mapper.describeDomain();
+            String fileName = "urm." + representation.getFileEnding();
+            Files.write(Paths.get(outputDirectory.getPath(), fileName), representation.getContent().getBytes());
         } catch (ClassNotFoundException | DependencyResolutionRequiredException | IOException e) {
             throw new MojoExecutionException(e.getMessage(), e);
         }

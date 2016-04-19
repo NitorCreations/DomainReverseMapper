@@ -1,6 +1,6 @@
 package com.iluwatar.presenters;
 
-import com.iluwatar.domain.DomainObject;
+import com.iluwatar.domain.DomainClass;
 import com.iluwatar.domain.Edge;
 import com.iluwatar.domain.EdgeType;
 
@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.joining;
 
-public class DefaultGraphvizPresenter implements Presenter {
+public class GraphvizPresenter implements Presenter {
 
     public static final String DOMAIN_DECLARATION = "digraph domain {\n";
     public static final String DEFAULTS = "  edge [ fontsize = 11 ];\n  node [ shape=record ];";
@@ -25,10 +25,10 @@ public class DefaultGraphvizPresenter implements Presenter {
     }
 
     private String linkDirection(Edge edge) {
-        if (edge.source.description == null) {
+        if (edge.source.getDescription() == null) {
             return "dir=forward arrowhead=odiamond color=slategray";
         }
-        if (edge.target.description == null) {
+        if (edge.target.getDescription() == null) {
             return "dir=back arrowtail=odiamond color=slategray";
         }
         return "dir=both arrowhead=none arrowtail=none color=slategray";
@@ -43,42 +43,42 @@ public class DefaultGraphvizPresenter implements Presenter {
 
     private String describeInheritance(Edge hierarchyEdge) {
         return String.format("  %s -> %s [%s];\n",
-                hierarchyEdge.source.className,
-                hierarchyEdge.target.className,
+                hierarchyEdge.source.getClassName(),
+                hierarchyEdge.target.getClassName(),
                 INHERITANCE_STYLE);
     }
 
-    private String describePackages(List<DomainObject> domainObjects) {
+    private String describePackages(List<DomainClass> domainObjects) {
         count.set(0);
         return domainObjects.stream()
-                .collect(groupingBy(DomainObject::getPackageName))
+                .collect(groupingBy(DomainClass::getPackageName))
                 .entrySet().stream()
                 .map(this::describePackage)
                 .collect(joining());
     }
 
-    private String describePackage(Map.Entry<String, List<DomainObject>> entry) {
+    private String describePackage(Map.Entry<String, List<DomainClass>> entry) {
         return String.format("  subgraph cluster_%s {\n    label = \"%s\";\n%s  }\n",
                 count.getAndIncrement(),
                 entry.getKey(),
                 listDomainObjects(entry.getValue()));
     }
 
-    private String listDomainObjects(List<DomainObject> domainObjects) {
+    private String listDomainObjects(List<DomainClass> domainObjects) {
         return domainObjects.stream()
                 .map(domainObject -> describeDomainObject(domainObject))
                 .distinct()
                 .collect(joining());
     }
 
-    private String describeDomainObject(DomainObject domainObject){
-        return String.format("    %s [ label = \"{%s | %s}\" ] \n", domainObject.className, domainObject.className,
+    private String describeDomainObject(DomainClass domainObject){
+        return String.format("    %s [ label = \"{%s | %s}\" ] \n", domainObject.getClassName(), domainObject.getClassName(),
                 describeDomainObjectMethods(domainObject));
     }
 
-    private String describeDomainObjectMethods(DomainObject domainObject) {
+    private String describeDomainObjectMethods(DomainClass domainObject) {
         StringBuilder sb = new StringBuilder();
-        domainObject.methods.stream().forEach((m) -> sb.append("+ " + m + "\\l"));
+        domainObject.getMethods().stream().forEach((m) -> sb.append("+ " + m + "\\l"));
         return sb.toString();
     }
 
@@ -94,15 +94,16 @@ public class DefaultGraphvizPresenter implements Presenter {
     }
 
     private String describeEdge(Edge edge) {
-        return String.format("%s -> %s [%s];", edge.source.className, edge.target.className, getEdgeDescription(edge));
+        return String.format("%s -> %s [%s];", edge.source.getClassName(), edge.target.getClassName(), getEdgeDescription(edge));
     }
 
     @Override
-    public String describe(List<DomainObject> domainObjects, List<Edge> edges) {
-        return DOMAIN_DECLARATION + DEFAULTS + "\n"
+    public Representation describe(List<DomainClass> domainObjects, List<Edge> edges) {
+        String content = DOMAIN_DECLARATION + DEFAULTS + "\n"
                 + describePackages(domainObjects)
                 + describeCompositions(edges)
                 + describeInheritance(edges)
                 + "}";
+        return new Representation(content, "dot");
     }
 }

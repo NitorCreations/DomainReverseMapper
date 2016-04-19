@@ -12,26 +12,26 @@ public class DomainObjectTest {
 
     @Test
     public void domainObjectConstructedProperlyFromClass() {
-        DomainObject viaClassConstructor = new DomainObject(DomainObjectTest.class);
+        DomainClass viaClassConstructor = new DomainClass(DomainObjectTest.class);
         assertThat(viaClassConstructor,
                 new DomainObjectAssertion("com.iluwatar.domain", "DomainObjectTest"));
     }
 
     @Test
     public void domainConstructedProperlyFromInnerClass() {
-        DomainObject viaClassConstructor = new DomainObject(DomainObjectTest.DomainObjectAssertion.class);
+        DomainClass viaClassConstructor = new DomainClass(DomainObjectTest.DomainObjectAssertion.class);
         assertThat(viaClassConstructor,
                 new DomainObjectAssertion("com.iluwatar.domain", "DomainObjectAssertion"));
     }
 
     @Test
     public void toStringWorks() {
-        String toString = new DomainObject(DomainObjectAssertion.class).toString();
+        String toString = new DomainClass(DomainObjectAssertion.class).toString();
         assertThat(toString, containsString("packageName"));
         assertThat(toString, containsString("className"));
     }
 
-    private static class DomainObjectAssertion extends TypeSafeMatcher<DomainObject> {
+    private static class DomainObjectAssertion extends TypeSafeMatcher<DomainClass> {
         private String expectedPackageName;
         private String expectedClassName;
 
@@ -46,9 +46,9 @@ public class DomainObjectTest {
         }
 
         @Override
-        protected boolean matchesSafely(DomainObject domainObject) {
-            assertThat(domainObject.packageName, is(expectedPackageName));
-            assertThat(domainObject.className, is(expectedClassName));
+        protected boolean matchesSafely(DomainClass domainObject) {
+            assertThat(domainObject.getPackageName(), is(expectedPackageName));
+            assertThat(domainObject.getClassName(), is(expectedClassName));
             return true;
         }
     }

@@ -1,5 +1,7 @@
 package com.iluwatar;
 
+import com.iluwatar.presenters.Presenter;
+import com.iluwatar.presenters.Representation;
 import org.apache.commons.cli.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +31,8 @@ public class DomainMapperCli {
         options.addOption(OptionBuilder.withArgName("package").hasArgs().isRequired().create('p'));
         options.addOption("i", "ignore", true, "comma separated list of ignored types");
         options.addOption(OptionBuilder.withArgName("ignore").hasArgs().isRequired(false).create('i'));
+        options.addOption("s", "presenter", true, "presenter to be used");
+        options.addOption(OptionBuilder.withArgName("presenter").hasArgs().isRequired(false).create('s'));
         try {
             CommandLine line = parser.parse(options, args);
             String[] packages = line.getOptionValue("p").split(",[ ]*");
@@ -46,13 +50,16 @@ public class DomainMapperCli {
                     }
                 }
             }
-            domainMapper = DomainMapper.create(Arrays.asList(packages), ignores == null ? new ArrayList<>() : Arrays.asList(ignores));
+
+            Presenter presenter = Presenter.parse(line.getOptionValue("i"));
+            domainMapper = DomainMapper.create(presenter, Arrays.asList(packages), ignores == null ? new ArrayList<>() : Arrays.asList(ignores));
+            Representation representation = domainMapper.describeDomain();
             if (line.hasOption('f')) {
                 String filename = line.getOptionValue('f');
-                Files.write(Paths.get(filename), domainMapper.describeDomain().getBytes());
-                log.info("Wrote dot to file " + filename);
+                Files.write(Paths.get(filename), representation.getContent().getBytes());
+                log.info("Wrote to file " + filename);
             } else {
-                log.info(domainMapper.describeDomain());
+                log.info(representation.getContent());
             }
         } catch (ParseException exp) {
             log.info(exp.getMessage());
