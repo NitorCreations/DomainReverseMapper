@@ -103,7 +103,7 @@ public class DomainMapperGraphvizTest {
         String task = "Task [ label = \"{Task" +
                 " | + addEmployee(e : Employee)" +
                 "\\l+ completeTask()" +
-                "\\l+ getAssignedEmployees() : List" +
+                "\\l+ getAssignedEmployees() : List<Employee>" +
                 "\\l+ getManager() : Manager" +
                 "\\l+ removeEmployee(e : Employee)" +
                 "\\l}\" ]";
