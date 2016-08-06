@@ -1,0 +1,129 @@
+package de.markusmo3.urm.domain;
+
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.lang.reflect.Modifier;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
+/**
+ * Created by moe on 09.04.16.
+ */
+public class DomainClass {
+
+    private static final Logger log = LoggerFactory.getLogger(DomainClass.class);
+
+    private static final List<String> IGNORED_METHODS = Arrays.asList("private static boolean[] $jacocoInit()");
+    private static final List<String> IGNORED_FIELDS = Arrays.asList("private static boolean[] $jacocoInit()");
+
+    private Class<?> clazz;
+    private String description;
+    private transient List<DomainField> fieldList;
+    private transient List<DomainConstructor> constructorList;
+    private transient List<DomainMethod> methodList;
+
+    public DomainClass(Class<?> clazz, String description) {
+        this.clazz = clazz;
+        this.description = description;
+    }
+
+    public DomainClass(Class<?> clazz) {
+        this(clazz, null);
+    }
+
+    private boolean isLambda(String s) {
+        return s.contains("lambda$");
+    }
+
+    public String getPackageName() {
+        return clazz.getPackage().getName();
+    }
+
+    public String getClassName() {
+        return clazz.getSimpleName();
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+
+    public List<DomainField> getFields() {
+        if (fieldList == null) {
+            fieldList = Arrays.stream(clazz.getDeclaredFields())
+                    .filter(f -> !(f.getDeclaringClass().isEnum() && f.getName().equals("$VALUES")))
+                    .filter(f -> !f.isSynthetic())
+                    .filter(f -> !IGNORED_FIELDS.contains(f))
+                    .map(DomainField::new)
+                    .sorted(Comparator.comparing(DomainField::getUmlName))
+                    .collect(Collectors.toList());
+        }
+        return fieldList;
+    }
+
+    public List<DomainConstructor> getConstructors() {
+        if (constructorList == null) {
+            if (clazz.isEnum()) {
+                // Enums only have the Native Constructor...
+                constructorList = Collections.emptyList();
+            } else {
+                constructorList = Arrays.stream(clazz.getDeclaredConstructors())
+                        .filter(c -> !c.isSynthetic())
+                        .map(DomainConstructor::new)
+                        .sorted(Comparator.comparing(DomainConstructor::getUmlName))
+                        .collect(Collectors.toList());
+            }
+        }
+        return constructorList;
+    }
+
+    public List<DomainMethod> getMethods() {
+        if (methodList == null) {
+            methodList = Arrays.stream(clazz.getDeclaredMethods())
+                    .filter(m -> !m.isSynthetic())
+                    .map(DomainMethod::new)
+                    .filter(m -> !IGNORED_METHODS.contains(m.getUmlName()) && !isLambda(m.getUmlName()))
+                    .sorted(Comparator.comparing(DomainExecutable::getUmlName))
+                    .collect(Collectors.toList());
+        }
+        return methodList;
+    }
+
+    @Override
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return EqualsBuilder.reflectionEquals(this, obj);
+    }
+
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this);
+    }
+
+    public DomainClassType getClassType() {
+        if (clazz.isInterface()) {
+            return DomainClassType.INTERFACE;
+        } else if (clazz.isEnum()) {
+            return DomainClassType.ENUM;
+        } else if (clazz.isAnnotation()) {
+            return DomainClassType.ANNOTATION;
+        } else {
+            return DomainClassType.CLASS;
+        }
+    }
+
+    public boolean isAbstract() {
+        return Modifier.isAbstract(clazz.getModifiers());
+    }
+}

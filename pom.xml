@@ -2,23 +2,28 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.iluwatar</groupId>
+    <groupId>de.markusmo3.urm</groupId>
     <artifactId>urm-parent</artifactId>
     <version>1.4.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>UML Reverse Mapper</name>
     <description>Automatically generate Graphviz based class diagram from your code</description>
-    <url>https://github.com/iluwatar/uml-reverse-mapper</url>
+    <url>https://github.com/markusmo3/uml-reverse-mapper</url>
     <scm>
-        <developerConnection>scm:git:git@github.com:iluwatar/uml-reverse-mapper.git</developerConnection>
-        <connection>scm:git:git@github.com:iluwatar/uml-reverse-mapper.git</connection>
-        <url>git@github.com:iluwatar/uml-reverse-mapper.git</url>
+        <developerConnection>scm:git:git@github.com:markusmo3/uml-reverse-mapper.git</developerConnection>
+        <connection>scm:git:git@github.com:markusmo3/uml-reverse-mapper.git</connection>
+        <url>git@github.com:markusmo3/uml-reverse-mapper.git</url>
     </scm>
     <inceptionYear>2013</inceptionYear>
     <prerequisites>
         <maven>3.0.4</maven>
     </prerequisites>
     <developers>
+        <developer>
+            <id>markusmo3</id>
+            <name>Markus Moser</name>
+            <email>markusmo3@zoho.com</email>
+        </developer>
         <developer>
             <id>iluwatar</id>
             <name>Ilkka Seppälä</name>
@@ -65,7 +70,7 @@
                 <plugin>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>0.7.5.201505241946</version>
+                    <version>0.7.7.201606060606</version>
                     <configuration>
                         <excludes>
                             <exclude>**/HelpMojo.class</exclude>
@@ -107,6 +112,14 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
                     <version>2.9.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.19.1</version>
+                    <configuration>
+                        <useSystemClassLoader>false</useSystemClassLoader>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
