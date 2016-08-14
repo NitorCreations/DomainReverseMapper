@@ -75,8 +75,9 @@ public class FieldScanner extends AbstractScanner {
 
                 @Override
                 public void visitInnerClass(String name, String outerName, String innerName, int access) {
-                    if (innerName == null || outerName == null) {
-                        // if anonymous class -> abort
+                    if (innerName == null || outerName == null
+                            || name.startsWith("java/lang/")) {
+                        // abort if anonymous or standard java class (latter needed because of java.util.MethodHandles)
                         return;
                     }
                     Class<?> outerClass = ReflectionUtils.forName(outerName.replaceAll("/", "."), DomainClassFinder.classLoaders);

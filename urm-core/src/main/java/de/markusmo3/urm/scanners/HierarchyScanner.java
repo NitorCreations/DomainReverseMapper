@@ -32,13 +32,6 @@ public class HierarchyScanner extends AbstractScanner {
                 DomainClass parent = new DomainClass(superclass);
                 edges.add(new Edge(child, parent, EdgeType.EXTENDS));
             }
-            // show declaringClass
-            Class<?> declaringClass = clazz.getDeclaringClass();
-            if (declaringClass != null && isDomainClass(declaringClass)) {
-                DomainClass child = new DomainClass(clazz);
-                DomainClass parent = new DomainClass(declaringClass);
-                edges.add(new Edge(child, parent, EdgeType.STATIC_INNER_CLASS));
-            }
         }
         return edges;
     }
