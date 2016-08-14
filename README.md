@@ -64,3 +64,7 @@ Graphviz or any of the online Graphviz tools to show your class diagram.
 
 Here are some class diagrams generated with the `urm-maven-plugin` and the PlantUML Presenter as well as PlantUML's
 free generation/hosting service.
+
+[![Async Method Invocation](http://plantuml.com/plantuml/png/3SlB3G8n303HLg2090TkT6Ey5easjYD_5kYUdERmDFSXEFEWj7dh4SkVhHbywdj4prSw6Qe4ILHKRWnsfhC-Ml8iHXUPKs5OYsoZnmvzWTSaR-0_mS8KNOyov5A462erZUlQ_ny0)](https://github.com/markusmo3/uml-reverse-mapper/blob/master/examples/async-method-invocation.urm.puml)
+[![Builder](http://plantuml.com/plantuml/png/3ShB4S8m34NHLg20M0jsTECuRuW7oTRear0-Njt5kSy-6kU1D7wS4Ufl8gjt-VGuSq-7jJa28qgRGbBjcoxpHIcy6IwOOvEg2bleiO9V5MKuxTdvW9KqARh-Fm00)](https://github.com/markusmo3/uml-reverse-mapper/blob/master/examples/builder.urm.puml)
+[![Datamapper](http://plantuml.com/plantuml/png/BSkx3SCm34NHLPm1B1Rkl0qZFyH6H8dW9_7uKP7g5WVtSVNQya1QMyu8zPt8-5jULvpvJ8VLqGCzIXr2mlPEbx5HIbiD7vXZ5LQ5JVIOmSsY3Ku71_-jf4dH-Vm0)](https://github.com/markusmo3/uml-reverse-mapper/blob/master/examples/data-mapper.urm.puml)
