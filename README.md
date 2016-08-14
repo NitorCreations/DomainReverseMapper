@@ -62,7 +62,5 @@ Graphviz or any of the online Graphviz tools to show your class diagram.
 
 ### Showcases
 
-Here are some class diagrams generated with the `urm-maven-plugin` and the PlantUML Presenter.
-
-![Poison Pill](async-method-invocation.png "Async Method Invocation")
-![Mediator](builder.png "Builder")
+Here are some class diagrams generated with the `urm-maven-plugin` and the PlantUML Presenter as well as PlantUML's
+free generation/hosting service.
