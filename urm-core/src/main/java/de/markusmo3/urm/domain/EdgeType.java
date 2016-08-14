@@ -16,7 +16,7 @@ public enum EdgeType {
                 case EXTENDS:
                 case INNER_CLASS:
                 case STATIC_INNER_CLASS:
-                    throw new RuntimeException("impossible");
+                    throw new RuntimeException("impossible! source: " + source + " | target: " + target);
             }
         }
         if (source.equals(ONE_TO_ONE)) {
@@ -24,7 +24,11 @@ public enum EdgeType {
         } else if (target.equals(ONE_TO_ONE)) {
             return source;
         }
-        throw new RuntimeException("impossible source: " + source + " | target: " + target);
+        throw new RuntimeException("impossible! source: " + source + " | target: " + target);
     }
 
+    public boolean isCardinality() {
+        return this == ONE_TO_ONE || this == ONE_TO_MANY
+                || this == MANY_TO_ONE || this == MANY_TO_MANY;
+    }
 }

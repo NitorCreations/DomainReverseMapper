@@ -18,19 +18,11 @@ public class DomainField {
             // If this is an enum constant, we dont need the type
             return field.getName();
         }
-        return field.getName() + " : " + field.getType().getSimpleName();
+        return field.getName() + " : " + TypeUtils.getSimpleName(field.getGenericType());
     }
 
     public Visibility getVisibility() {
-        if (Modifier.isPublic(field.getModifiers())) {
-            return Visibility.PUBLIC;
-        } else if (Modifier.isProtected(field.getModifiers())) {
-            return Visibility.PROTECTED;
-        } else if (Modifier.isPrivate(field.getModifiers())) {
-            return Visibility.PRIVATE;
-        } else {
-            return Visibility.DEFAULT;
-        }
+        return TypeUtils.getVisibility(field.getModifiers());
     }
 
     public DomainClass getType() {

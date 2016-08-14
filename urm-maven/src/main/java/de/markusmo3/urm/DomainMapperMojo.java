@@ -8,6 +8,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.*;
 import org.apache.maven.project.MavenProject;
+import org.reflections.Reflections;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,16 +34,33 @@ public class DomainMapperMojo extends AbstractMojo {
     private List<String> ignores;
     @Parameter(property = "presenter", required = false)
     private String presenterString;
+    @Parameter(property = "map.skipForProjects", required = false)
+    private List<String> skipForProjects;
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
+        if (skipForProjects != null && !skipForProjects.isEmpty()) {
+            String projectName = project.getName();
+            if (skipForProjects.contains(projectName)) {
+                getLog().info("Skip configured (in pom.xml) for current project \"" + projectName +"\". " +
+                        "Plugin will not be executed!");
+                return;
+            }
+        }
+
         if (packages.isEmpty())
             throw new MojoFailureException("No packages defined for scanning.");
         try {
             Presenter presenter = Presenter.parse(presenterString);
 
-            String fileName = "urm." + presenter.getFileEnding();
+            String fileName = project.getName() + ".urm." + presenter.getFileEnding();
             Path path = Paths.get(outputDirectory.getPath(), fileName);
+
+            if (!getLog().isDebugEnabled()) {
+                // nullify the Reflections logger to prevent it from spamming
+                // the console if we aren't in debug mode
+                Reflections.log = null;
+            }
 
             if (!Files.exists(path)) {
                 List<URL> projectClasspathList = getClasspathUrls();
@@ -51,8 +69,9 @@ public class DomainMapperMojo extends AbstractMojo {
 
                 Representation representation = mapper.describeDomain();
                 Files.write(path, representation.getContent().getBytes());
+                getLog().info(fileName + " successfully written to: \"" + path + "\"!");
             } else {
-                getLog().info("urm.puml already exists, file was not overwritten!");
+                getLog().info(fileName + " already exists, file was not overwritten!");
             }
         } catch (ClassNotFoundException | DependencyResolutionRequiredException | IOException e) {
             throw new MojoExecutionException(e.getMessage(), e);

@@ -3,6 +3,7 @@ package de.markusmo3.urm.domain;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,8 +21,8 @@ public class DomainClass {
 
     private static final Logger log = LoggerFactory.getLogger(DomainClass.class);
 
-    private static final List<String> IGNORED_METHODS = Arrays.asList("private static boolean[] $jacocoInit()");
-    private static final List<String> IGNORED_FIELDS = Arrays.asList("private static boolean[] $jacocoInit()");
+    protected static final List<String> IGNORED_METHODS = Arrays.asList("$jacocoInit");
+    protected static final List<String> IGNORED_FIELDS = Arrays.asList("$jacocoData");
 
     private Class<?> clazz;
     private String description;
@@ -46,6 +47,10 @@ public class DomainClass {
         return clazz.getPackage().getName();
     }
 
+    public String getUmlName() {
+        return TypeUtils.getSimpleName(clazz);
+    }
+
     public String getClassName() {
         return clazz.getSimpleName();
     }
@@ -54,13 +59,12 @@ public class DomainClass {
         return description;
     }
 
-
     public List<DomainField> getFields() {
         if (fieldList == null) {
             fieldList = Arrays.stream(clazz.getDeclaredFields())
                     .filter(f -> !(f.getDeclaringClass().isEnum() && f.getName().equals("$VALUES")))
                     .filter(f -> !f.isSynthetic())
-                    .filter(f -> !IGNORED_FIELDS.contains(f))
+                    .filter(f -> !IGNORED_FIELDS.contains(f.getName()))
                     .map(DomainField::new)
                     .sorted(Comparator.comparing(DomainField::getUmlName))
                     .collect(Collectors.toList());
@@ -89,7 +93,7 @@ public class DomainClass {
             methodList = Arrays.stream(clazz.getDeclaredMethods())
                     .filter(m -> !m.isSynthetic())
                     .map(DomainMethod::new)
-                    .filter(m -> !IGNORED_METHODS.contains(m.getUmlName()) && !isLambda(m.getUmlName()))
+                    .filter(m -> !IGNORED_METHODS.contains(m.getName()) && !isLambda(m.getName()))
                     .sorted(Comparator.comparing(DomainExecutable::getUmlName))
                     .collect(Collectors.toList());
         }
@@ -108,7 +112,11 @@ public class DomainClass {
 
     @Override
     public String toString() {
-        return ReflectionToStringBuilder.toString(this);
+        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+    }
+
+    public Visibility getVisibility() {
+        return TypeUtils.getVisibility(clazz.getModifiers());
     }
 
     public DomainClassType getClassType() {
@@ -126,4 +134,5 @@ public class DomainClass {
     public boolean isAbstract() {
         return Modifier.isAbstract(clazz.getModifiers());
     }
+
 }

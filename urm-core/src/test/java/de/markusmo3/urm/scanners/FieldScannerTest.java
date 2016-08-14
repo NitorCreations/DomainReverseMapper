@@ -53,6 +53,32 @@ public class FieldScannerTest {
 
     private final Edge innerClassToOuter = createReference(
             Outer.Inner.class, null, Outer.class, null, EdgeType.INNER_CLASS, Direction.UNI_DIRECTIONAL);
+    private final Edge staticInnerClassToOuter = createReference(
+            Outer.StaticInner.class, null, Outer.class, null, EdgeType.STATIC_INNER_CLASS, Direction.UNI_DIRECTIONAL);
+    private final Edge[] innerReferencingOuter = new Edge[] {
+            createReference(Outer.InnerReferencingOuter.class, null, Outer.class, null,
+                    EdgeType.INNER_CLASS, Direction.UNI_DIRECTIONAL),
+            createReference(Outer.InnerReferencingOuter.class, "outer", Outer.class, null,
+                    EdgeType.ONE_TO_ONE, Direction.UNI_DIRECTIONAL)
+    };
+    private final Edge[] innerReferencingMultipleOuter = new Edge[] {
+            createReference(Outer.InnerReferencingMultipleOuter.class, null, Outer.class, null,
+                    EdgeType.INNER_CLASS, Direction.UNI_DIRECTIONAL),
+            createReference(Outer.InnerReferencingMultipleOuter.class, "outerList", Outer.class, null,
+                    EdgeType.ONE_TO_MANY, Direction.UNI_DIRECTIONAL)
+    };
+    private final Edge[] outerReferencingInner = new Edge[] {
+            createReference(Outer.OuterReferencingInner.class, null, Outer.class, null,
+                    EdgeType.INNER_CLASS, Direction.UNI_DIRECTIONAL),
+            createReference(Outer.class, "outerReferencingInner", Outer.OuterReferencingInner.class, null,
+                    EdgeType.ONE_TO_ONE, Direction.UNI_DIRECTIONAL)
+    };
+    private final Edge[] outerReferencingMultipleInner = new Edge[] {
+            createReference(Outer.OuterReferencingMultipleInner.class, null, Outer.class, null,
+                    EdgeType.INNER_CLASS, Direction.UNI_DIRECTIONAL),
+            createReference(Outer.class, "outerReferencingInnerList", Outer.OuterReferencingMultipleInner.class, null,
+                    EdgeType.ONE_TO_MANY, Direction.UNI_DIRECTIONAL)
+    };
 
     private List<Class<?>> testedSetOfDomainClasses;
 
@@ -62,7 +88,7 @@ public class FieldScannerTest {
     }
 
     @Test
-    public void simpleReferenceChain() {
+    public void testSimpleReferenceChain() {
         testedSetOfDomainClasses.add(Timesheet.class);
         testedSetOfDomainClasses.add(Task.class);
         testedSetOfDomainClasses.add(Manager.class);
@@ -71,14 +97,14 @@ public class FieldScannerTest {
     }
 
     @Test
-    public void selfReference() {
+    public void testSelfReference() {
         testedSetOfDomainClasses.add(Selfie.class);
         List<Edge> edges = resolveEdges(testedSetOfDomainClasses);
         assertThat(edges, containsInAnyOrder(selfReference));
     }
 
     @Test
-    public void collectionReferences() {
+    public void testCollectionReferences() {
         testedSetOfDomainClasses.add(PhoneNumber.class);
         testedSetOfDomainClasses.add(Person.class);
         List<Edge> edges = resolveEdges(testedSetOfDomainClasses);
@@ -86,7 +112,7 @@ public class FieldScannerTest {
     }
 
     @Test
-    public void bidirectionalReferences() {
+    public void testBiDirectionalReferences() {
         testedSetOfDomainClasses.add(Company.class);
         testedSetOfDomainClasses.add(Person.class);
         testedSetOfDomainClasses.add(Husband.class);
@@ -96,7 +122,7 @@ public class FieldScannerTest {
     }
 
     @Test
-    public void multipleReferencesToSameDomainObject() {
+    public void testMultipleReferencesToSameDomainObject() {
         testedSetOfDomainClasses.add(Manager.class);
         testedSetOfDomainClasses.add(DoubleReferer.class);
         List<Edge> edges = resolveEdges(testedSetOfDomainClasses);
@@ -105,7 +131,7 @@ public class FieldScannerTest {
     }
 
     @Test
-    public void BiDirectionalReferencesMappedToBothReferences() {
+    public void testBiDirectionalReferencesMappedToBothReferences() {
         testedSetOfDomainClasses.add(Mother.class);
         testedSetOfDomainClasses.add(Child.class);
         List<Edge> edges = resolveEdges(testedSetOfDomainClasses);
@@ -113,11 +139,51 @@ public class FieldScannerTest {
     }
 
     @Test
-    public void InnerClass() {
+    public void testInnerClass() {
         testedSetOfDomainClasses.add(Outer.Inner.class);
         testedSetOfDomainClasses.add(Outer.class);
         List<Edge> edges = resolveEdges(testedSetOfDomainClasses);
         assertThat(edges, containsInAnyOrder(innerClassToOuter));
+    }
+
+    @Test
+    public void testStaticInnerClass() {
+        testedSetOfDomainClasses.add(Outer.StaticInner.class);
+        testedSetOfDomainClasses.add(Outer.class);
+        List<Edge> edges = resolveEdges(testedSetOfDomainClasses);
+        assertThat(edges, containsInAnyOrder(staticInnerClassToOuter));
+    }
+
+    @Test
+    public void testInnerReferencingOuter() {
+        testedSetOfDomainClasses.add(Outer.InnerReferencingOuter.class);
+        testedSetOfDomainClasses.add(Outer.class);
+        List<Edge> edges = resolveEdges(testedSetOfDomainClasses);
+        assertThat(edges, containsInAnyOrder(innerReferencingOuter));
+    }
+
+    @Test
+    public void testInnerReferencingMultipleOuter() {
+        testedSetOfDomainClasses.add(Outer.InnerReferencingMultipleOuter.class);
+        testedSetOfDomainClasses.add(Outer.class);
+        List<Edge> edges = resolveEdges(testedSetOfDomainClasses);
+        assertThat(edges, containsInAnyOrder(innerReferencingMultipleOuter));
+    }
+
+    @Test
+    public void testOuterReferencingInner() {
+        testedSetOfDomainClasses.add(Outer.OuterReferencingInner.class);
+        testedSetOfDomainClasses.add(Outer.class);
+        List<Edge> edges = resolveEdges(testedSetOfDomainClasses);
+        assertThat(edges, containsInAnyOrder(outerReferencingInner));
+    }
+
+    @Test
+    public void testOuterReferencingMultipleInner() {
+        testedSetOfDomainClasses.add(Outer.OuterReferencingMultipleInner.class);
+        testedSetOfDomainClasses.add(Outer.class);
+        List<Edge> edges = resolveEdges(testedSetOfDomainClasses);
+        assertThat(edges, containsInAnyOrder(outerReferencingMultipleInner));
     }
 
     @After

@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.org/markusmo3/uml-reverse-mapper.svg?branch=master)](https://travis-ci.org/iluwatar/uml-reverse-mapper)
-[![Coverage Status](https://coveralls.io/repos/markusmo3/uml-reverse-mapper/badge.svg?branch=master&service=github)](https://coveralls.io/github/markusmo3/uml-reverse-mapper?branch=master)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.markusmo3/urm-maven-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/de.markusmo3/urm-maven-plugin/)
+[![Build Status](https://travis-ci.org/markusmo3/uml-reverse-mapper.svg?branch=master)](https://travis-ci.org/markusmo3/uml-reverse-mapper)
+[![Coverage Status](https://coveralls.io/repos/github/markusmo3/uml-reverse-mapper/badge.svg)](https://coveralls.io/github/markusmo3/uml-reverse-mapper)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.markusmo3.urm/urm-maven-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/de.markusmo3.urm/urm-maven-plugin/)
 
 UML Reverse Mapper
 ===========================
@@ -28,6 +28,8 @@ Add to your pom.xml the following:
 				<artifactId>urm-maven-plugin</artifactId>
 				<version>1.4.0</version>
 				<configuration>
+				    <!-- if outputDirectory is not set explicitly it will default to your build dir -->
+                    <outputDirectory>${project.basedir}/etc</outputDirectory>
 					<packages>
 						<param>com.mycompany.mypackage</param>
 						<param>com.mycompany.other_package</param>
@@ -56,10 +58,13 @@ Add to your pom.xml the following:
 		</plugins>
 	</build>
 
-where the `packages` configuration parameter contains a list of packages that should be included in the class diagram and
-the `ignores` configuration parameter contains a list of types that should be excluded from the class diagram. `Dependencies` list should contain the artifacts where the classes are found.
+where the `packages` configuration parameter contains a list of packages that should be included in the class
+diagram and the `ignores` configuration parameter contains a list of types that should be excluded from the class
+diagram. `Dependencies` list should contain the artifacts where the classes are found.
 
-When `process-classes` life-cycle phase gets executed, the class diagram will be saved to `/target/urm.dot`. Use this file with your local Graphviz or any of the online Graphviz tools to show your class diagram.
+When `process-classes` life-cycle phase gets executed, the class diagram will be saved to
+`/target/${project.name}.urm.dot` or `/target/${project.name}.urm.puml`. Use this file with your local
+Graphviz or any of the online Graphviz tools to show your class diagram.
 
 ### Showcases
 

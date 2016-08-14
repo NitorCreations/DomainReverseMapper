@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.markusmo3.urm</groupId>
     <artifactId>urm-parent</artifactId>
-    <version>1.4.0-SNAPSHOT</version>
+    <version>1.4.0</version>
     <packaging>pom</packaging>
     <name>UML Reverse Mapper</name>
     <description>Automatically generate Graphviz based class diagram from your code</description>
@@ -133,7 +133,7 @@
                 <artifactId>coveralls-maven-plugin</artifactId>
                 <version>4.0.0</version>
                 <configuration>
-                    <repoToken>DXL65ozMuDPtJm18wyyfQ4Bssg29YnYXn</repoToken>
+                    <repoToken>0Jgis0PASFI1Z9fT8JEPEfaDuvWNx8LLw</repoToken>
                 </configuration>
             </plugin>
         </plugins>

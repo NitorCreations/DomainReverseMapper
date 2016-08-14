@@ -1,9 +1,6 @@
 package de.markusmo3.urm.presenters;
 
-import de.markusmo3.urm.domain.DomainClass;
-import de.markusmo3.urm.domain.DomainClassType;
-import de.markusmo3.urm.domain.Edge;
-import de.markusmo3.urm.domain.EdgeType;
+import de.markusmo3.urm.domain.*;
 
 import java.util.List;
 import java.util.Map;
@@ -75,20 +72,23 @@ public class PlantUMLPresenter implements Presenter {
     }
 
     private String describeDomainClassType(DomainClass domainClass) {
-        String className = domainClass.getClassName();
+        String visi = "";
+        if (domainClass.getVisibility() != Visibility.PUBLIC) {
+            visi = domainClass.getVisibility().toString();
+        }
+        String className = domainClass.getUmlName();
         switch (domainClass.getClassType()) {
             case CLASS: return (domainClass.isAbstract() ? "abstract " : "")
-                    + "class " + className;
-            case INTERFACE: return "interface " + className;
-            case ENUM: return "enum " + className;
-            case ANNOTATION: return "annotation " + className;
+                    + visi + "class " + className;
+            case INTERFACE: return visi + "interface " + className;
+            case ENUM: return visi + "enum " + className;
+            case ANNOTATION: return visi + "annotation " + className;
         }
         return className;
     }
 
     private String describeDomainClassFields(DomainClass domainClass) {
         String description = domainClass.getFields().stream()
-                .filter(df -> !domainClasses.contains(df.getType()))
                 .map(f -> f.getVisibility() + " " + f.getUmlName()
                         + (f.isStatic() ? " {static}" : "") + (f.isAbstract() ? " {abstract}" : ""))
                 .collect(Collectors.joining("\n    "));
@@ -130,8 +130,7 @@ public class PlantUMLPresenter implements Presenter {
         // Arrows pointing from Source to Target!
         switch (edge.type) {
             case STATIC_INNER_CLASS:
-                arrow = "+--";
-                arrowDescription = "static";
+                arrow = "+..";
                 break;
             case INNER_CLASS:
                 arrow = "+--";

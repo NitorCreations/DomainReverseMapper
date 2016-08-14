@@ -1,17 +1,20 @@
 package de.markusmo3.urm.scanners;
 
+import de.markusmo3.urm.DomainClassFinder;
 import de.markusmo3.urm.domain.Edge;
 import de.markusmo3.urm.domain.EdgeType;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.Opcodes;
+import org.reflections.ReflectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -69,6 +72,33 @@ public class FieldScanner extends AbstractScanner {
                     }
                     return super.visitField(access, name, desc, signature, value);
                 }
+
+                @Override
+                public void visitInnerClass(String name, String outerName, String innerName, int access) {
+                    if (innerName == null || outerName == null) {
+                        // if anonymous class -> abort
+                        return;
+                    }
+                    Class<?> outerClass = ReflectionUtils.forName(outerName.replaceAll("/", "."), DomainClassFinder.classLoaders);
+                    if (clazz.equals(outerClass)) {
+                        return;
+                    }
+
+                    Edge innerClassEdge = null;
+                    if ((clazz.getModifiers() & Modifier.STATIC) > 0) {
+                        innerClassEdge = EdgeOperations.createEdge(clazz, outerClass, EdgeType.STATIC_INNER_CLASS, NAME_FOR_INNERCLASS);
+                    } else {
+                        innerClassEdge = EdgeOperations.createEdge(clazz, outerClass, EdgeType.INNER_CLASS, NAME_FOR_INNERCLASS);
+                    }
+
+                    if (innerClassEdge != null) {
+                        if (!EdgeOperations.relationAlreadyExists(fieldEdges, innerClassEdge)) {
+                            fieldEdges.add(innerClassEdge);
+                        }
+                    }
+
+                    super.visitInnerClass(name, outerName, innerName, access);
+                }
             }, ClassReader.SKIP_CODE);
         } catch (IOException e) {
             logger.warn("Failed to read bytecode for class " + clazz.getName(), e);
@@ -81,10 +111,10 @@ public class FieldScanner extends AbstractScanner {
             return empty(); // to prevent self-referencing we ignore all enum constants
         }
         if (isDomainClass(field.getType())) {
-            if (innerClassFieldReferenceInBytecode.equals(field.getName())) {
-                return of(EdgeOperations.createEdge(clazz, (Class) field.getType(), EdgeType.INNER_CLASS, NAME_FOR_INNERCLASS));
+            if (!innerClassFieldReferenceInBytecode.equals(field.getName())) {
+                //return of(EdgeOperations.createEdge(clazz, (Class) field.getType(), EdgeType.INNER_CLASS, NAME_FOR_INNERCLASS));
+                return of(EdgeOperations.createEdge(clazz, (Class) field.getType(), EdgeType.ONE_TO_ONE, field.getName()));
             }
-            return of(EdgeOperations.createEdge(clazz, (Class) field.getType(), EdgeType.ONE_TO_ONE, field.getName()));
         }
         if (isCollection(field)) {
             Optional<Class<?>> classInCollection = getDomainClassFromCollection(field);

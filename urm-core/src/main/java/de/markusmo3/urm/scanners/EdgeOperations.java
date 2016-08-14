@@ -33,14 +33,18 @@ public class EdgeOperations {
 
     private static List<Edge> takeSingleItemsGroups(Collection<List<Edge>> groupedEdges) {
         return groupedEdges.stream()
-                .filter(edgeGroup -> edgeGroup.size() == 1)
+                .filter(edgeGroup -> edgeGroup.size() == 1 || 1 == edgeGroup.stream()
+                        .filter(e -> e.type.isCardinality())
+                        .count())
                 .flatMap(Collection::stream)
                 .collect(toList());
     }
 
     private static List<Edge> mergeNonSingleGroups(Collection<List<Edge>> groupedEdges) {
         List<List<List<Edge>>> edgeGroups = groupedEdges.stream()
-                .filter(edgeGroup -> edgeGroup.size() > 1)
+                .filter(edgeGroup -> edgeGroup.size() > 1 && 1 < edgeGroup.stream()
+                        .filter(e -> e.type.isCardinality())
+                        .count())
                 .map(EdgeOperations::groupBySource)
                 .collect(toList());
         List<Edge> multiReferenceUniDirectionals = edgeGroups.stream()

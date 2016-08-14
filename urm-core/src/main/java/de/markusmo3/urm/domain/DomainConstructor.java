@@ -14,6 +14,6 @@ public class DomainConstructor extends DomainExecutable<Constructor> {
     @Override
     protected String getName() {
         // to prevent it from printing FQN
-        return getExecutable().getDeclaringClass().getSimpleName();
+        return TypeUtils.getSimpleName(getExecutable().getDeclaringClass());
     }
 }

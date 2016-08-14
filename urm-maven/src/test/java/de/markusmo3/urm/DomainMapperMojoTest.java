@@ -14,6 +14,7 @@ import org.mockito.Spy;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,6 +25,7 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 
 public class DomainMapperMojoTest {
+    public static final String PROJECT_NAME = "domain-mapper-mojo-test";
     @Spy
     File outputDirectory = new File("");
     @Mock
@@ -41,6 +43,7 @@ public class DomainMapperMojoTest {
     public void setup() throws ClassNotFoundException, DependencyResolutionRequiredException {
         MockitoAnnotations.initMocks(this);
         when(project.getCompileClasspathElements()).thenReturn(Arrays.asList("foo", "bar"));
+        when(project.getName()).thenReturn(PROJECT_NAME);
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
@@ -49,8 +52,9 @@ public class DomainMapperMojoTest {
         packages.add("com.iluwatar.testdomain");
         mojo.execute();
 
-        assertThat(Files.exists(Paths.get("urm.puml")), is(true));
-        Files.delete(Paths.get("urm.puml"));
+        Path pumlPath = Paths.get(PROJECT_NAME + ".urm.puml");
+        assertThat(Files.exists(pumlPath), is(true));
+        Files.delete(pumlPath);
     }
 
     @Test(expected = MojoFailureException.class)

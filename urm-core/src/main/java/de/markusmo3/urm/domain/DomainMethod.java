@@ -22,7 +22,7 @@ public class DomainMethod extends DomainExecutable<Method> {
             // But if it returns nothing (aka void) we done output any type
             return super.getUmlName();
         }
-        return super.getUmlName() + " : " + cutPackages(returnType.getTypeName());
+        return super.getUmlName() + " : " + TypeUtils.getSimpleName(returnType);
     }
 
 }
