@@ -5,9 +5,9 @@
 UML Reverse Mapper
 ===========================
 
-Automatically generate [PlantUML](http://www.plantuml.com/) based class diagram from your code.
+Automatically generate class diagram from your code.
 
-Using reflection, UML Reverse Mapper scans your packages that contain your code. It then builds a graph of class relations and outputs a Graphviz .dot file.
+Using reflection, UML Reverse Mapper scans your packages that contain your code. It then builds a graph of class relations and outputs either a Graphviz .dot file or a [PlantUML](http://www.plantuml.com/) .puml file.
 
 ### Using from the command-line
 
@@ -15,16 +15,16 @@ Build the `urm-core` project with `mvn clean package` and grab the generated art
 
     java -cp abstract-factory.jar:urm-core.jar DomainMapperCli -p com.iluwatar.abstractfactory -i com.iluwatar.abstractfactory.Castle
 
-This will scan all classes under the package `com.iluwatar.abstractfactory` except `Castle` that was marked to be ignored and output the .dot file to your console output. If you want to write it to file use switch `-f filename.dot`. If you need to scan multiple packages use format `-p "com.package1, com.package2"`. Note that under Windows OS the classpath separator is `;` instead of `:`;
+This will scan all classes under the package `com.iluwatar.abstractfactory` except `Castle` that was marked to be ignored and output the .dot file to your console output. If you want to write it to file use switch `-f filename.dot`. If you need to scan multiple packages use format `-p "com.package1, com.package2"`. Note that under Windows OS the classpath separator is `;` instead of `:`
 
 ### Using the Maven plugin
 
 Add to your pom.xml the following:
-
+```xml
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>de.markusmo3</groupId>
+				<groupId>com.github.markusmo3.urm</groupId>
 				<artifactId>urm-maven-plugin</artifactId>
 				<version>1.4.0</version>
 				<configuration>
@@ -47,16 +47,10 @@ Add to your pom.xml the following:
 						</goals>
 					</execution>
 				</executions>
-				<dependencies>
-					<dependency>
-                        <groupId>${project.groupId}</groupId>
-                        <artifactId>${project.artifactId}</artifactId>
-                        <version>${project.version}</version>
-					</dependency>
-				</dependencies>
 			</plugin>
 		</plugins>
 	</build>
+```
 
 where the `packages` configuration parameter contains a list of packages that should be included in the class
 diagram and the `ignores` configuration parameter contains a list of types that should be excluded from the class
@@ -68,7 +62,7 @@ Graphviz or any of the online Graphviz tools to show your class diagram.
 
 ### Showcases
 
-Here are some class diagrams generated with the `urm-maven-plugin`.
+Here are some class diagrams generated with the `urm-maven-plugin` and the PlantUML Presenter.
 
 ![Poison Pill](async-method-invocation.png "Async Method Invocation")
 ![Mediator](builder.png "Builder")
