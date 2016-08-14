@@ -5,9 +5,9 @@
     <packaging>jar</packaging>
     <name>urm-core</name>
     <parent>
-        <groupId>de.markusmo3.urm</groupId>
+        <groupId>com.github.markusmo3.urm</groupId>
         <artifactId>urm-parent</artifactId>
-        <version>1.4.0-SNAPSHOT</version>
+        <version>1.4.0</version>
     </parent>
     <url>http://maven.apache.org</url>
     <dependencies>
