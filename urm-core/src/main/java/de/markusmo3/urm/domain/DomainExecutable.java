@@ -5,6 +5,7 @@ import com.thoughtworks.paranamer.*;
 import java.lang.reflect.Executable;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
+import java.util.Arrays;
 
 /**
  * Created by moe on 09.04.16.
@@ -34,6 +35,19 @@ public abstract class DomainExecutable<T extends Executable> {
         // Have to do the old for loop way because Paranamer doesnt have a nice interface
         String[] parameterNames = PARANAMER.lookupParameterNames(executable, false);
         Parameter[] parameters = executable.getParameters();
+
+        Class<?> declaringClass = executable.getDeclaringClass();
+        if ((declaringClass.isLocalClass() || declaringClass.isMemberClass())
+                && !Modifier.isStatic(declaringClass.getModifiers())
+                && (this instanceof DomainConstructor)) {
+            // An inner class of any sort (local or member) that isnt static holds a reference to its
+            // declaring/parent class. This reference is passed into the constructor as the first argument,
+            // so in that case we have to ignore the first argument from 'parameters'
+            parameters = Arrays.copyOfRange(parameters, 1, parameters.length);
+            // But due to this parameter being hidden, it isnt found by Paranamer and thus the parameterNames
+            // array mustn't be cut
+        }
+
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < parameters.length; i++) {
             String paraName = ((parameterNames.length != 0 && useParameterNames) ? parameterNames[i] + " : " : "");
