@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/markusmo3/uml-reverse-mapper.svg?branch=master)](https://travis-ci.org/markusmo3/uml-reverse-mapper)
 [![Coverage Status](https://coveralls.io/repos/github/markusmo3/uml-reverse-mapper/badge.svg)](https://coveralls.io/github/markusmo3/uml-reverse-mapper)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.markusmo3.urm/urm-maven-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/de.markusmo3.urm/urm-maven-plugin/)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.markusmo3.urm/urm-maven-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.markusmo3.urm/urm-maven-plugin/)
 
 UML Reverse Mapper
 ===========================
