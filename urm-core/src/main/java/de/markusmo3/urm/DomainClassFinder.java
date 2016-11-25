@@ -53,7 +53,7 @@ public class DomainClassFinder {
 
         FilterBuilder filter = new FilterBuilder()
                 .include(FilterBuilder.prefix(packageName));
-        if (!ALLOW_FINDING_INTERNAL_CLASSES) {
+        if (!isAllowFindingInternalClasses()) {
             filter.exclude(FilterBuilder.prefix(URM_PACKAGE));
         }
 
