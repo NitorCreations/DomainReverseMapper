@@ -76,20 +76,22 @@ public class FieldScanner extends AbstractScanner {
                 @Override
                 public void visitInnerClass(String name, String outerName, String innerName, int access) {
                     if (innerName == null || outerName == null
-                            || name.startsWith("java/lang/")) {
+                            || name.startsWith("java/")) {
                         // abort if anonymous or standard java class (latter needed because of java.util.MethodHandles)
                         return;
                     }
                     Class<?> outerClass = ReflectionUtils.forName(outerName.replaceAll("/", "."), DomainClassFinder.classLoaders);
-                    if (clazz.equals(outerClass)) {
+                    Class<?> innerClass = ReflectionUtils.forName(name.replaceAll("/", "."), DomainClassFinder.classLoaders);
+                    if (innerClass.equals(outerClass) || clazz.equals(outerClass)) {
+                        // To ensure we only add one Relation for each couple, the outerClass relations are thrown aboard
                         return;
                     }
 
-                    Edge innerClassEdge = null;
-                    if ((clazz.getModifiers() & Modifier.STATIC) > 0) {
-                        innerClassEdge = EdgeOperations.createEdge(clazz, outerClass, EdgeType.STATIC_INNER_CLASS, NAME_FOR_INNERCLASS);
+                    Edge innerClassEdge;
+                    if ((innerClass.getModifiers() & Modifier.STATIC) > 0) {
+                        innerClassEdge = EdgeOperations.createEdge(innerClass, outerClass, EdgeType.STATIC_INNER_CLASS, NAME_FOR_INNERCLASS);
                     } else {
-                        innerClassEdge = EdgeOperations.createEdge(clazz, outerClass, EdgeType.INNER_CLASS, NAME_FOR_INNERCLASS);
+                        innerClassEdge = EdgeOperations.createEdge(innerClass, outerClass, EdgeType.INNER_CLASS, NAME_FOR_INNERCLASS);
                     }
 
                     if (innerClassEdge != null) {
