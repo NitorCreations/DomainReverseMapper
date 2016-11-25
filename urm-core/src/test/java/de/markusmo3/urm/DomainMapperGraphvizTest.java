@@ -32,7 +32,7 @@ public class DomainMapperGraphvizTest {
 
     @Before
     public void setup() {
-        System.setProperty("de.markusmo3.urm.DomainClassFinder.allowFindingInternalClasses", "true");
+        DomainClassFinder.ALLOW_FINDING_INTERNAL_CLASSES = true;
     }
 
     @Test

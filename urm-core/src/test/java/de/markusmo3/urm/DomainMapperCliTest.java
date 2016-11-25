@@ -19,7 +19,7 @@ public class DomainMapperCliTest extends DomainMapperCli { // extends to silence
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        System.setProperty("de.markusmo3.urm.DomainClassFinder.allowFindingInternalClasses", "true");
+        DomainClassFinder.ALLOW_FINDING_INTERNAL_CLASSES = true;
     }
 
     @Test

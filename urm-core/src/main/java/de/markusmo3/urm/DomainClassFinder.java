@@ -8,6 +8,7 @@ import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
 import org.reflections.util.FilterBuilder;
 
+import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.*;
 import java.util.logging.Logger;
@@ -18,8 +19,7 @@ public class DomainClassFinder {
     private static final Logger logger = Logger.getLogger(DomainClassFinder.class.getName());
 
     private static final String URM_PACKAGE = "de.markusmo3.urm";
-    private static final boolean ALLOW_FINDING_INTERNAL_CLASSES = Boolean.parseBoolean(
-            System.getProperty("de.markusmo3.urm.DomainClassFinder.allowFindingInternalClasses", "false"));
+    public static boolean ALLOW_FINDING_INTERNAL_CLASSES;
 
     public static ClassLoader[] classLoaders;
 
@@ -43,10 +43,12 @@ public class DomainClassFinder {
     }
 
     private static Set<Class<?>> getClasses(URLClassLoader classLoader, String packageName) {
-        List<ClassLoader> classLoadersList = new LinkedList<ClassLoader>();
+        List<ClassLoader> classLoadersList = new LinkedList<>();
         classLoadersList.add(ClasspathHelper.contextClassLoader());
         classLoadersList.add(ClasspathHelper.staticClassLoader());
-        classLoadersList.add(classLoader);
+        if (classLoader != null) {
+            classLoadersList.add(classLoader);
+        }
 
         classLoaders = classLoadersList.toArray(new ClassLoader[0]);
 
@@ -56,14 +58,24 @@ public class DomainClassFinder {
             filter.exclude(FilterBuilder.prefix(URM_PACKAGE));
         }
 
+        Collection<URL> urls = ClasspathHelper.forClassLoader(classLoaders);
         Reflections reflections = new Reflections(new ConfigurationBuilder()
                 .setScanners(new SubTypesScanner(false /* don't exclude Object.class */), new ResourcesScanner())
-                .setUrls(ClasspathHelper.forClassLoader(classLoaders))
+                .setUrls(urls)
                 .filterInputsBy(filter)
                 .addClassLoaders(classLoadersList)
         );
+        logger.severe("#mo3-debug# ClassLoaders: " + classLoadersList.toString()
+                + "\n urls: " + urls
+                + "\n ALLOW_FINDING_INTERNAL_CLASSES: " + ALLOW_FINDING_INTERNAL_CLASSES
+        );
         return Sets.union(reflections.getSubTypesOf(Object.class),
                 reflections.getSubTypesOf(Enum.class));
+    }
+
+    public static boolean isAllowFindingInternalClasses() {
+        return ALLOW_FINDING_INTERNAL_CLASSES |= Boolean.parseBoolean(
+                System.getProperty("de.markusmo3.urm.DomainClassFinder.allowFindingInternalClasses", "false"));
     }
 
     private DomainClassFinder() {
