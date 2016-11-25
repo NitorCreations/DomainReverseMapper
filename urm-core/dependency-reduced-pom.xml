@@ -3,7 +3,7 @@
   <parent>
     <artifactId>urm-parent</artifactId>
     <groupId>com.github.markusmo3.urm</groupId>
-    <version>1.4.3</version>
+    <version>1.4.4</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>urm-core</artifactId>
@@ -69,7 +69,6 @@
         <plugins>
           <plugin>
             <artifactId>maven-source-plugin</artifactId>
-            <version>2.2.1</version>
             <executions>
               <execution>
                 <id>attach-sources</id>
@@ -81,7 +80,6 @@
           </plugin>
           <plugin>
             <artifactId>maven-javadoc-plugin</artifactId>
-            <version>2.9.1</version>
             <executions>
               <execution>
                 <id>attach-javadocs</id>
