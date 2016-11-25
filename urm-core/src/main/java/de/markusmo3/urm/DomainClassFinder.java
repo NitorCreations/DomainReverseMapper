@@ -8,7 +8,6 @@ import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
 import org.reflections.util.FilterBuilder;
 
-import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.*;
 import java.util.logging.Logger;
@@ -58,16 +57,11 @@ public class DomainClassFinder {
             filter.exclude(FilterBuilder.prefix(URM_PACKAGE));
         }
 
-        Collection<URL> urls = ClasspathHelper.forClassLoader(classLoaders);
         Reflections reflections = new Reflections(new ConfigurationBuilder()
                 .setScanners(new SubTypesScanner(false /* don't exclude Object.class */), new ResourcesScanner())
-                .setUrls(urls)
+                .setUrls(ClasspathHelper.forClassLoader(classLoaders))
                 .filterInputsBy(filter)
                 .addClassLoaders(classLoadersList)
-        );
-        logger.severe("#mo3-debug# ClassLoaders: " + classLoadersList.toString()
-                + "\n urls: " + urls
-                + "\n ALLOW_FINDING_INTERNAL_CLASSES: " + ALLOW_FINDING_INTERNAL_CLASSES
         );
         return Sets.union(reflections.getSubTypesOf(Object.class),
                 reflections.getSubTypesOf(Enum.class));
