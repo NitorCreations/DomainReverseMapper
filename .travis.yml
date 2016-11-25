@@ -1,5 +1,14 @@
 language: java
 jdk:
   - oraclejdk8
+  
 after_success:
   - mvn clean test jacoco:report coveralls:report
+  
+# use latest java version available instead of travis default
+addons:
+  apt:
+    packages:
+      - oracle-java8-installer
+
+sudo: false # route the build to the container-based infrastructure for a faster build
