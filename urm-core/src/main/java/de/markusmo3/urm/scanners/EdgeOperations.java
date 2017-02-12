@@ -6,9 +6,7 @@ import de.markusmo3.urm.domain.DomainClass;
 import de.markusmo3.urm.domain.Edge;
 import de.markusmo3.urm.domain.EdgeType;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
@@ -22,7 +20,8 @@ public class EdgeOperations {
     }
 
     public static List<Edge> mergeBiDirectionals(List<Edge> edges) {
-        Collection<List<Edge>> groupedEdges = groupEdges(edges);
+        HashSet<Edge> noDuplicateSet = new HashSet<>(edges);
+        Collection<List<Edge>> groupedEdges = groupEdges(noDuplicateSet);
         List<Edge> uniDirectionals = takeSingleItemsGroups(groupedEdges);
         List<Edge> biDirectionals = mergeNonSingleGroups(groupedEdges);
         List<Edge> mergedEdges = Lists.newArrayList();
@@ -64,7 +63,7 @@ public class EdgeOperations {
         return newEdges;
     }
 
-    private static Collection<List<Edge>> groupEdges(List<Edge> edges) {
+    private static Collection<List<Edge>> groupEdges(Set<Edge> edges) {
         return edges.stream()
                 .collect(groupingBy(EdgeOperations::sameSourceAndTarget))
                 .values();

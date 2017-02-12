@@ -18,7 +18,7 @@ public class HierarchyScanner extends AbstractScanner {
         for (Class<?> clazz : classes) {
             // show implemented interfaces
             Class<?>[] interfaces = clazz.getInterfaces();
-            for (Class<?> interfaze: interfaces) {
+            for (Class<?> interfaze : interfaces) {
                 if (isDomainClass(interfaze)) {
                     DomainClass child = new DomainClass(clazz);
                     DomainClass parent = new DomainClass(interfaze);

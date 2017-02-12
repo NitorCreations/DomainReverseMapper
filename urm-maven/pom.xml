@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.github.markusmo3.urm</groupId>
 		<artifactId>urm-parent</artifactId>
-		<version>1.4.1</version>
+		<version>1.4.4</version>
 	</parent>
 	<name>urm-maven</name>
 	<description>

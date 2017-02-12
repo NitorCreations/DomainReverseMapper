@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.markusmo3.urm</groupId>
     <artifactId>urm-parent</artifactId>
-    <version>1.4.1</version>
+    <version>1.4.4</version>
     <packaging>pom</packaging>
     <name>UML Reverse Mapper</name>
     <description>Automatically generate Graphviz based class diagram from your code</description>
