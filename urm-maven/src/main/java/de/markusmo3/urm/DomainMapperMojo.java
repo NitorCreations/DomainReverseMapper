@@ -20,6 +20,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import static java.util.stream.Collectors.toList;
 
 @Mojo(name = "map", defaultPhase = LifecyclePhase.PROCESS_CLASSES, requiresDependencyResolution = ResolutionScope.COMPILE)
 public class DomainMapperMojo extends AbstractMojo {
@@ -36,6 +37,10 @@ public class DomainMapperMojo extends AbstractMojo {
     private String presenterString;
     @Parameter(property = "map.skipForProjects", required = false)
     private List<String> skipForProjects;
+    @Parameter(property ="includeMainDirectory", defaultValue = "true")
+    private boolean includeMainDirectory;
+    @Parameter(property ="includeTestDirectory", defaultValue = "false")
+    private boolean includeTestDirectory;
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
@@ -81,12 +86,28 @@ public class DomainMapperMojo extends AbstractMojo {
     @SuppressWarnings("unchecked")
     private List<URL> getClasspathUrls() throws DependencyResolutionRequiredException, MojoExecutionException {
         List<URL> projectClasspathList = new ArrayList<>();
-        for (String element : (List<String>) project.getCompileClasspathElements()) {
+        for (String element : getProjectClassPathList()) {
             try {
                 projectClasspathList.add(new File(element).toURI().toURL());
             } catch (MalformedURLException e) {
                 throw new MojoExecutionException(element + " is an invalid classpath element", e);
             }
+        }
+        return projectClasspathList;
+    }
+
+    private List<String> getProjectClassPathList()throws DependencyResolutionRequiredException{
+        List<String> projectClasspathList = new ArrayList<>();
+        if(includeMainDirectory && includeTestDirectory)
+            projectClasspathList = project.getTestClasspathElements();
+        else if(includeMainDirectory)
+            projectClasspathList = project.getCompileClasspathElements();
+        else if(includeTestDirectory) {
+            String outputDir = project.getBuild().getOutputDirectory();
+
+            projectClasspathList =  ((List<String>)project.getTestClasspathElements())
+                    .stream().filter(url -> !outputDir.equalsIgnoreCase(url))
+                    .collect(toList());
         }
         return projectClasspathList;
     }
