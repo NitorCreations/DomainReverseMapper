@@ -29,7 +29,7 @@ Add to your pom.xml the following:
 				<version>1.4.0</version>
 				<configuration>
 				    <!-- if outputDirectory is not set explicitly it will default to your build dir -->
-                    <outputDirectory>${project.basedir}/etc</outputDirectory>
+                   			<outputDirectory>${project.basedir}/etc</outputDirectory>
 					<packages>
 						<param>com.mycompany.mypackage</param>
 						<param>com.mycompany.other_package</param>
@@ -39,7 +39,7 @@ Add to your pom.xml the following:
 						<param>com.mycompany.other_package.OtherClass</param>
 					</ignores>
 					<includeMainDirectory>true</includeMainDirectory>
-                    <includeTestDirectory>false</includeTestDirectory>
+                    			<includeTestDirectory>false</includeTestDirectory>
 				</configuration>
 				<executions>
 					<execution>
