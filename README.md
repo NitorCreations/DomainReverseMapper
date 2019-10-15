@@ -29,7 +29,7 @@ Add to your pom.xml the following:
 				<version>1.4.0</version>
 				<configuration>
 				    <!-- if outputDirectory is not set explicitly it will default to your build dir -->
-                    <outputDirectory>${project.basedir}/etc</outputDirectory>
+                   			<outputDirectory>${project.basedir}/etc</outputDirectory>
 					<packages>
 						<param>com.mycompany.mypackage</param>
 						<param>com.mycompany.other_package</param>
@@ -38,10 +38,12 @@ Add to your pom.xml the following:
 						<param>com.mycompany.mypackage.MyClass</param>
 						<param>com.mycompany.other_package.OtherClass</param>
 					</ignores>
+					<includeMainDirectory>true</includeMainDirectory>
+                    			<includeTestDirectory>false</includeTestDirectory>
 				</configuration>
 				<executions>
 					<execution>
-						<phase>process-classes</phase>
+						<phase>process-test-classes</phase>
 						<goals>
 							<goal>map</goal>
 						</goals>
@@ -54,9 +56,12 @@ Add to your pom.xml the following:
 
 where the `packages` configuration parameter contains a list of packages that should be included in the class
 diagram and the `ignores` configuration parameter contains a list of types that should be excluded from the class
-diagram. `Dependencies` list should contain the artifacts where the classes are found.
+diagram. `Dependencies` list should contain the artifacts where the classes are found.`includeMainDirectory` 
+configuration parameter indicates to include classes of src/main/java directory. Default value of 
+`includeMainDirectory` is true. `includeTestDirectory` configuration parameter indicates to
+include classes of src/test/java directory. Default value of `includeTestDirectory` configuration parameter is false.
 
-When `process-classes` life-cycle phase gets executed, the class diagram will be saved to
+When `process-test-classes` life-cycle phase gets executed, the class diagram will be saved to
 `/target/${project.name}.urm.dot` or `/target/${project.name}.urm.puml`. Use this file with your local
 Graphviz or any of the online Graphviz tools to show your class diagram.
 
