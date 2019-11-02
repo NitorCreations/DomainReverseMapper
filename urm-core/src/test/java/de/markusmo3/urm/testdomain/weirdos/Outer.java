@@ -1,4 +1,4 @@
-package de.markusmo3.urm.testdomain.weirdos;
+package com.iluwatar.urm.testdomain.weirdos;
 
 import java.util.List;
 

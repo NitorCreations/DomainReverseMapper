@@ -1,4 +1,4 @@
-package de.markusmo3.urm.domain;
+package com.iluwatar.urm.domain;
 
 import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;

@@ -20,7 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package de.markusmo3.urm.testdomain.observ;
+package com.iluwatar.urm.testdomain.observ;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;

@@ -1,4 +1,4 @@
-package de.markusmo3.urm.scanners;
+package com.iluwatar.urm.scanners;
 
 import java.util.List;
 

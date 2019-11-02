@@ -1,4 +1,4 @@
-package de.markusmo3.urm.testdomain.person;
+package com.iluwatar.urm.testdomain.person;
 
 public class DoubleReferer {
     private Manager myBoss;

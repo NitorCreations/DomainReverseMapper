@@ -1,4 +1,4 @@
-package de.markusmo3.urm.testdomain.withanonymousclass;
+package com.iluwatar.urm.testdomain.withanonymousclass;
 
 public class ClassWithAnonymousImplementation {
 

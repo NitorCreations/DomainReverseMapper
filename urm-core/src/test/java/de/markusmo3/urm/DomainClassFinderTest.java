@@ -1,4 +1,4 @@
-package de.markusmo3.urm;
+package com.iluwatar.urm;
 
 import net.sf.qualitytest.CoverageForPrivateConstructor;
 import org.junit.Before;
@@ -20,33 +20,33 @@ public class DomainClassFinderTest {
 
     @Test
     public void withSinglePackage() throws Exception {
-        List<Class<?>> classes = findClasses("de.markusmo3.urm.testdomain.person");
+        List<Class<?>> classes = findClasses("com.iluwatar.urm.testdomain.person");
         assertThat(classes.size(), is(4));
     }
 
     @Test
     public void withSinglePackageAndIgnore() throws Exception {
-        List<Class<?>> classes = DomainClassFinder.findClasses(Arrays.asList("de.markusmo3.urm.testdomain.person"),
+        List<Class<?>> classes = DomainClassFinder.findClasses(Arrays.asList("com.iluwatar.urm.testdomain.person"),
                 Arrays.asList("Manager"), null);
         assertThat(classes.size(), is(3));
     }
 
     @Test
     public void withMultiPackages() throws Exception {
-        List<Class<?>> classes = findClasses("de.markusmo3.urm.testdomain.person", "de.markusmo3.urm.testdomain.another");
+        List<Class<?>> classes = findClasses("com.iluwatar.urm.testdomain.person", "com.iluwatar.urm.testdomain.another");
         assertThat(classes.size(), is(5));
     }
 
     @Test
     public void withMultiPackagesAndIgnores() throws Exception {
-        List<Class<?>> classes = DomainClassFinder.findClasses(Arrays.asList("de.markusmo3.urm.testdomain.person", "Another"),
+        List<Class<?>> classes = DomainClassFinder.findClasses(Arrays.asList("com.iluwatar.urm.testdomain.person", "Another"),
                 Arrays.asList("Manager", "Another"), null);
         assertThat(classes.size(), is(3));
     }
 
     @Test
     public void filtersAnonymousClasses() throws Exception {
-        List<Class<?>> classes = findClasses("de.markusmo3.urm.testdomain.withanonymousclass");
+        List<Class<?>> classes = findClasses("com.iluwatar.urm.testdomain.withanonymousclass");
         assertThat(classes.size(), is(1));
     }
 

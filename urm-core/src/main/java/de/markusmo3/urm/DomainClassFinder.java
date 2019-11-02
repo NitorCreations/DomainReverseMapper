@@ -1,4 +1,4 @@
-package de.markusmo3.urm;
+package com.iluwatar.urm;
 
 import com.google.common.collect.Sets;
 import org.reflections.Reflections;
@@ -17,7 +17,7 @@ public class DomainClassFinder {
 
     private static final Logger logger = Logger.getLogger(DomainClassFinder.class.getName());
 
-    private static final String URM_PACKAGE = "de.markusmo3.urm";
+    private static final String URM_PACKAGE = "com.iluwatar.urm";
     public static boolean ALLOW_FINDING_INTERNAL_CLASSES;
 
     public static ClassLoader[] classLoaders;
@@ -69,7 +69,7 @@ public class DomainClassFinder {
 
     public static boolean isAllowFindingInternalClasses() {
         return ALLOW_FINDING_INTERNAL_CLASSES |= Boolean.parseBoolean(
-                System.getProperty("de.markusmo3.urm.DomainClassFinder.allowFindingInternalClasses", "false"));
+                System.getProperty("com.iluwatar.urm.DomainClassFinder.allowFindingInternalClasses", "false"));
     }
 
     private DomainClassFinder() {

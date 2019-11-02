@@ -1,14 +1,14 @@
-package de.markusmo3.urm;
+package com.iluwatar.urm;
 
-import de.markusmo3.urm.presenters.GraphvizPresenter;
-import de.markusmo3.urm.presenters.Presenter;
-import de.markusmo3.urm.testdomain.Selfie;
-import de.markusmo3.urm.testdomain.Task;
-import de.markusmo3.urm.testdomain.Timesheet;
-import de.markusmo3.urm.testdomain.person.DoubleReferer;
-import de.markusmo3.urm.testdomain.person.Employee;
-import de.markusmo3.urm.testdomain.person.Manager;
-import de.markusmo3.urm.testdomain.person.Person;
+import com.iluwatar.urm.presenters.GraphvizPresenter;
+import com.iluwatar.urm.presenters.Presenter;
+import com.iluwatar.urm.testdomain.Selfie;
+import com.iluwatar.urm.testdomain.Task;
+import com.iluwatar.urm.testdomain.Timesheet;
+import com.iluwatar.urm.testdomain.person.DoubleReferer;
+import com.iluwatar.urm.testdomain.person.Employee;
+import com.iluwatar.urm.testdomain.person.Manager;
+import com.iluwatar.urm.testdomain.person.Person;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -42,7 +42,7 @@ public class DomainMapperGraphvizTest {
         domainMapper = new DomainMapper(presenter, list);
         String description = GRAPHVIZ_START;
         assertThat(getRepresentationContent(), containsString(description));
-        String pkg = "label = \"de.markusmo3.urm.testdomain.person\";";
+        String pkg = "label = \"com.iluwatar.urm.testdomain.person\";";
         assertThat(getRepresentationContent(), containsString(pkg));
         String employee = "Employee [ label = \"{Employee | + getDepartment() : String\\l+ getName() : String\\l}\" ]";
         assertThat(getRepresentationContent(), containsString(employee));
@@ -54,7 +54,7 @@ public class DomainMapperGraphvizTest {
         domainMapper = new DomainMapper(presenter, list);
         String description = GRAPHVIZ_START;
         assertThat(getRepresentationContent(), containsString(description));
-        String pkg = "label = \"de.markusmo3.urm.testdomain\";";
+        String pkg = "label = \"com.iluwatar.urm.testdomain\";";
         assertThat(getRepresentationContent(), containsString(pkg));
         String selfie = "Selfie [ label = \"{Selfie | }\" ]";
         assertThat(getRepresentationContent(), containsString(selfie));
@@ -67,7 +67,7 @@ public class DomainMapperGraphvizTest {
         domainMapper = new DomainMapper(presenter, Arrays.asList(DoubleReferer.class, Manager.class));
         String description = GRAPHVIZ_START;
         assertThat(getRepresentationContent(), containsString(description));
-        String pkg = "label = \"de.markusmo3.urm.testdomain.person\";";
+        String pkg = "label = \"com.iluwatar.urm.testdomain.person\";";
         assertThat(getRepresentationContent(), containsString(description));
         String doubleReferer = "DoubleReferer [ label = \"{DoubleReferer | }\" ]";
         assertThat(getRepresentationContent(), containsString(doubleReferer));
@@ -82,7 +82,7 @@ public class DomainMapperGraphvizTest {
         domainMapper = new DomainMapper(presenter, Arrays.<Class<?>>asList(Manager.class, Person.class));
         String description = GRAPHVIZ_START;
         assertThat(getRepresentationContent(), containsString(description));
-        String pkg = "label = \"de.markusmo3.urm.testdomain.person\";";
+        String pkg = "label = \"com.iluwatar.urm.testdomain.person\";";
         assertThat(getRepresentationContent(), containsString(pkg));
         String manager = "Manager [ label = \"{Manager | + getName() : String\\l}\" ]";
         assertThat(getRepresentationContent(), containsString(manager));
@@ -98,7 +98,7 @@ public class DomainMapperGraphvizTest {
                 Manager.class, Timesheet.class, Person.class));
         String description1 = GRAPHVIZ_START;
         assertThat(getRepresentationContent(), containsString(description1));
-        String pkg1 = "label = \"de.markusmo3.urm.testdomain\";";
+        String pkg1 = "label = \"com.iluwatar.urm.testdomain\";";
         assertThat(getRepresentationContent(), containsString(pkg1));
         String task = "Task [ label = \"{Task" +
                 " | + addEmployee(e : Employee)" +
@@ -118,7 +118,7 @@ public class DomainMapperGraphvizTest {
         assertThat(getRepresentationContent(), containsString(timesheet));
         String description2 = "subgraph cluster_1";
         assertThat(getRepresentationContent(), containsString(description2));
-        String pkg2 = "label = \"de.markusmo3.urm.testdomain.person\";";
+        String pkg2 = "label = \"com.iluwatar.urm.testdomain.person\";";
         assertThat(getRepresentationContent(), containsString(pkg2));
         String employee = "Employee [ label = \"{Employee" +
                 " | + getDepartment() : String" +
@@ -145,7 +145,7 @@ public class DomainMapperGraphvizTest {
 
     @Test
     public void testCreate() throws Exception {
-        DomainMapper mapper = DomainMapper.create(presenter, Arrays.asList("de.markusmo3.urm.testdomain"));
+        DomainMapper mapper = DomainMapper.create(presenter, Arrays.asList("com.iluwatar.urm.testdomain"));
         assertThat(mapper.getClasses(), hasItems(Timesheet.class, Task.class, Person.class, Manager.class, Employee.class));
     }
 

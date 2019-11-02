@@ -1,4 +1,4 @@
-package de.markusmo3.urm.domain;
+package com.iluwatar.urm.domain;
 
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.Is;

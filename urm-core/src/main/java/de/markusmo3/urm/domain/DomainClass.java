@@ -1,4 +1,4 @@
-package de.markusmo3.urm.domain;
+package com.iluwatar.urm.domain;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;

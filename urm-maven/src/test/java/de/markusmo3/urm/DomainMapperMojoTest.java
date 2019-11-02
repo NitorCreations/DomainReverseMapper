@@ -1,4 +1,4 @@
-package de.markusmo3.urm;
+package com.iluwatar.urm;
 
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.plugin.MojoExecutionException;

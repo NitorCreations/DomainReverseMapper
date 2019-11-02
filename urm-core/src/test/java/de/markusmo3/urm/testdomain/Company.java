@@ -1,6 +1,6 @@
-package de.markusmo3.urm.testdomain;
+package com.iluwatar.urm.testdomain;
 
-import de.markusmo3.urm.testdomain.person.Person;
+import com.iluwatar.urm.testdomain.person.Person;
 
 import java.util.List;
 

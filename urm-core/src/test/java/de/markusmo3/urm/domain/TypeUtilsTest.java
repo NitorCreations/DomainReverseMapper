@@ -1,8 +1,8 @@
-package de.markusmo3.urm.domain;
+package com.iluwatar.urm.domain;
 
-import de.markusmo3.urm.testdomain.observ.Observable;
-import de.markusmo3.urm.testdomain.observ.Observer;
-import de.markusmo3.urm.testdomain.weirdos.GenericMadness;
+import com.iluwatar.urm.testdomain.observ.Observable;
+import com.iluwatar.urm.testdomain.observ.Observer;
+import com.iluwatar.urm.testdomain.weirdos.GenericMadness;
 import org.junit.Test;
 
 import java.lang.reflect.Field;

@@ -1,7 +1,7 @@
-package de.markusmo3.urm.testdomain.person;
+package com.iluwatar.urm.testdomain.person;
 
-import de.markusmo3.urm.testdomain.Company;
-import de.markusmo3.urm.testdomain.PhoneNumber;
+import com.iluwatar.urm.testdomain.Company;
+import com.iluwatar.urm.testdomain.PhoneNumber;
 
 import java.util.List;
 

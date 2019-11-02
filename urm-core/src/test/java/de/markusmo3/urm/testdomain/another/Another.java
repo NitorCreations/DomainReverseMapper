@@ -1,4 +1,4 @@
-package de.markusmo3.urm.testdomain.another;
+package com.iluwatar.urm.testdomain.another;
 
 public class Another {
 }

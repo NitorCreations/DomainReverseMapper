@@ -1,11 +1,11 @@
-package de.markusmo3.urm;
+package com.iluwatar.urm;
 
-import de.markusmo3.urm.domain.DomainClass;
-import de.markusmo3.urm.domain.Edge;
-import de.markusmo3.urm.presenters.Presenter;
-import de.markusmo3.urm.presenters.Representation;
-import de.markusmo3.urm.scanners.FieldScanner;
-import de.markusmo3.urm.scanners.HierarchyScanner;
+import com.iluwatar.urm.domain.DomainClass;
+import com.iluwatar.urm.domain.Edge;
+import com.iluwatar.urm.presenters.Presenter;
+import com.iluwatar.urm.presenters.Representation;
+import com.iluwatar.urm.scanners.FieldScanner;
+import com.iluwatar.urm.scanners.HierarchyScanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -1,8 +1,8 @@
-package de.markusmo3.urm.presenters;
+package com.iluwatar.urm.presenters;
 
-import de.markusmo3.urm.domain.DomainClass;
-import de.markusmo3.urm.domain.Edge;
-import de.markusmo3.urm.domain.EdgeType;
+import com.iluwatar.urm.domain.DomainClass;
+import com.iluwatar.urm.domain.Edge;
+import com.iluwatar.urm.domain.EdgeType;
 
 import java.util.List;
 import java.util.Map;

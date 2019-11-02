@@ -1,6 +1,6 @@
-package de.markusmo3.urm.domain;
+package com.iluwatar.urm.domain;
 
-import de.markusmo3.urm.testdomain.weirdos.Colors;
+import com.iluwatar.urm.testdomain.weirdos.Colors;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
 import org.junit.Test;
@@ -18,14 +18,14 @@ public class DomainObjectTest {
     public void domainObjectConstructedProperlyFromClass() {
         DomainClass viaClassConstructor = new DomainClass(DomainObjectTest.class);
         assertThat(viaClassConstructor,
-                new DomainObjectAssertion("de.markusmo3.urm.domain", "DomainObjectTest"));
+                new DomainObjectAssertion("com.iluwatar.urm.domain", "DomainObjectTest"));
     }
 
     @Test
     public void domainConstructedProperlyFromInnerClass() {
         DomainClass viaClassConstructor = new DomainClass(DomainObjectTest.DomainObjectAssertion.class);
         assertThat(viaClassConstructor,
-                new DomainObjectAssertion("de.markusmo3.urm.domain", "DomainObjectAssertion"));
+                new DomainObjectAssertion("com.iluwatar.urm.domain", "DomainObjectAssertion"));
     }
 
     @Test

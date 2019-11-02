@@ -1,8 +1,8 @@
-package de.markusmo3.urm.scanners;
+package com.iluwatar.urm.scanners;
 
-import de.markusmo3.urm.DomainClassFinder;
-import de.markusmo3.urm.domain.Edge;
-import de.markusmo3.urm.domain.EdgeType;
+import com.iluwatar.urm.DomainClassFinder;
+import com.iluwatar.urm.domain.Edge;
+import com.iluwatar.urm.domain.EdgeType;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.FieldVisitor;

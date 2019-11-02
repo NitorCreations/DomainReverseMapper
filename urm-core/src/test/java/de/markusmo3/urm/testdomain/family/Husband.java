@@ -1,4 +1,4 @@
-package de.markusmo3.urm.testdomain.family;
+package com.iluwatar.urm.testdomain.family;
 
 public class Husband {
     Wife wife;

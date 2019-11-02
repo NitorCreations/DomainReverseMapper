@@ -1,4 +1,4 @@
-package de.markusmo3.urm;
+package com.iluwatar.urm;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,25 +24,25 @@ public class DomainMapperCliTest extends DomainMapperCli { // extends to silence
 
     @Test
     public void withSinglePackage() throws Exception {
-        cli.run(new String[]{"-p", "de.markusmo3.urm.testdomain.person"});
+        cli.run(new String[]{"-p", "com.iluwatar.urm.testdomain.person"});
         assertThat(cli.domainMapper.getClasses().size(), is(4));
     }
 
     @Test
     public void withSinglePackageAndIgnore() throws Exception {
-        cli.run(new String[]{"-p", "de.markusmo3.urm.testdomain.person", "-i", "Manager"});
+        cli.run(new String[]{"-p", "com.iluwatar.urm.testdomain.person", "-i", "Manager"});
         assertThat(cli.domainMapper.getClasses().size(), is(3));
     }
 
     @Test
     public void withMultiPackages() throws Exception {
-        cli.run(new String[]{"-p", "\"de.markusmo3.urm.testdomain.person, de.markusmo3.urm.testdomain.another\""});
+        cli.run(new String[]{"-p", "\"com.iluwatar.urm.testdomain.person, com.iluwatar.urm.testdomain.another\""});
         assertThat(cli.domainMapper.getClasses().size(), is(5));
     }
 
     @Test
     public void withMultiPackagesAndIgnores() throws Exception {
-        cli.run(new String[]{"-p", "\"de.markusmo3.urm.testdomain.person, de.markusmo3.urm.testdomain.another\"", "-i", "\"Employee, Another\""});
+        cli.run(new String[]{"-p", "\"com.iluwatar.urm.testdomain.person, com.iluwatar.urm.testdomain.another\"", "-i", "\"Employee, Another\""});
         assertThat(cli.domainMapper.getClasses().size(), is(3));
     }
 

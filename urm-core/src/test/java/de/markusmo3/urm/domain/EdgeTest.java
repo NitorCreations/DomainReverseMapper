@@ -1,7 +1,7 @@
-package de.markusmo3.urm.domain;
+package com.iluwatar.urm.domain;
 
-import de.markusmo3.urm.testdomain.person.Manager;
-import de.markusmo3.urm.testdomain.person.Person;
+import com.iluwatar.urm.testdomain.person.Manager;
+import com.iluwatar.urm.testdomain.person.Person;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.Test;
 

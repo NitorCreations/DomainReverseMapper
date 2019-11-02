@@ -1,7 +1,7 @@
-package de.markusmo3.urm;
+package com.iluwatar.urm;
 
-import de.markusmo3.urm.presenters.Presenter;
-import de.markusmo3.urm.presenters.Representation;
+import com.iluwatar.urm.presenters.Presenter;
+import com.iluwatar.urm.presenters.Representation;
 import org.apache.commons.cli.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

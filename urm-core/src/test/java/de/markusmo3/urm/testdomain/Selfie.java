@@ -1,4 +1,4 @@
-package de.markusmo3.urm.testdomain;
+package com.iluwatar.urm.testdomain;
 
 /**
  * Class to test cyclic reference with

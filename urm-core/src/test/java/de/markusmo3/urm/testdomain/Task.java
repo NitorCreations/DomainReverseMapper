@@ -1,7 +1,7 @@
-package de.markusmo3.urm.testdomain;
+package com.iluwatar.urm.testdomain;
 
-import de.markusmo3.urm.testdomain.person.Employee;
-import de.markusmo3.urm.testdomain.person.Manager;
+import com.iluwatar.urm.testdomain.person.Employee;
+import com.iluwatar.urm.testdomain.person.Manager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
