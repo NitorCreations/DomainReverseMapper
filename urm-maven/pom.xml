@@ -3,9 +3,9 @@
 	<artifactId>urm-maven-plugin</artifactId>
 	<packaging>maven-plugin</packaging>
 	<parent>
-		<groupId>com.github.markusmo3.urm</groupId>
+		<groupId>com.iluwatar.urm</groupId>
 		<artifactId>urm-parent</artifactId>
-		<version>1.4.4</version>
+		<version>1.4.6</version>
 	</parent>
 	<name>urm-maven</name>
 	<description>
@@ -17,7 +17,7 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.github.markusmo3.urm</groupId>
+			<groupId>com.iluwatar.urm</groupId>
 			<artifactId>urm-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
