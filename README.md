@@ -22,38 +22,38 @@ This will scan all the classes under the package `com.iluwatar.abstractfactory` 
 
 Add to your pom.xml the following:
 ```xml
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>com.iluwatar.urm</groupId>
-				<artifactId>urm-maven-plugin</artifactId>
-				<version>1.4.6</version>
-				<configuration>
-				    <!-- if outputDirectory is not set explicitly it will default to your build dir -->
-                   	<outputDirectory>${project.basedir}/etc</outputDirectory>
-					<packages>
-						<param>com.mycompany.mypackage</param>
-						<param>com.mycompany.other_package</param>
-					</packages>
-					<ignores>
-						<param>com.mycompany.mypackage.MyClass</param>
-						<param>com.mycompany.other_package.OtherClass</param>
-					</ignores>
-					<includeMainDirectory>true</includeMainDirectory>
-                    <includeTestDirectory>false</includeTestDirectory>
-                    <presenter>graphviz</presenter>
-				</configuration>
-				<executions>
-					<execution>
-						<phase>process-test-classes</phase>
-						<goals>
-							<goal>map</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
+<build>
+  <plugins>
+    <plugin>
+      <groupId>com.iluwatar.urm</groupId>
+      <artifactId>urm-maven-plugin</artifactId>
+      <version>1.4.6</version>
+      <configuration>
+        <!-- if outputDirectory is not set explicitly it will default to your build dir -->
+        <outputDirectory>${project.basedir}/etc</outputDirectory>
+        <packages>
+          <param>com.mycompany.mypackage</param>
+          <param>com.mycompany.other_package</param>
+        </packages>
+        <ignores>
+          <param>com.mycompany.mypackage.MyClass</param>
+          <param>com.mycompany.other_package.OtherClass</param>
+        </ignores>
+        <includeMainDirectory>true</includeMainDirectory>
+        <includeTestDirectory>false</includeTestDirectory>
+        <presenter>graphviz</presenter>
+      </configuration>
+      <executions>
+        <execution>
+          <phase>process-test-classes</phase>
+          <goals>
+            <goal>map</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+  </plugins>
+</build>
 ```
 
 - `packages` configuration parameter contains a list of packages that should be included in the class
