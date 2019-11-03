@@ -69,7 +69,7 @@ public class DomainClassFinder {
 
     public static boolean isAllowFindingInternalClasses() {
         return ALLOW_FINDING_INTERNAL_CLASSES |= Boolean.parseBoolean(
-                System.getProperty("com.iluwatar.urm.DomainClassFinder.allowFindingInternalClasses", "false"));
+                System.getProperty("DomainClassFinder.allowFindingInternalClasses", "false"));
     }
 
     private DomainClassFinder() {

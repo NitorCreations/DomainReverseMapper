@@ -39,7 +39,7 @@
             <configuration>
               <transformers>
                 <transformer>
-                  <mainClass>com.iluwatar.urm.DomainMapperCli</mainClass>
+                  <mainClass>DomainMapperCli</mainClass>
                 </transformer>
               </transformers>
             </configuration>
