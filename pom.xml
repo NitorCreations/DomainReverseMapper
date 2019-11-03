@@ -32,6 +32,15 @@
             <email>sami.airaksinen@nitorcreations.com</email>
         </developer>
     </developers>
+    <scm>
+        <url>https://github.com/iluwatar/uml-reverse-mapper</url>
+        <connection>
+            scm:git:git://github.com/iluwatar/uml-reverse-mapper.git
+        </connection>
+        <developerConnection>
+            scm:git:ssh://git@github.com:iluwatar/uml-reverse-mapper.git
+        </developerConnection>
+    </scm>
     <licenses>
         <license>
             <name>The Apache Software License, Version 2.0</name>
