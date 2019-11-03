@@ -1,21 +1,22 @@
-[![Build Status](https://travis-ci.org/markusmo3/uml-reverse-mapper.svg?branch=master)](https://travis-ci.org/markusmo3/uml-reverse-mapper)
-[![Coverage Status](https://coveralls.io/repos/github/markusmo3/uml-reverse-mapper/badge.svg)](https://coveralls.io/github/markusmo3/uml-reverse-mapper)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.markusmo3.urm/urm-maven-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.markusmo3.urm/urm-maven-plugin/)
+[![Build Status](https://travis-ci.org/iluwatar/uml-reverse-mapper.svg?branch=master)](https://travis-ci.org/iluwatar/uml-reverse-mapper)
+[![Coverage Status](https://coveralls.io/repos/github/iluwatar/uml-reverse-mapper/badge.svg?branch=master)](https://coveralls.io/github/iluwatar/uml-reverse-mapper?branch=master)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.iluwatar.urm/urm-maven-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.iluwatar.urm/urm-maven-plugin/)
 
-UML Reverse Mapper
-===========================
+# UML Reverse Mapper
 
 Automatically generate class diagram from your code.
 
-Using reflection, UML Reverse Mapper scans your packages that contain your code. It then builds a graph of class relations and outputs either a Graphviz .dot file or a [PlantUML](http://www.plantuml.com/) .puml file.
+Using reflection, UML Reverse Mapper scans your packages that contain your code. It then builds a graph of class relations and outputs either a [Graphviz](https://www.graphviz.org/) .dot file or a [PlantUML](http://www.plantuml.com/) .puml file.
+
+The tool is available in command line version (urm-core) and Maven plugin (urm-maven-plugin).
 
 ### Using from the command-line
 
 Build the `urm-core` project with `mvn clean package` and grab the generated artifact `urm-core.jar`. Then you need the archive that will be analyzed. In this example we use `abstract-factory.jar` and assume the package name to be `com.iluwatar.abstractfactory`. Place the jar-files in the same directory and execute the following command.
 
-    java -cp abstract-factory.jar:urm-core.jar DomainMapperCli -p com.iluwatar.abstractfactory -i com.iluwatar.abstractfactory.Castle
+    java -cp abstract-factory.jar:urm-core.jar com.iluwatar.urm.DomainMapperCli -p com.iluwatar.abstractfactory -i com.iluwatar.abstractfactory.Castle
 
-This will scan all classes under the package `com.iluwatar.abstractfactory` except `Castle` that was marked to be ignored and output the .dot file to your console output. If you want to write it to file use switch `-f filename.dot`. If you need to scan multiple packages use format `-p "com.package1, com.package2"`. Note that under Windows OS the classpath separator is `;` instead of `:`
+This will scan all the classes under the package `com.iluwatar.abstractfactory` except `Castle` that was marked to be ignored and output the markup to your console output. By default PlantUML presenter is used, but it can be changed with switch `-s graphviz`. If you want to write it to file use switch `-f filename`. If you need to scan multiple packages use format `-p "com.package1, com.package2"`. Note that under Windows OS the classpath separator is `;` instead of `:`
 
 ### Using the Maven plugin
 
@@ -24,12 +25,12 @@ Add to your pom.xml the following:
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>com.github.markusmo3.urm</groupId>
+				<groupId>com.iluwatar.urm</groupId>
 				<artifactId>urm-maven-plugin</artifactId>
-				<version>1.4.0</version>
+				<version>1.4.6</version>
 				<configuration>
 				    <!-- if outputDirectory is not set explicitly it will default to your build dir -->
-                   			<outputDirectory>${project.basedir}/etc</outputDirectory>
+                   	<outputDirectory>${project.basedir}/etc</outputDirectory>
 					<packages>
 						<param>com.mycompany.mypackage</param>
 						<param>com.mycompany.other_package</param>
@@ -39,7 +40,8 @@ Add to your pom.xml the following:
 						<param>com.mycompany.other_package.OtherClass</param>
 					</ignores>
 					<includeMainDirectory>true</includeMainDirectory>
-                    			<includeTestDirectory>false</includeTestDirectory>
+                    <includeTestDirectory>false</includeTestDirectory>
+                    <presenter>graphviz</presenter>
 				</configuration>
 				<executions>
 					<execution>
@@ -54,16 +56,20 @@ Add to your pom.xml the following:
 	</build>
 ```
 
-where the `packages` configuration parameter contains a list of packages that should be included in the class
-diagram and the `ignores` configuration parameter contains a list of types that should be excluded from the class
-diagram. `Dependencies` list should contain the artifacts where the classes are found.`includeMainDirectory` 
-configuration parameter indicates to include classes of src/main/java directory. Default value of 
-`includeMainDirectory` is true. `includeTestDirectory` configuration parameter indicates to
-include classes of src/test/java directory. Default value of `includeTestDirectory` configuration parameter is false.
+- `packages` configuration parameter contains a list of packages that should be included in the class
+diagram 
+- `ignores` configuration parameter contains a list of types that should be excluded from the class
+diagram
+- `Dependencies` list should contain the artifacts where the classes are found. See https://maven.apache.org/guides/mini/guide-configuring-plugins.html#Using_the_dependencies_Tag
+- `includeMainDirectory` configuration parameter indicates to include classes of src/main/java 
+directory. Default value of `includeMainDirectory` is true. 
+- `includeTestDirectory` configuration parameter indicates to include classes of src/test/java 
+directory. Default value of `includeTestDirectory` configuration parameter is false.
+- `presenter` parameter control which presenter is used. Can be either `graphviz` or `plantuml`.
 
 When `process-test-classes` life-cycle phase gets executed, the class diagram will be saved to
 `/target/${project.name}.urm.dot` or `/target/${project.name}.urm.puml`. Use this file with your local
-Graphviz or any of the online Graphviz tools to show your class diagram.
+or online tools to show your class diagram.
 
 ### Showcases
 
@@ -75,6 +81,7 @@ free generation/hosting service.
 [![Datamapper](http://plantuml.com/plantuml/png/BSkx3SCm34NHLPm1B1Rkl0qZFyH6H8dW9_7uKP7g5WVtSVNQya1QMyu8zPt8-5jULvpvJ8VLqGCzIXr2mlPEbx5HIbiD7vXZ5LQ5JVIOmSsY3Ku71_-jf4dH-Vm0)](https://github.com/markusmo3/uml-reverse-mapper/blob/master/examples/data-mapper.urm.puml)
 
 ### Deploy Instructions
+
 [Performing a Release Deployment](http://central.sonatype.org/pages/apache-maven.html#performing-a-release-deployment)
 
 
