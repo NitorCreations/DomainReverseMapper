@@ -12,18 +12,16 @@ public interface Presenter {
     String getFileEnding();
 
     /**
-     * Fuzzy parser for presenter Strings
+     * Factory method for {@link Presenter}
      * @param presenterString
-     * @return corresponding Presenter or the Default PlantUMLPresenter
+     * @return chosen Presenter
      */
     static Presenter parse(String presenterString) {
-        // Fuzzy selection for better usability
-        if (presenterString == null || presenterString.contains("plant")) {
+        if (presenterString == null || presenterString.equalsIgnoreCase("plantuml")) {
             return new PlantUMLPresenter();
-        } else if (presenterString.contains("graph")) {
+        } else if (presenterString.equalsIgnoreCase("graphviz")) {
             return new GraphvizPresenter();
         }
-        // default presenter
         return new PlantUMLPresenter();
     }
 }

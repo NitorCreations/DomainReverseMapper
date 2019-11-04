@@ -51,7 +51,7 @@ public class DomainMapperCli {
                 }
             }
 
-            Presenter presenter = Presenter.parse(line.getOptionValue("i"));
+            Presenter presenter = Presenter.parse(line.getOptionValue("s"));
             domainMapper = DomainMapper.create(presenter, Arrays.asList(packages), ignores == null ? new ArrayList<>() : Arrays.asList(ignores));
             Representation representation = domainMapper.describeDomain();
             if (line.hasOption('f')) {
