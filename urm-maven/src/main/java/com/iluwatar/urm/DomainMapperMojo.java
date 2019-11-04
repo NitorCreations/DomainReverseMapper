@@ -25,7 +25,7 @@ import static java.util.stream.Collectors.toList;
 @Mojo(name = "map", defaultPhase = LifecyclePhase.PROCESS_CLASSES, requiresDependencyResolution = ResolutionScope.COMPILE)
 public class DomainMapperMojo extends AbstractMojo {
 
-    @Parameter(defaultValue = "${project.basedir}", property = "outputDir", required = true)
+    @Parameter(defaultValue = "${project.basedir}", property = "outputDirectory", required = true)
     private File outputDirectory;
     @Component
     private MavenProject project;
@@ -34,7 +34,7 @@ public class DomainMapperMojo extends AbstractMojo {
     @Parameter(property = "map.ignores", required = false)
     private List<String> ignores;
     @Parameter(property = "presenter", required = false)
-    private String presenterString;
+    private String presenter;
     @Parameter(property = "map.skipForProjects", required = false)
     private List<String> skipForProjects;
     @Parameter(property ="includeMainDirectory", defaultValue = "true")
@@ -56,9 +56,9 @@ public class DomainMapperMojo extends AbstractMojo {
         if (packages.isEmpty())
             throw new MojoFailureException("No packages defined for scanning.");
         try {
-            Presenter presenter = Presenter.parse(presenterString);
+            Presenter selectedPresenter = Presenter.parse(this.presenter);
 
-            String fileName = project.getName() + ".urm." + presenter.getFileEnding();
+            String fileName = project.getName() + ".urm." + selectedPresenter.getFileEnding();
             Path path = Paths.get(outputDirectory.getPath(), fileName);
 
             if (!getLog().isDebugEnabled()) {
@@ -69,7 +69,7 @@ public class DomainMapperMojo extends AbstractMojo {
 
             if (!Files.exists(path)) {
                 List<URL> projectClasspathList = getClasspathUrls();
-                DomainMapper mapper = DomainMapper.create(presenter, packages, ignores,
+                DomainMapper mapper = DomainMapper.create(selectedPresenter, packages, ignores,
                         new URLClassLoader(projectClasspathList.toArray(new URL[projectClasspathList.size()])));
 
                 Representation representation = mapper.describeDomain();
