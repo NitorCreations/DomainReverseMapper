@@ -88,3 +88,10 @@ free generation/hosting service.
 ```
 mvn clean deploy -P release
 ```
+
+### Release notes
+
+- 1.4.7
+    - Update README.md instruction [#20](https://github.com/iluwatar/uml-reverse-mapper/issues/20)
+    - Presenter can not be chosen via command line parameter [#22](https://github.com/iluwatar/uml-reverse-mapper/issues/22)
+    - Presenter can not be chosen via plugin parameters [#23](https://github.com/iluwatar/uml-reverse-mapper/issues/23)
