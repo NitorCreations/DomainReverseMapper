@@ -54,16 +54,13 @@
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <guava.version>15.0</guava.version>
-        <h2.version>1.3.173</h2.version>
         <junit.version>4.12</junit.version>
-        <log4j.version>1.2.17</log4j.version>
         <mockito.version>1.10.19</mockito.version>
-        <powermock.version>1.5.1</powermock.version>
         <hamcrest.version>1.3</hamcrest.version>
         <slf4j.version>1.7.12</slf4j.version>
         <logback.version>1.1.3</logback.version>
         <asm.version>5.0.3</asm.version>
+        <jacoco.version>0.8.5</jacoco.version>
     </properties>
     <build>
         <pluginManagement>
@@ -71,7 +68,7 @@
                 <plugin>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>0.7.7.201606060606</version>
+                    <version>${jacoco.version}</version>
                     <configuration>
                         <excludes>
                             <exclude>**/HelpMojo.class</exclude>
