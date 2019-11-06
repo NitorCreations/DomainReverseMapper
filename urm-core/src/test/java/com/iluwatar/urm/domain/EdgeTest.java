@@ -12,7 +12,7 @@ public class EdgeTest {
 
     @Test
     public void testEqualsContract() throws Exception {
-        EqualsVerifier.forClass(Edge.class).verify();
+        EqualsVerifier.forClass(Edge.class).withPrefabValues(DomainClass.class, new DomainClass(Person.class), new DomainClass(Manager.class)).verify();
     }
 
     @Test

@@ -68,6 +68,7 @@
         <coveralls.version>4.3.0</coveralls.version>
         <commons-lang3.version>3.9</commons-lang3.version>
         <commons-cli.version>1.4</commons-cli.version>
+        <equalsverifier.version>3.1.10</equalsverifier.version>
     </properties>
     <build>
         <pluginManagement>
@@ -202,7 +203,7 @@
             <dependency>
                 <groupId>nl.jqno.equalsverifier</groupId>
                 <artifactId>equalsverifier</artifactId>
-                <version>1.7.5</version>
+                <version>${equalsverifier.version}</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
