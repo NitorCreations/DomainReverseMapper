@@ -64,6 +64,7 @@
         <compiler.version>3.8.1</compiler.version>
         <source.version>3.2.0</source.version>
         <javadoc.version>3.1.1</javadoc.version>
+        <surefire.version>3.0.0-M3</surefire.version>
     </properties>
     <build>
         <pluginManagement>
@@ -117,7 +118,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>2.19.1</version>
+                    <version>${surefire.version}</version>
                     <configuration>
                         <useSystemClassLoader>false</useSystemClassLoader>
                     </configuration>
