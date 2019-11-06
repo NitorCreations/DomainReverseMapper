@@ -65,6 +65,8 @@
         <source.version>3.2.0</source.version>
         <javadoc.version>3.1.1</javadoc.version>
         <surefire.version>3.0.0-M3</surefire.version>
+        <coveralls.version>4.3.0</coveralls.version>
+        <commons-lang3.version>3.9</commons-lang3.version>
     </properties>
     <build>
         <pluginManagement>
@@ -133,7 +135,7 @@
             <plugin>
                 <groupId>org.eluder.coveralls</groupId>
                 <artifactId>coveralls-maven-plugin</artifactId>
-                <version>4.3.0</version>
+                <version>${coveralls.version}</version>
                 <configuration>
                     <repoToken>nG6lQAYipMRQmtx1ReDS2Z2wS4Ib9TTwr</repoToken>
                 </configuration>
@@ -145,7 +147,7 @@
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
-                <version>3.3.2</version>
+                <version>${commons-lang3.version}</version>
             </dependency>
             <dependency>
                 <groupId>junit</groupId>
