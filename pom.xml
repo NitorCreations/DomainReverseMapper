@@ -9,7 +9,7 @@
     <name>UML Reverse Mapper</name>
     <description>Automatically generate class diagram from your code</description>
     <url>https://github.com/iluwatar/uml-reverse-mapper</url>
-    <inceptionYear>2013</inceptionYear>
+    <inceptionYear>2013-2019</inceptionYear>
     <developers>
         <developer>
             <id>iluwatar</id>
