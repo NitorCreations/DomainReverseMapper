@@ -49,7 +49,7 @@ public class FieldScanner extends AbstractScanner {
         try {
             InputStream is = clazz.getClassLoader().getResourceAsStream(clazz.getName().replace(".", "/") + ".class");
             ClassReader reader = new ClassReader(is);
-            reader.accept(new ClassVisitor(Opcodes.ASM4) {
+            reader.accept(new ClassVisitor(Opcodes.ASM7) {
                 @Override
                 public FieldVisitor visitField(int access, String name, String desc, String signature, Object value) {
                     try {
