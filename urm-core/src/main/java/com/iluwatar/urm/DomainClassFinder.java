@@ -2,14 +2,16 @@ package com.iluwatar.urm;
 
 import com.google.common.collect.Sets;
 import org.reflections.Reflections;
-import org.reflections.scanners.ResourcesScanner;
 import org.reflections.scanners.SubTypesScanner;
 import org.reflections.util.ClasspathHelper;
-import org.reflections.util.ConfigurationBuilder;
 import org.reflections.util.FilterBuilder;
 
 import java.net.URLClassLoader;
-import java.util.*;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -42,27 +44,7 @@ public class DomainClassFinder {
     }
 
     private static Set<Class<?>> getClasses(URLClassLoader classLoader, String packageName) {
-        List<ClassLoader> classLoadersList = new LinkedList<>();
-        classLoadersList.add(ClasspathHelper.contextClassLoader());
-        classLoadersList.add(ClasspathHelper.staticClassLoader());
-        if (classLoader != null) {
-            classLoadersList.add(classLoader);
-        }
-
-        classLoaders = classLoadersList.toArray(new ClassLoader[0]);
-
-        FilterBuilder filter = new FilterBuilder()
-                .include(FilterBuilder.prefix(packageName));
-        if (!isAllowFindingInternalClasses()) {
-            filter.exclude(FilterBuilder.prefix(URM_PACKAGE));
-        }
-
-        Reflections reflections = new Reflections(new ConfigurationBuilder()
-                .setScanners(new SubTypesScanner(false /* don't exclude Object.class */), new ResourcesScanner())
-                .setUrls(ClasspathHelper.forClassLoader(classLoaders))
-                .filterInputsBy(filter)
-                .addClassLoaders(classLoadersList)
-        );
+        Reflections reflections = new Reflections(packageName, new SubTypesScanner(false));
         return Sets.union(reflections.getSubTypesOf(Object.class),
                 reflections.getSubTypesOf(Enum.class));
     }
