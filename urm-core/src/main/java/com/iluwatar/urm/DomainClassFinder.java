@@ -2,8 +2,10 @@ package com.iluwatar.urm;
 
 import com.google.common.collect.Sets;
 import org.reflections.Reflections;
+import org.reflections.scanners.ResourcesScanner;
 import org.reflections.scanners.SubTypesScanner;
 import org.reflections.util.ClasspathHelper;
+import org.reflections.util.ConfigurationBuilder;
 import org.reflections.util.FilterBuilder;
 
 import java.net.URLClassLoader;
@@ -44,7 +46,22 @@ public class DomainClassFinder {
     }
 
     private static Set<Class<?>> getClasses(URLClassLoader classLoader, String packageName) {
-        Reflections reflections = new Reflections(packageName, new SubTypesScanner(false));
+        List<ClassLoader> classLoadersList = new LinkedList<>();
+        classLoadersList.add(ClasspathHelper.contextClassLoader());
+        classLoadersList.add(ClasspathHelper.staticClassLoader());
+        if (classLoader != null) {
+            classLoadersList.add(classLoader);
+        }
+        classLoaders = classLoadersList.toArray(new ClassLoader[0]);
+        FilterBuilder filter = new FilterBuilder().include(FilterBuilder.prefix(packageName));
+        if (!isAllowFindingInternalClasses()) {
+            filter.exclude(FilterBuilder.prefix(URM_PACKAGE));
+        }
+        Reflections reflections = new Reflections(new ConfigurationBuilder()
+            .setScanners(new SubTypesScanner(false), new ResourcesScanner())
+            .setUrls(ClasspathHelper.forClassLoader(classLoaders))
+            .filterInputsBy(filter)
+            .addClassLoaders(classLoadersList));
         return Sets.union(reflections.getSubTypesOf(Object.class),
                 reflections.getSubTypesOf(Enum.class));
     }
