@@ -27,7 +27,7 @@ Add to your pom.xml the following:
     <plugin>
       <groupId>com.iluwatar.urm</groupId>
       <artifactId>urm-maven-plugin</artifactId>
-      <version>1.4.7</version>
+      <version>1.4.8</version>
       <configuration>
         <!-- if outputDirectory is not set explicitly it will default to your build dir -->
         <outputDirectory>${project.basedir}/etc</outputDirectory>
@@ -45,7 +45,7 @@ Add to your pom.xml the following:
       </configuration>
       <executions>
         <execution>
-          <phase>process-test-classes</phase>
+          <phase>process-classes</phase>
           <goals>
             <goal>map</goal>
           </goals>
@@ -67,8 +67,8 @@ directory. Default value of `includeMainDirectory` is true.
 directory. Default value of `includeTestDirectory` configuration parameter is false.
 - `presenter` parameter control which presenter is used. Can be either `graphviz` or `plantuml`.
 
-When `process-test-classes` life-cycle phase gets executed, the class diagram will be saved to
-`/target/${project.name}.urm.dot` or `/target/${project.name}.urm.puml`. Use this file with your local
+When `process-classes` life-cycle phase gets executed, the class diagram will be saved to the location specified by `outputDirectory` parameter. If not specified the file is saved
+to `/target/${project.name}.urm.dot` or `/target/${project.name}.urm.puml`. Use this file with your local
 or online tools to show your class diagram.
 
 ### Showcases
@@ -90,6 +90,11 @@ mvn clean deploy -P release
 ```
 
 ### Release notes
+
+- 1.4.8
+    - Update dependencies to latest versions [#21](https://github.com/iluwatar/uml-reverse-mapper/issues/21)
+    - Work on Java 11 compatibility [#18](https://github.com/iluwatar/uml-reverse-mapper/issues/18)
+    - Create directories for the output file, if they don't exist
 
 - 1.4.7
     - Update README.md instruction [#20](https://github.com/iluwatar/uml-reverse-mapper/issues/20)
