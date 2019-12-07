@@ -60,6 +60,10 @@ public class DomainMapperMojo extends AbstractMojo {
 
             String fileName = project.getName() + ".urm." + selectedPresenter.getFileEnding();
             Path path = Paths.get(outputDirectory.getPath(), fileName);
+            Path dir = path.getParent();
+            if (dir != null) {
+                Files.createDirectories(dir);
+            }
 
             if (!getLog().isDebugEnabled()) {
                 // nullify the Reflections logger to prevent it from spamming

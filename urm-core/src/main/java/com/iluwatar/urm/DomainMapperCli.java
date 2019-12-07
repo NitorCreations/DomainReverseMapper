@@ -6,8 +6,10 @@ import org.apache.commons.cli.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -56,6 +58,10 @@ public class DomainMapperCli {
             Representation representation = domainMapper.describeDomain();
             if (line.hasOption('f')) {
                 String filename = line.getOptionValue('f');
+                Path parent = Paths.get(filename).getParent();
+                if (parent != null) {
+                    Files.createDirectories(Paths.get(filename).getParent());
+                }
                 Files.write(Paths.get(filename), representation.getContent().getBytes());
                 log.info("Wrote to file " + filename);
             } else {
