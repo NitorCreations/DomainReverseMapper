@@ -7,13 +7,13 @@ import java.lang.reflect.Constructor;
  */
 public class DomainConstructor extends DomainExecutable<Constructor> {
 
-    public DomainConstructor(Constructor constructor) {
-        super(constructor);
-    }
+  public DomainConstructor(Constructor constructor) {
+    super(constructor);
+  }
 
-    @Override
-    protected String getName() {
-        // to prevent it from printing FQN
-        return TypeUtils.getSimpleName(getExecutable().getDeclaringClass());
-    }
+  @Override
+  protected String getName() {
+    // to prevent it from printing FQN
+    return TypeUtils.getSimpleName(getExecutable().getDeclaringClass());
+  }
 }

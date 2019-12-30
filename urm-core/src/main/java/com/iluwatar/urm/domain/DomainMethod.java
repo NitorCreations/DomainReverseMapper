@@ -8,21 +8,21 @@ import java.lang.reflect.Type;
  */
 public class DomainMethod extends DomainExecutable<Method> {
 
-    private static final String VOID_TYPE_NAME = Void.TYPE.getSimpleName();
+  private static final String VOID_TYPE_NAME = Void.TYPE.getSimpleName();
 
-    public DomainMethod(Method method) {
-        super(method);
-    }
+  public DomainMethod(Method method) {
+    super(method);
+  }
 
-    @Override
-    public String getUmlName() {
-        // Executable by itself has no return type, so add it here
-        Type returnType = getExecutable().getGenericReturnType();
-        if (Void.class.equals(returnType) || Void.TYPE.equals(returnType)) {
-            // But if it returns nothing (aka void) we done output any type
-            return super.getUmlName();
-        }
-        return super.getUmlName() + " : " + TypeUtils.getSimpleName(returnType);
+  @Override
+  public String getUmlName() {
+    // Executable by itself has no return type, so add it here
+    Type returnType = getExecutable().getGenericReturnType();
+    if (Void.class.equals(returnType) || Void.TYPE.equals(returnType)) {
+      // But if it returns nothing (aka void) we done output any type
+      return super.getUmlName();
     }
+    return super.getUmlName() + " : " + TypeUtils.getSimpleName(returnType);
+  }
 
 }

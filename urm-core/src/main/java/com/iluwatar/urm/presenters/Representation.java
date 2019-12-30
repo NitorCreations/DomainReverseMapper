@@ -5,20 +5,20 @@ package com.iluwatar.urm.presenters;
  */
 public class Representation {
 
-    private final String content;
-    private final String fileEnding;
+  private final String content;
+  private final String fileEnding;
 
-    public Representation(String content, String fileEnding) {
-        this.content = content;
-        this.fileEnding = fileEnding;
-    }
+  public Representation(String content, String fileEnding) {
+    this.content = content;
+    this.fileEnding = fileEnding;
+  }
 
-    public String getContent() {
-        return content;
-    }
+  public String getContent() {
+    return content;
+  }
 
-    public String getFileEnding() {
-        return fileEnding;
-    }
+  public String getFileEnding() {
+    return fileEnding;
+  }
 
 }

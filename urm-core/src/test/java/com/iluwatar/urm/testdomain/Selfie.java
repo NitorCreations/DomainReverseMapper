@@ -1,8 +1,8 @@
 package com.iluwatar.urm.testdomain;
 
 /**
- * Class to test cyclic reference with
+ * Class to test cyclic reference.
  */
 public class Selfie {
-    private Selfie me;
+  private Selfie me;
 }
