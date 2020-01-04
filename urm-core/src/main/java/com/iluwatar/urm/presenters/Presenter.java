@@ -7,21 +7,21 @@ import java.util.List;
 
 public interface Presenter {
 
-    Representation describe(List<DomainClass> domainObjects, List<Edge> edges);
+  Representation describe(List<DomainClass> domainObjects, List<Edge> edges);
 
-    String getFileEnding();
+  String getFileEnding();
 
-    /**
-     * Factory method for {@link Presenter}
-     * @param presenterString
-     * @return chosen Presenter
-     */
-    static Presenter parse(String presenterString) {
-        if (presenterString == null || presenterString.equalsIgnoreCase("plantuml")) {
-            return new PlantUMLPresenter();
-        } else if (presenterString.equalsIgnoreCase("graphviz")) {
-            return new GraphvizPresenter();
-        }
-        return new PlantUMLPresenter();
+  /**
+   * Factory method for {@link Presenter}.
+   * @param presenterString as a String
+   * @return chosen Presenter
+   */
+  static Presenter parse(String presenterString) {
+    if (presenterString == null || presenterString.equalsIgnoreCase("plantuml")) {
+      return new PlantUmlPresenter();
+    } else if (presenterString.equalsIgnoreCase("graphviz")) {
+      return new GraphvizPresenter();
     }
+    return new PlantUmlPresenter();
+  }
 }

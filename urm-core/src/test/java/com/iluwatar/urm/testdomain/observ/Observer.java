@@ -1,8 +1,7 @@
 package com.iluwatar.urm.testdomain.observ;
 
 /**
- * 
- * Observer
+ * Observer.
  */
 public interface Observer<S extends Observable<S, O, A>, O extends Observer<S, O, A>, A> {
 
