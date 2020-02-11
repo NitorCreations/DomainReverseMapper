@@ -6,7 +6,7 @@
 
 Automatically generate class diagram from your code.
 
-Using reflection, UML Reverse Mapper scans your packages that contain your code. It then builds a graph of class relations and outputs either a [Graphviz](https://www.graphviz.org/) .dot file or a [PlantUML](http://www.plantuml.com/) .puml file.
+Using reflection, UML Reverse Mapper scans your packages that contain your code. It builds the class relations and can output as a [Graphviz](https://www.graphviz.org/) .dot file, a [PlantUML](http://www.plantuml.com/) .puml file or a [Mermaid](https://mermaid-js.github.io/mermaid/#/)  .mmd file.
 
 The tool is available in command line version (urm-core) and Maven plugin (urm-maven-plugin).
 
@@ -16,7 +16,7 @@ Build the `urm-core` project with `mvn clean package` and grab the generated art
 
     java -cp abstract-factory.jar:urm-core.jar com.iluwatar.urm.DomainMapperCli -p com.iluwatar.abstractfactory -i com.iluwatar.abstractfactory.Castle
 
-This will scan all the classes under the package `com.iluwatar.abstractfactory` except `Castle` that was marked to be ignored and output the markup to your console output. By default PlantUML presenter is used, but it can be changed with switch `-s graphviz`. If you want to write it to file use switch `-f filename`. If you need to scan multiple packages use format `-p "com.package1, com.package2"`. Note that under Windows OS the classpath separator is `;` instead of `:`
+This will scan all the classes under the package `com.iluwatar.abstractfactory` except `Castle` that was marked to be ignored and output the markup to your console output. By default PlantUML presenter is used, but it can be changed with switch `-s graphviz` or `-s mermaid`. If you want to write it to file use switch `-f filename`. If you need to scan multiple packages use format `-p "com.package1, com.package2"`. Note that under Windows OS the classpath separator is `;` instead of `:`
 
 ### Using the Maven plugin
 
@@ -65,7 +65,7 @@ diagram
 directory. Default value of `includeMainDirectory` is true. 
 - `includeTestDirectory` configuration parameter indicates to include classes of src/test/java 
 directory. Default value of `includeTestDirectory` configuration parameter is false.
-- `presenter` parameter control which presenter is used. Can be either `graphviz` or `plantuml`.
+- `presenter` parameter control which presenter is used. Can be `graphviz`, `plantuml` or `mermaid`.
 
 When `process-classes` life-cycle phase gets executed, the class diagram will be saved to the location specified by `outputDirectory` parameter. If not specified the file is saved
 to `/target/${project.name}.urm.dot` or `/target/${project.name}.urm.puml`. Use this file with your local

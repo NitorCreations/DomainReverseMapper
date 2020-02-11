@@ -21,6 +21,8 @@ public interface Presenter {
       return new PlantUmlPresenter();
     } else if (presenterString.equalsIgnoreCase("graphviz")) {
       return new GraphvizPresenter();
+    } else if (presenterString.equalsIgnoreCase("mermaid")) {
+      return new MermaidPresenter();
     }
     return new PlantUmlPresenter();
   }
