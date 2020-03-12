@@ -14,5 +14,7 @@ public class PresenterTest {
     assertTrue(presenter.getClass().getSimpleName().equals("GraphvizPresenter"));
     presenter = Presenter.parse("plantuml");
     assertTrue(presenter.getClass().getSimpleName().equals("PlantUmlPresenter"));
+    presenter = Presenter.parse("mermaid");
+    assertTrue(presenter.getClass().getSimpleName().equals("MermaidPresenter"));
   }
 }
