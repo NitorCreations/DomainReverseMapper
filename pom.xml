@@ -65,7 +65,7 @@
         <javadoc.version>3.2.0</javadoc.version>
         <surefire.version>3.0.0-M4</surefire.version>
         <coveralls.version>4.3.0</coveralls.version>
-        <commons-lang3.version>3.9</commons-lang3.version>
+        <commons-lang3.version>3.10</commons-lang3.version>
         <commons-cli.version>1.4</commons-cli.version>
         <equalsverifier.version>3.1.13</equalsverifier.version>
         <reflections.version>0.9.11</reflections.version>
