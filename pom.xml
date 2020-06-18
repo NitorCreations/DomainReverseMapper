@@ -63,7 +63,7 @@
         <compiler.version>3.8.1</compiler.version>
         <source.version>3.2.1</source.version>
         <javadoc.version>3.2.0</javadoc.version>
-        <surefire.version>3.0.0-M4</surefire.version>
+        <surefire.version>3.0.0-M5</surefire.version>
         <coveralls.version>4.3.0</coveralls.version>
         <commons-lang3.version>3.10</commons-lang3.version>
         <commons-cli.version>1.4</commons-cli.version>
