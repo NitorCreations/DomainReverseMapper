@@ -31,6 +31,11 @@
             <name>Sami Airaksinen</name>
             <email>sami.airaksinen@nitorcreations.com</email>
         </developer>
+        <developer>
+            <id>hbothr15</id>
+            <name>Hemant Bothra</name>
+            <email>hemant.bothra15@gmail.com</email>
+        </developer>
     </developers>
     <scm>
         <url>https://github.com/iluwatar/uml-reverse-mapper</url>
@@ -120,8 +125,8 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>${compiler.version}</version>
                     <configuration>
-                        <source>1.8</source>
-                        <target>1.8</target>
+                        <source>11</source>
+                        <target>11</target>
                     </configuration>
                 </plugin>
                 <plugin>
