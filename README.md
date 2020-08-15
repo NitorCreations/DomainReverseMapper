@@ -27,7 +27,7 @@ Add to your pom.xml the following:
     <plugin>
       <groupId>com.iluwatar.urm</groupId>
       <artifactId>urm-maven-plugin</artifactId>
-      <version>1.4.8</version>
+      <version>2.0.0</version>
       <configuration>
         <!-- if outputDirectory is not set explicitly it will default to your build dir -->
         <outputDirectory>${project.basedir}/etc</outputDirectory>
