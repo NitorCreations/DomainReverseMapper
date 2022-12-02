@@ -62,29 +62,29 @@
         <junit.version>4.13.2</junit.version>
         <mockito.version>4.9.0</mockito.version>
         <hamcrest.version>1.3</hamcrest.version>
-        <logback.version>1.2.3</logback.version>
+        <logback.version>1.4.5</logback.version>
         <asm.version>7.3.1</asm.version>
-        <jacoco.version>0.8.5</jacoco.version>
-        <compiler.version>3.8.1</compiler.version>
+        <jacoco.version>0.8.8</jacoco.version>
+        <compiler.version>3.10.1</compiler.version>
         <source.version>3.2.1</source.version>
-        <javadoc.version>3.2.0</javadoc.version>
-        <surefire.version>3.0.0-M5</surefire.version>
+        <javadoc.version>3.4.1</javadoc.version>
+        <surefire.version>3.0.0-M7</surefire.version>
         <coveralls.version>4.3.0</coveralls.version>
         <commons-lang3.version>3.11</commons-lang3.version>
-        <commons-cli.version>1.4</commons-cli.version>
-        <equalsverifier.version>3.4.1</equalsverifier.version>
+        <commons-cli.version>1.5.0</commons-cli.version>
+        <equalsverifier.version>3.12</equalsverifier.version>
         <reflections.version>0.9.11</reflections.version>
         <qualitytest.version>1.3</qualitytest.version>
         <paranamer.version>2.8</paranamer.version>
-        <nexus.version>1.6.8</nexus.version>
-        <gpg.version>1.6</gpg.version>
-        <release-plugin.version>2.5.3</release-plugin.version>
-        <shade.version>3.2.4</shade.version>
-        <plugin-api.version>3.6.3</plugin-api.version>
-        <plugin-annotations.version>3.6.0</plugin-annotations.version>
+        <nexus.version>1.6.13</nexus.version>
+        <gpg.version>3.0.1</gpg.version>
+        <release-plugin.version>3.0.0-M7</release-plugin.version>
+        <shade.version>3.4.1</shade.version>
+        <plugin-api.version>3.8.6</plugin-api.version>
+        <plugin-annotations.version>3.7.0</plugin-annotations.version>
         <maven-project.version>3.0-alpha-2</maven-project.version>
-        <maven-plugin.version>3.6.0</maven-plugin.version>
-        <checkstyle-maven-plugin.version>3.1.1</checkstyle-maven-plugin.version>
+        <maven-plugin.version>3.7.0</maven-plugin.version>
+        <checkstyle-maven-plugin.version>3.2.0</checkstyle-maven-plugin.version>
         <checkstyle.version>8.27</checkstyle.version>
     </properties>
     <build>
