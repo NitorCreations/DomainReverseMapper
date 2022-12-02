@@ -1,7 +1,7 @@
-[![Build Status](https://travis-ci.com/iluwatar/uml-reverse-mapper.svg?branch=master)](https://travis-ci.com/iluwatar/uml-reverse-mapper)
-[![Coverage Status](https://coveralls.io/repos/github/iluwatar/uml-reverse-mapper/badge.svg?branch=master)](https://coveralls.io/github/iluwatar/uml-reverse-mapper?branch=master)
+![Build Status](https://github.com/iluwatar/uml-reverse-mapper/actions/workflows/maven-ci.yml/badge.svg)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.iluwatar.urm/urm-maven-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.iluwatar.urm/urm-maven-plugin/)
 [![Join the chat at https://gitter.im/iluwatar/uml-reverse-mapper](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/iluwatar/uml-reverse-mapper?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 
 # UML Reverse Mapper
 
