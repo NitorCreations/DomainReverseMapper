@@ -85,6 +85,7 @@
         <maven-plugin.version>3.7.0</maven-plugin.version>
         <maven-checkstyle-plugin.version>3.2.0</maven-checkstyle-plugin.version>
         <checkstyle.version>10.3.2</checkstyle.version>
+        <sonar-maven-plugin.version>3.8.0.2131</sonar-maven-plugin.version>
     </properties>
     <build>
         <pluginManagement>
@@ -182,6 +183,11 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-plugin-plugin</artifactId>
                     <version>${maven-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.sonarsource.scanner.maven</groupId>
+                    <artifactId>sonar-maven-plugin</artifactId>
+                    <version>${sonar-maven-plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
