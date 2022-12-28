@@ -63,7 +63,7 @@ public class DomainClassFinder {
       filter.excludePackage(URM_PACKAGE);
     }
     Reflections reflections = new Reflections(new ConfigurationBuilder()
-        .setScanners(new SubTypesScanner(false),new ResourcesScanner())
+        .setScanners(new SubTypesScanner(false), new ResourcesScanner())
         .addClassLoaders(classLoader)
         .forPackage(packageName, classLoader)
         .filterInputsBy(filter));
