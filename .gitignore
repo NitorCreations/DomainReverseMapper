@@ -8,11 +8,6 @@ target/
 .classpath
 .project
 
-# Package Files #
-*.jar
-*.war
-*.ear
-
 # Intellij
 .idea/
 *.iml
