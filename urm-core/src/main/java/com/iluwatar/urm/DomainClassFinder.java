@@ -62,13 +62,22 @@ public class DomainClassFinder {
     if (!isAllowFindingInternalClasses()) {
       filter.excludePackage(URM_PACKAGE);
     }
-    Reflections reflections = new Reflections(new ConfigurationBuilder()
-        .setScanners(new SubTypesScanner(false), new ResourcesScanner())
-        .addClassLoaders(classLoader)
-        .forPackage(packageName, classLoader)
-        .filterInputsBy(filter));
-    Set<Class<?>> classes = Sets.union(reflections.getSubTypesOf(Object.class), reflections.getSubTypesOf(Enum.class));
-    return classes;
+    if (classLoader != null) {
+      Reflections reflections = new Reflections(new ConfigurationBuilder()
+              .setScanners(new SubTypesScanner(false), new ResourcesScanner())
+              .addClassLoaders(classLoader)
+              .forPackage(packageName, classLoader)
+              .filterInputsBy(filter));
+      Set<Class<?>> classes = Sets.union(reflections.getSubTypesOf(Object.class), reflections.getSubTypesOf(Enum.class));
+      return classes;
+    } else {
+      Reflections reflections = new Reflections(new ConfigurationBuilder()
+              .setScanners(new SubTypesScanner(false), new ResourcesScanner())
+              .forPackage(packageName)
+              .filterInputsBy(filter));
+      Set<Class<?>> classes = Sets.union(reflections.getSubTypesOf(Object.class), reflections.getSubTypesOf(Enum.class));
+      return classes;
+    }
   }
 
   public static boolean isAllowFindingInternalClasses() {
