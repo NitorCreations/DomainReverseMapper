@@ -3,7 +3,6 @@
 Domain Reverse Mapper (DRM)
 ===========================
 
-[![Build Status](https://travis-ci.org/NitorCreations/DomainReverseMapper.png)](https://travis-ci.org/NitorCreations/DomainReverseMapper) 
 [![Coverage Status](https://coveralls.io/repos/NitorCreations/DomainReverseMapper/badge.png?branch=master)](https://coveralls.io/r/NitorCreations/DomainReverseMapper?branch=master)
 
 Automatically generate [Graphviz](http://www.graphviz.org/) diagram from your domain classes.
